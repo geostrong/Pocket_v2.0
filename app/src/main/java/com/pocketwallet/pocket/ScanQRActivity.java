@@ -1,4 +1,4 @@
-package com.pocketwallet.pocket_v2;
+package com.pocketwallet.pocket;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

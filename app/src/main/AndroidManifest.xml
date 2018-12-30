@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.pocketwallet.pocket_v2">
+    package="com.pocketwallet.pocket">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:allowBackup="true"
@@ -10,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name="com.pocketwallet.pocket.MainActivity"
             android:label="Pocket">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -18,13 +21,13 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name=".QuickQrActivity" />
-        <activity android:name=".ScanQRActivity" />
+        <activity android:name="com.pocketwallet.pocket.QuickQrActivity" />
+        <activity android:name="com.pocketwallet.pocket.ScanQRActivity" />
         <activity
-            android:name=".RequestActivity"
+            android:name="com.pocketwallet.pocket.RequestActivity"
             android:label="@string/title_activity_request"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".SplashActivity"
+        <activity android:name="com.pocketwallet.pocket.SplashActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +35,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service android:name="com.pocketwallet.pocket.MyFirebaseMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
     </application>
+
 
 </manifest>

@@ -1,4 +1,4 @@
-package com.pocketwallet.pocket_v2;
+package com.pocketwallet.pocket;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
