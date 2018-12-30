@@ -19,7 +19,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".QuickQrActivity" />
-        <activity android:name=".ScanQRActivity"></activity>
+        <activity android:name=".ScanQRActivity" />
+        <activity
+            android:name=".RequestActivity"
+            android:label="@string/title_activity_request"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

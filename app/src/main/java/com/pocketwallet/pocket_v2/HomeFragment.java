@@ -36,6 +36,16 @@ public class HomeFragment extends Fragment {
                 startActivity(newIntent);
             }
         });
+
+        Button requestBtn = (Button) view.findViewById(R.id.reqBtn);
+        requestBtn.setOnClickListener(new  View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(getActivity(), RequestActivity.class);
+                startActivity(newIntent);
+            }
+        });
         //<--End of setup buttons-->
 
         return view;
