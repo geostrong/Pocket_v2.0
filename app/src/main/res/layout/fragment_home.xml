@@ -1,15 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/bg">
 
-    <TextView
-        android:id="@+id/textView"
+    <RelativeLayout
+        android:id="@+id/myPocketButton"
+        android:layout_width="354dp"
+        android:layout_height="193dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="66dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/pocketlayout"
+        android:clickable="true"
+        android:elevation="10dp"
+        android:focusable="true"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/lastUpdated"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="88dp"
+            android:layout_marginEnd="16dp"
+            android:text="2018-12-29 11:59:49:AM +0800"
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/lastUpdated2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="67dp"
+            android:layout_marginTop="167dp"
+            android:layout_marginEnd="70dp"
+            android:text="Total Balance"
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/MyPocket"
+            android:layout_width="206dp"
+            android:layout_height="58dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="80dp"
+            android:layout_marginTop="11dp"
+            android:layout_marginEnd="84dp"
+            android:layout_marginBottom="136dp"
+            android:autoSizeTextType="uniform"
+            android:text="MyPocket"
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
+
+        <TextView
+            android:id="@+id/balance"
+            android:layout_width="243dp"
+            android:layout_height="77dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="63dp"
+            android:layout_marginTop="105dp"
+            android:layout_marginEnd="64dp"
+            android:layout_marginBottom="23dp"
+            android:autoSizeTextType="uniform"
+            android:text="@string/balance"
+            android:textAlignment="center"
+            android:textColor="@android:color/black" />
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/quickQRBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="HomeFragment"
-        tools:layout_editor_absoluteX="128dp"
-        tools:layout_editor_absoluteY="271dp" />
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="8dp"
+        android:text="Quick QR"
+        android:textAllCaps="false"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.261"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/myPocketButton" />
+
+    <Button
+        android:id="@+id/scanQRBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan QR"
+        android:textAllCaps="false"
+        tools:layout_editor_absoluteX="245dp"
+        tools:layout_editor_absoluteY="291dp" />
+
 </android.support.constraint.ConstraintLayout>

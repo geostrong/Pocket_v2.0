@@ -18,6 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".QuickQrActivity" />
+        <activity android:name=".ScanQRActivity"></activity>
     </application>
 
 </manifest>
