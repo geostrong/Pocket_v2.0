@@ -67,8 +67,10 @@ public class HomeFragment extends Fragment {
             }
         });
         //<--End of setup buttons-->
+
         lastUpdatedTxt = (TextView)view.findViewById(R.id.lastUpdated);
         balanceTxt = (TextView)view.findViewById(R.id.balance);
+
         Bundle extras = new Bundle();
         extras = getArguments();
         if (extras != null) {
