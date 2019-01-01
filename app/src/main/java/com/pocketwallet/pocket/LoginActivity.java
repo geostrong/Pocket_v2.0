@@ -1,0 +1,133 @@
+package com.pocketwallet.pocket;
+
+import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class LoginActivity extends AppCompatActivity {
+    private EditText phoneNumber;
+    private EditText password;
+    private Button login;
+    private TextView signup;
+
+    //LOGIN API URL
+    final String LOGIN_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/login";
+
+    //---TEST---
+    private Button loginTest1;
+    private Button loginTest2;
+    //----------
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
+
+        //---TEST BUTTONS---
+        loginTest1 = (Button)findViewById(R.id.loginTest1);
+        loginTest2 = (Button)findViewById(R.id.loginTest2);
+        //----------
+
+        //SETUP BUTTONS AND EDITTEXT
+        phoneNumber = (EditText)findViewById(R.id.loginPhone);
+        password = (EditText)findViewById(R.id.loginPassword);
+        login = (Button)findViewById(R.id.loginButton);
+        signup = (TextView)findViewById(R.id.signupButton);
+
+        login.setOnClickListener (new View.OnClickListener() {
+            public void onClick(View view){
+                login(phoneNumber.getText().toString(), password.getText().toString());
+            }
+        });
+
+        loginTest1.setOnClickListener (new View.OnClickListener() {
+            public void onClick(View view){
+                LoginTestUser1();
+            }
+        });
+
+        loginTest2.setOnClickListener (new View.OnClickListener() {
+            public void onClick(View view){
+                LoginTestUser2();
+            }
+        });
+
+    }
+
+    //POST LOGIN REQUEST
+    private void login(String phoneNumber, String password) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        try {
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("phoneNumber", phoneNumber);
+            jsonBody.put("password", password);
+
+            System.out.println("Login Details: " + jsonBody);
+
+            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, jsonBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    System.out.print("Response: " + response);
+                    //String userId;
+                    //launchMainActivity(userId);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    onBackPressed();
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    final Map<String, String> headers = new HashMap<>();
+                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
+                    return headers;
+                }
+            };
+
+            requestQueue.add(jsonObject);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //LAUNCH MAIN ACTIVITY
+    public void launchMainActivity(String userId){
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.putExtra("userId",userId);
+        startActivity(intent);
+        finish();
+    }
+
+    //---TEST---
+    private void LoginTestUser1(){
+        String userId = "1cdd62b4-9f59-47c7-a7a5-919b6574bae3";
+        launchMainActivity(userId);
+    }
+
+    private void LoginTestUser2(){
+        String userId = "b814cb32-eebf-4490-bdde-9695a7ef23a8";
+        launchMainActivity(userId);
+    }
+    //----------
+}
