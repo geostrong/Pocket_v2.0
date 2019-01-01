@@ -1,12 +1,16 @@
 package com.pocketwallet.pocket;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -30,7 +34,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //LOGIN API URL
     final String LOGIN_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/login";
-
+    String POSTFCM_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/fcmtoken";
     //---TEST---
     private Button loginTest1;
     private Button loginTest2;
@@ -92,7 +96,22 @@ public class LoginActivity extends AppCompatActivity {
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    System.out.print("Response: " + response);
+                    try {
+                        System.out.println("Response: " + response);
+                        String result = response.getString("result");
+                        String userId = response.getString("user_id");
+                        System.out.println("Results: " + result);
+                        System.out.println("User: " + userId);
+                        if(!userId.equals("failed")){
+                            postFCMToken(userId);
+                            launchMainActivity(userId);
+                        }else{
+                            System.out.println("===================Failed to Login===================");
+                        }
+
+                    }catch(JSONException e){
+
+                    }
                     //String userId;
                     //launchMainActivity(userId);
                 }
@@ -110,6 +129,47 @@ public class LoginActivity extends AppCompatActivity {
                 }
             };
 
+            requestQueue.add(jsonObject);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    //POST FCMTOKEN
+    private void postFCMToken(String userId) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String fcmToken = prefs.getString("FCM_TOKEN", "DEFAULT");
+        System.out.println(fcmToken);
+        try {
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("user_id", userId);
+            jsonBody.put("fcm_token", fcmToken);
+
+            System.out.println("Login Details: " + jsonBody);
+
+            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, POSTFCM_URL, jsonBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        String result = response.getString("result");
+                        System.out.println("Results: " + result);
+                        if (result.equals("success")) {
+                            System.out.println("Post FCM Token Success!");
+                        } else {
+                            System.out.println("Post FCM Token Failed :(");
+                        }
+                    } catch (JSONException e) {
+
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    onBackPressed();
+                }
+            });
             requestQueue.add(jsonObject);
 
         } catch (JSONException e) {

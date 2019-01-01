@@ -18,7 +18,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
-
 public class RequestFragment_QR extends Fragment {
     @Nullable
     @Override
@@ -50,7 +49,9 @@ public class RequestFragment_QR extends Fragment {
             }
         });
         //<---->
-
         return view;
     }
+
+
+
 }
