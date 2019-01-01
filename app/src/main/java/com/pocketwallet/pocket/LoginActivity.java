@@ -3,6 +3,7 @@ package com.pocketwallet.pocket;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class LoginActivity extends AppCompatActivity {
     private TextView signup;
     private String phoneNumber;
     private String password;
+    private boolean doubleBackToExitPressedOnce = false;
 
     //LOGIN API URL
     final String LOGIN_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/login";
@@ -87,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                 LoginTestUser2();
             }
         });
+
 
     }
 
@@ -210,6 +213,25 @@ public class LoginActivity extends AppCompatActivity {
         intent.putExtra("userId",userId);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
     //---TEST---
