@@ -1,6 +1,16 @@
 package com.pocketwallet.pocket;
 
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.nfc.NdefMessage;
+import android.nfc.NfcAdapter;
+import android.nfc.tech.NfcA;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,6 +19,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class  RequestFragment_NFC extends Fragment {
@@ -25,6 +49,7 @@ public class  RequestFragment_NFC extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_request_fragment__nfc, container, false);
 
+        mTextView = (TextView)view.findViewById(R.id.mTextView);
         amountText = (TextView)view.findViewById(R.id.amountTxt);
         amountText.setSelectAllOnFocus(true);
         confirmButton = (Button)view.findViewById(R.id.confirmButton);
@@ -36,6 +61,59 @@ public class  RequestFragment_NFC extends Fragment {
         return view;
     }
 
+    public void processNFC(String merchantId, String payeeUserId,String authCode){
+        System.out.println("Processing NFC..." + payeeUserId + "," + authCode);
+        this.userId = merchantId;
+        this.payeeUserId = payeeUserId;
+        this.authCode = authCode;
+        amount = amountText.getText().toString();
+        Payment();
+    }
 
+    private void Payment() {
+        mTextView.setText("Sending payment to server...");
+        System.out.println("Sending Payment To Server...");
+        System.out.println("Payee_id: " + payeeUserId);
+        System.out.println("Merchant_id: " + userId);
+        System.out.println("Auth_code: " + authCode);
+        System.out.println("Amount: " + amount);
+        RequestQueue requestQueue = Volley.newRequestQueue(this.getActivity());
+        try {
+            JSONObject jsonBody = new JSONObject();
 
+            jsonBody.put("payee_id", payeeUserId);
+            jsonBody.put("merchant_id", userId);
+            jsonBody.put("amount", amount);
+            //jsonBody.put("auth_code", authCode);
+            System.out.println("TEST PRINTING: " + jsonBody);
+            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, urlPayment, jsonBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    mTextView.setText(response.toString());
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    getActivity().onBackPressed();
+                }
+            }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    final Map<String, String> headers = new HashMap<>();
+                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
+                    return headers;
+                }
+            };
+            requestQueue.add(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void UpdateSharedPreference(String key, String value){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key,value);
+        editor.commit();
+    }
 }
