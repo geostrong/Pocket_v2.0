@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -31,6 +32,9 @@ public class HomeFragment extends Fragment {
 
     private TextView lastUpdatedTxt;
     private TextView balanceTxt;
+
+    private RelativeLayout myPocketButton;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -63,7 +67,16 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(getActivity(), RequestActivity.class);
+                newIntent.putExtra("userId",userId);
                 startActivity(newIntent);
+            }
+        });
+
+        myPocketButton = (RelativeLayout) view.findViewById(R.id.myPocketButton);
+        myPocketButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                updateBalance();
             }
         });
         //<--End of setup buttons-->
@@ -76,7 +89,6 @@ public class HomeFragment extends Fragment {
         }
         //Update Balance
         GETBALANCE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/"+ userId + "/balance";
-        GETAUTHCODE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/"+ userId + "/auth-code";
         updateBalance();
         return view;
     }
