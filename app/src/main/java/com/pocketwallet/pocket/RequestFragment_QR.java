@@ -20,9 +20,13 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 
 public class RequestFragment_QR extends Fragment {
     @Nullable
+
+    private String userId;
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_request_fragment__qr, container, false);
+
+        userId = ((RequestActivity)getActivity()).getUserId();
 
         //<--Setup image view-->
         final ImageView generatedQR = (ImageView) view.findViewById(R.id.generatedDynamicQR);
@@ -38,8 +42,11 @@ public class RequestFragment_QR extends Fragment {
             public void onClick(View v) {
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
                 try {
-                    System.out.println(amountEntered.toString());
-                    BitMatrix bitMatrix = multiFormatWriter.encode(amountEntered.getText().toString(), BarcodeFormat.QR_CODE,generatedQR.getWidth(),generatedQR.getHeight());
+                    System.out.println(amountEntered.getText().toString());
+                    String amount = amountEntered.getText().toString();
+                    String toQR = userId + "|" + amount;
+                    System.out.println("TOQR: " + toQR);
+                    BitMatrix bitMatrix = multiFormatWriter.encode(toQR, BarcodeFormat.QR_CODE,generatedQR.getWidth(),generatedQR.getHeight());
                     BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                     Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
                     generatedQR.setImageBitmap(bitmap);
