@@ -15,4 +15,8 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <!--Style for Splash Screen-->
+    <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name ="android:windowBackground">@drawable/splash</item>
+    </style>
 </resources>

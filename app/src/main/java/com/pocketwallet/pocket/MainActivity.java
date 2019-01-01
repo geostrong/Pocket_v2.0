@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity
         implements NfcAdapter.CreateNdefMessageCallback,
         NfcAdapter.OnNdefPushCompleteCallback {
 
+    private boolean doubleBackToExitPressedOnce = false;
     private TextView mTextMessage;
     private String userId;
     private Bundle extras;
@@ -169,5 +170,24 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(key,value);
         editor.commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
