@@ -3,13 +3,17 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_more">More</string>
-    <string name="balance">$50</string>
+
     <string name="title_activity_request">RequestActivity</string>
     <string name="tab_text_1">QR</string>
     <string name="tab_text_2">NFC</string>
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+
+    <!--Home-->
+    <string name="balance">-</string>
+    <string name="last_updated">-</string>
 
     <!--Profile-->
     <string name="profile_name">Danielle Murray</string>

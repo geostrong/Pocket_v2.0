@@ -34,6 +34,9 @@ public class MainActivity extends AppCompatActivity
     private TextView mTextMessage;
     private String userId;
     private Bundle extras;
+    private Fragment homeFragment;
+    private Fragment meFragment;
+    private Fragment moreFragment;
 
     private String GETAUTHCODE_URL;
     private String authCode;
@@ -50,13 +53,13 @@ public class MainActivity extends AppCompatActivity
 
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    selectedFragment = new HomeFragment();
+                    selectedFragment = homeFragment;
                     break;
                 case R.id.navigation_me:
-                    selectedFragment = new MeFragment();
+                    selectedFragment = meFragment;
                     break;
                 case R.id.navigation_more:
-                    selectedFragment = new MoreFragment();
+                    selectedFragment = moreFragment;
                     break;
             }
             return loadFragment(selectedFragment);
@@ -67,6 +70,12 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        //SETUP FRAGMENTS
+        homeFragment = new HomeFragment();
+        meFragment = new MeFragment();
+        moreFragment = new MoreFragment();
+
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");

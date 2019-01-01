@@ -3,9 +3,12 @@ package com.pocketwallet.pocket;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,10 +30,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
-    private EditText phoneNumber;
-    private EditText password;
+    private EditText phonenumberInput;
+    private EditText passwordInput;
     private Button login;
     private TextView signup;
+    private String phoneNumber;
+    private String password;
+    private boolean doubleBackToExitPressedOnce = false;
 
     //LOGIN API URL
     final String LOGIN_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/login";
@@ -51,14 +57,17 @@ public class LoginActivity extends AppCompatActivity {
         //----------
 
         //SETUP BUTTONS AND EDITTEXT
-        phoneNumber = (EditText)findViewById(R.id.loginPhone);
-        password = (EditText)findViewById(R.id.loginPassword);
+        phonenumberInput = (EditText)findViewById(R.id.loginPhone);
+        passwordInput = (EditText)findViewById(R.id.loginPassword);
         login = (Button)findViewById(R.id.loginButton);
         signup = (TextView)findViewById(R.id.signupButton);
 
+        phonenumberInput.addTextChangedListener(loginTextWatcher);
+        passwordInput.addTextChangedListener(loginTextWatcher);
+
         login.setOnClickListener (new View.OnClickListener() {
             public void onClick(View view){
-                login(phoneNumber.getText().toString(), password.getText().toString());
+                login(phoneNumber, password);
             }
         });
 
@@ -80,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                 LoginTestUser2();
             }
         });
+
 
     }
 
@@ -177,12 +187,51 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private TextWatcher loginTextWatcher = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            phoneNumber = phonenumberInput.getText().toString().trim();
+            password = passwordInput.getText().toString().trim();
+
+            login.setEnabled(!phoneNumber.isEmpty() && !password.isEmpty());
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+        }
+    };
+
     //LAUNCH MAIN ACTIVITY
     public void launchMainActivity(String userId){
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("userId",userId);
         startActivity(intent);
         finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Please BACK again to exit", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
     //---TEST---

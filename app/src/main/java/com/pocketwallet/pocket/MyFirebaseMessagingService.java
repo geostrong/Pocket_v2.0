@@ -5,19 +5,15 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.preference.Preference;
+
 import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
-import com.google.firebase.messaging.FirebaseMessaging;
+
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
@@ -65,30 +61,14 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setVibrate(new long[]{1000,1000,1000})
                     .setContentTitle(title)
                     .setContentText(message)
-                    .setSmallIcon(R.mipmap.ic_launcher);
+                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setPriority(NotificationCompat.PRIORITY_MAX);
 
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
             manager.notify(new Random().nextInt(), notificationBuilder.build());
         }
     }
-
-    /* NOT WORKING
-    private void getTokenAndStore() {
-
-        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(MyFirebaseMessagingService.this, new OnSuccessListener<InstanceIdResult>() {
-            @Override
-            public void onSuccess(InstanceIdResult instanceIdResult) {
-                String newToken = instanceIdResult.getToken();
-                Log.e("newToken", newToken);
-                SharedPreferences.Editor editor = PreferenceManager.getDefaultSharedPreferences(MyFirebaseMessagingService.this).edit();
-                editor.putString("token", newToken);
-                editor.apply();
-            }
-        });
-
-    }
-    */
 }
 
 

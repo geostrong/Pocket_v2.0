@@ -32,7 +32,7 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="88dp"
             android:layout_marginEnd="16dp"
-            android:text="2018-12-29 11:59:49:AM +0800"
+            android:text="@string/last_updated"
             android:textAlignment="center"
             android:textColor="@android:color/white" />
 
