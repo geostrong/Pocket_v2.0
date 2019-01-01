@@ -4,8 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/bg">
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/myPocketButton"
@@ -35,7 +34,7 @@
             android:layout_marginEnd="16dp"
             android:text="2018-12-29 11:59:49:AM +0800"
             android:textAlignment="center"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/lastUpdated2"
@@ -49,7 +48,7 @@
             android:layout_marginEnd="70dp"
             android:text="Total Balance"
             android:textAlignment="center"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/MyPocket"
@@ -66,7 +65,7 @@
             android:autoSizeTextType="uniform"
             android:text="MyPocket"
             android:textAlignment="center"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white" />
 
         <TextView
             android:id="@+id/balance"
@@ -83,7 +82,7 @@
             android:autoSizeTextType="uniform"
             android:text="@string/balance"
             android:textAlignment="center"
-            android:textColor="@android:color/black" />
+            android:textColor="@android:color/white" />
 
     </RelativeLayout>
 
@@ -92,12 +91,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="76dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
         android:text="Quick QR"
         android:textAllCaps="false"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.236"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/myPocketButton" />
 
@@ -106,33 +105,27 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="Scan QR"
         android:textAllCaps="false"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.785"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myPocketButton"
-        app:layout_constraintVertical_bias="0.183" />
+        app:layout_constraintTop_toBottomOf="@+id/myPocketButton" />
 
     <Button
         android:id="@+id/reqBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="64dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
         android:text="Request"
         android:textAllCaps="true"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.934"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/myPocketButton"
-        app:layout_constraintVertical_bias="0.544" />
+        app:layout_constraintTop_toBottomOf="@+id/myPocketButton" />
 
 </android.support.constraint.ConstraintLayout>

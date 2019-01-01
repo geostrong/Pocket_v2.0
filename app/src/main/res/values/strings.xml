@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Pocket_v2</string>
+    <string name="app_name">Pocket</string>
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_more">More</string>
@@ -10,5 +10,9 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="default_notification_channel_id" translatable="false">fcm_default_channel</string>
+
+    <!--Profile-->
+    <string name="profile_name">Danielle Murray</string>
+
 
 </resources>

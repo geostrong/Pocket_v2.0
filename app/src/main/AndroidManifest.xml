@@ -12,6 +12,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <!--ACTIVITIES-->
         <activity
             android:name="com.pocketwallet.pocket.MainActivity"
             android:label="Pocket">
@@ -21,12 +23,15 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
         <activity android:name="com.pocketwallet.pocket.QuickQrActivity" />
         <activity android:name="com.pocketwallet.pocket.ScanQRActivity" />
+
         <activity
             android:name="com.pocketwallet.pocket.RequestActivity"
             android:label="@string/title_activity_request"
             android:theme="@style/AppTheme.NoActionBar" />
+
         <activity android:name="com.pocketwallet.pocket.SplashActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
@@ -35,11 +40,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--SERVICES-->
         <service android:name="com.pocketwallet.pocket.MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
+
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />

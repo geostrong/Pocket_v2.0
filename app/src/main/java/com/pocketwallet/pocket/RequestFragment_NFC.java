@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class RequestFragment_NFC extends Fragment {
+public class  RequestFragment_NFC extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
