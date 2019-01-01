@@ -7,9 +7,9 @@
     tools:context=".ScanQRActivity">
 
     <ImageView
-        android:id="@+id/imageView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:id="@+id/qrScannerView"
+        android:layout_width="309dp"
+        android:layout_height="224dp"
         android:layout_marginStart="55dp"
         android:layout_marginTop="150dp"
         android:layout_marginEnd="55dp"
@@ -21,18 +21,19 @@
         app:srcCompat="@drawable/scanqrview" />
 
     <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/mTextView"
+        android:layout_width="200dp"
+        android:layout_height="104dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="11dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:text="SCAN MERCHANT QR CODE"
+        android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.248" />
+        app:layout_constraintTop_toBottomOf="@+id/qrScannerView"
+        app:layout_constraintVertical_bias="0.367" />
+
 </android.support.constraint.ConstraintLayout>

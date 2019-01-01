@@ -32,7 +32,7 @@ public class RequestActivity extends AppCompatActivity {
     private PendingIntent pendingIntent;
 
     private String userId;
-
+    private Bundle extras;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +53,7 @@ public class RequestActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        Bundle extras = getIntent().getExtras();
+        extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
         }
@@ -64,7 +64,6 @@ public class RequestActivity extends AppCompatActivity {
         }
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
                 getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        System.out.println("User idddddddddd: " + userId);
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -79,6 +78,7 @@ public class RequestActivity extends AppCompatActivity {
             selectedFragment = new Fragment();
             switch (position) {
                 case 0:
+                    selectedFragment.setArguments(extras);
                     selectedFragment = new RequestFragment_QR();
                     break;
                 case 1:
@@ -134,5 +134,9 @@ public class RequestActivity extends AppCompatActivity {
             RequestFragment_NFC nfcFragment = (RequestFragment_NFC) selectedFragment;
             nfcFragment.processNFC(userId, payeeUserId,authCode);
         }
+    }
+
+    public String getUserId(){
+        return userId;
     }
 }

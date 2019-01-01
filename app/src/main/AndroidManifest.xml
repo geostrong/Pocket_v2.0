@@ -19,37 +19,22 @@
         <!-- ACTIVITIES -->
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/SplashScreenTheme">
+            android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".LoginActivity"
             android:parentActivityName=".SplashActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
+            android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name=".MainActivity"
-            android:label="Pocket">
-        </activity>
-
-
-        <activity
-            android:name=".RegisterActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity>
-
+            android:label="Pocket"></activity>
         <activity android:name=".QuickQrActivity" />
         <activity android:name=".ScanQRActivity" />
-
         <activity
             android:name=".RequestActivity"
             android:label="@string/title_activity_request"
@@ -58,13 +43,14 @@
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
 
         <!-- SERVICES -->
-        <service
-            android:name=".MyFirebaseMessagingService">
+        <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -74,7 +60,7 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
 
-
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>
