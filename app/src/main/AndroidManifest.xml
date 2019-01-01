@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.pocketwallet.pocket">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -11,33 +12,44 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
 
         <!-- ACTIVITIES -->
-        <activity
-            android:name=".MainActivity"
-            android:label="Pocket">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".QuickQrActivity" />
-        <activity android:name=".ScanQRActivity" />
-        <activity
-            android:name=".RequestActivity"
-            android:label="@string/title_activity_request"
-            android:theme="@style/AppTheme.NoActionBar" />
+        <!--
         <activity
             android:name=".SplashActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        -->
+
+        <activity android:name=".LoginActivity"
+            android:parentActivityName=".SplashActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:label="Pocket">
+        </activity>
+
+        <activity android:name=".QuickQrActivity" />
+
+        <activity android:name=".ScanQRActivity"/>
+
+        <activity
+            android:name=".RequestActivity"
+            android:label="@string/title_activity_request"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".MainActivity"/>
 
         <!-- SERVICES -->
         <service android:name=".MyFirebaseMessagingService">
@@ -50,7 +62,6 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
 
-        <activity android:name=".LoginActivity"></activity>
     </application>
 
 </manifest>
