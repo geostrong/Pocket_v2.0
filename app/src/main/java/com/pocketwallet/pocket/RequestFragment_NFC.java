@@ -89,7 +89,16 @@ public class  RequestFragment_NFC extends Fragment {
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, urlPayment, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    mTextView.setText(response.toString());
+                    try {
+                        String transactionNumber = response.getString("Transaction Number");
+                        String result = response.getString("Result");
+                        if(result.equals("Success")) {
+                            mTextView.setText("Transaction is successful!"
+                                    + "\nTransaction Number:" + transactionNumber);
+                        }
+                    }catch(JSONException e){
+
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
