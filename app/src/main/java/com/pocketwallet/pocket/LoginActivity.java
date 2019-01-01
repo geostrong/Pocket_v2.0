@@ -59,6 +59,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        signup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //LAUNCH SIGNUP ACTIVITY
+            }
+        });
+
         loginTest1.setOnClickListener (new View.OnClickListener() {
             public void onClick(View view){
                 LoginTestUser1();
