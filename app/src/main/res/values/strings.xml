@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Pocket</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_more">More</string>
+    <string name="title_dashboard">Me</string>
+    <string name="title_more">Settings</string>
 
     <string name="title_activity_request">RequestActivity</string>
     <string name="tab_text_1">QR</string>
@@ -17,6 +17,9 @@
 
     <!--Profile-->
     <string name="profile_name">Danielle Murray</string>
+
+    <!--Me-->
+    <string name="phoneNumber">8700 8900</string>
 
 
 </resources>

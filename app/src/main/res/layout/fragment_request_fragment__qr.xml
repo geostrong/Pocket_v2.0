@@ -1,62 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RequestFragment_QR">
+    tools:context=".RequestFragment_QR"
+    android:id="@+id/relativeLayout4">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="209dp"
+        android:layout_height="73dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:textColorHint="#000000"
+        app:hintTextAppearance="@style/customEditText"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.598">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/requestAmountQR"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:hint="Request amount"
+            android:inputType="numberDecimal"
+            android:textSize="@dimen/_15ssp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.345" />
+
+    </android.support.design.widget.TextInputLayout>
 
     <TextView
         android:id="@+id/genQrPre"
-        android:layout_width="wrap_content"
-        android:layout_height="61dp"
-        android:layout_alignTop="@+id/generatedDynamicQR"
-        android:layout_alignEnd="@+id/generatedDynamicQR"
-        android:layout_alignBottom="@+id/generatedDynamicQR"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="132dp"
+        android:layout_width="206dp"
+        android:layout_height="43dp"
+        android:layout_marginStart="166dp"
         android:layout_marginTop="123dp"
         android:layout_marginEnd="80dp"
         android:layout_marginBottom="116dp"
         android:text="Enter required amount and press generate to generate Dynamic QR"
-        android:textStyle="italic" />
+        android:textStyle="italic"
+        app:layout_constraintBottom_toBottomOf="@+id/generatedDynamicQR"
+        app:layout_constraintEnd_toEndOf="@+id/generatedDynamicQR"
+        app:layout_constraintHorizontal_bias="0.36"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/generatedDynamicQR"
+        app:layout_constraintVertical_bias="0.51" />
 
     <ImageView
         android:id="@+id/generatedDynamicQR"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="56dp"
         android:layout_marginTop="92dp"
         android:layout_marginEnd="55dp"
         android:layout_marginBottom="302dp"
-        />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <Button
         android:id="@+id/generate_qr"
-        android:layout_width="115dp"
+        android:layout_width="@dimen/_115sdp"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
         android:layout_marginStart="149dp"
         android:layout_marginEnd="147dp"
-        android:layout_marginBottom="120dp"
+        android:layout_marginBottom="108dp"
+        android:background="@drawable/buttonlayout"
         android:gravity="center"
-        android:text="Generate" />
+        android:text="Generate"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.505"
+        app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/requestAmountQR"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="212dp"
-        android:ems="10"
-        android:hint="Enter amount to request "
-        android:inputType="numberDecimal" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
