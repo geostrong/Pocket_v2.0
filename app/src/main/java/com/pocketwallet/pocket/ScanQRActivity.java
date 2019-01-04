@@ -53,7 +53,6 @@ public class ScanQRActivity extends AppCompatActivity
             userId = extras.getString("userId");
         }
 
-        qrScannerView = findViewById(R.id.qrScannerView);
         mTextView = findViewById(R.id.mTextView);
 
         qrScanner = new ZXingScannerView(getApplicationContext());
@@ -72,7 +71,6 @@ public class ScanQRActivity extends AppCompatActivity
     @Override
     public void handleResult(Result result){
         System.out.println("Result is: " + result.getText());
-        qrScannerView.setVisibility(View.GONE);
         qrScanner.stopCamera();
         setContentView(R.layout.activity_scanqr);
         String resultText = result.getText();
@@ -107,7 +105,6 @@ public class ScanQRActivity extends AppCompatActivity
                     act.runOnUiThread(new Runnable(){
                         @Override
                         public void run() {
-                            qrScannerView.setVisibility(View.GONE);
                             if(result.equals("Success")) {
                                 mTextView.setText("Transaction is successful!"
                                         + "\nTransaction Number:" + transactionNumber);

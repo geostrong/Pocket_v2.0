@@ -18,6 +18,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -40,6 +41,7 @@ public class  RequestFragment_NFC extends Fragment {
     Button confirmButton;
     TextView mTextView;
     TextView amountText;
+    ImageView nfcImage;
     private String userId;
     private String payeeUserId;
     private String amount;
@@ -53,6 +55,8 @@ public class  RequestFragment_NFC extends Fragment {
         amountText = (TextView)view.findViewById(R.id.amountTxt);
         amountText.setSelectAllOnFocus(true);
         confirmButton = (Button)view.findViewById(R.id.confirmButton);
+        nfcImage = (ImageView)view.findViewById(R.id.nfcImage);
+
         Bundle extras = new Bundle();
         extras = getArguments();
         if (extras != null) {
@@ -93,6 +97,7 @@ public class  RequestFragment_NFC extends Fragment {
                         String transactionNumber = response.getString("Transaction Number");
                         String result = response.getString("Result");
                         if(result.equals("Success")) {
+                            nfcImage.setVisibility(View.GONE);
                             mTextView.setText("Transaction is successful!"
                                     + "\nTransaction Number:" + transactionNumber);
                         }
