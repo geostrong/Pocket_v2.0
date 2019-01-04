@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
+            <!-- solid background -->
+            <solid android:color="#FF8C00"/>\
+            <gradient
+                android:angle="45"
+                android:centerX="35%"
+                android:centerColor="#FF0000"
+                android:startColor="#FF0000"
+                android:endColor="#EB0000"
+                android:type="linear"
+                />
+            <!-- draw 35 dp radius for each corner -->
+            <corners android:radius="10dp"/>
+        </shape>
+    </item>
+</selector>

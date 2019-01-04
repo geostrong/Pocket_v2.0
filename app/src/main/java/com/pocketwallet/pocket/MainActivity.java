@@ -88,10 +88,10 @@ public class MainActivity extends AppCompatActivity
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter == null){
             //No NFC
+        }else {
+            nfcAdapter.setNdefPushMessageCallback(this, this);
+            nfcAdapter.setOnNdefPushCompleteCallback(this, this);
         }
-        nfcAdapter.setNdefPushMessageCallback(this,this);
-        nfcAdapter.setOnNdefPushCompleteCallback(this,this);
-
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
