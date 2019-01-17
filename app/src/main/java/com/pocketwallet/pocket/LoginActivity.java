@@ -237,13 +237,11 @@ public class LoginActivity extends AppCompatActivity {
 
     //---TEST---
     private void LoginTestUser1(){
-        String userId = "1cdd62b4-9f59-47c7-a7a5-919b6574bae3";
-        launchMainActivity(userId);
+        login("99998888", "tpw");
     }
 
     private void LoginTestUser2(){
-        String userId = "b814cb32-eebf-4490-bdde-9695a7ef23a8";
-        launchMainActivity(userId);
+        login("88881111", "tpw2");
     }
     //----------
 }
