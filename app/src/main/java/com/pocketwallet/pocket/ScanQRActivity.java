@@ -1,13 +1,17 @@
 package com.pocketwallet.pocket;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Handler;
+import android.content.pm.PackageManager;
+
+import android.os.Vibrator;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageView;
+import android.util.SparseArray;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -17,31 +21,33 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.zxing.Result;
-import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
-import com.journeyapps.barcodescanner.CaptureActivity;
-import com.journeyapps.barcodescanner.DecoratedBarcodeView;
+import com.google.android.gms.vision.CameraSource;
+import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
-public class ScanQRActivity extends AppCompatActivity
-                implements ZXingScannerView.ResultHandler{
+public class ScanQRActivity extends AppCompatActivity{
 
     private ZXingScannerView qrScanner;
     private TextView mTextView;
-    private ImageView qrScannerView;
+    private SurfaceView qrScannerView;
+    SurfaceView surfaceView;
+    CameraSource cameraSource;
+    BarcodeDetector barcodeDetector;
 
     private Bundle extras;
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/";
 
     private String userId;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,32 +59,60 @@ public class ScanQRActivity extends AppCompatActivity
             userId = extras.getString("userId");
         }
 
+        surfaceView = (SurfaceView)findViewById(R.id.surfaceView);
+        barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
+        cameraSource = new CameraSource.Builder(this,barcodeDetector).setRequestedPreviewSize(640,480).setAutoFocusEnabled(true).build();
         mTextView = findViewById(R.id.mTextView);
 
-        qrScanner = new ZXingScannerView(getApplicationContext());
-        setContentView(qrScanner);
-        qrScanner.setResultHandler(this);
-        qrScanner.startCamera();
+        surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
+            @Override
+            public void surfaceCreated(SurfaceHolder holder) {
+                if(ActivityCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                    return;
+                }
+                try{
+                    cameraSource.start(holder);
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+
+            }
+
+            @Override
+            public void surfaceDestroyed(SurfaceHolder holder) {
+                cameraSource.stop();
+            }
+        });
+
+        barcodeDetector.setProcessor(new com.google.android.gms.vision.Detector.Processor<Barcode>() {
+            @Override
+            public void release() {
+
+            }
+
+            @Override
+            public void receiveDetections(com.google.android.gms.vision.Detector.Detections<Barcode> detections) {
+                final SparseArray<Barcode> qrCodes = detections.getDetectedItems();
+                if(qrCodes.size()!=0){
+                    Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                    vibrator.vibrate(1000);
+                    System.out.println("Result is: " + qrCodes.valueAt(0).displayValue);
+
+                    String resultText = qrCodes.valueAt(0).displayValue;
+                    String merchantUserId = (String) resultText.subSequence(0,36);
+                    String amount = (String)resultText.subSequence(37,resultText.length());
+                    System.out.println("Merchant User ID: " + merchantUserId);
+                    System.out.println("Amount: " + amount);
+                    processPayment(merchantUserId,amount);
+                    finish();
+                }
+            }
+        });
         System.out.println("userid: " + userId);
-    }
-
-    @Override
-    protected void onPause(){
-        super.onPause();
-        qrScanner.stopCamera();
-    }
-
-    @Override
-    public void handleResult(Result result){
-        System.out.println("Result is: " + result.getText());
-        qrScanner.stopCamera();
-        setContentView(R.layout.activity_scanqr);
-        String resultText = result.getText();
-        String merchantUserId = (String) resultText.subSequence(0,36);
-        String amount = (String)resultText.subSequence(37,resultText.length());
-        System.out.println("Merchant User ID: " + merchantUserId);
-        System.out.println("Amount: " + amount);
-        processPayment(merchantUserId,amount);
     }
 
     public void processPayment(String merchantUserId,String amount){
@@ -113,7 +147,6 @@ public class ScanQRActivity extends AppCompatActivity
                                         + "\nTransaction Number:" + transactionNumber);
                             }
                         }
-
                     });
 
                 }catch(JSONException e){

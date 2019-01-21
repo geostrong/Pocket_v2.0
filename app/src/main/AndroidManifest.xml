@@ -41,6 +41,8 @@
 
         <activity android:name=".QuickQrActivity" />
         <activity android:name=".ScanQRActivity" />
+                <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES"
+                            android:value="barcode"></meta-data>
         <activity
             android:name=".RequestActivity"
             android:label="@string/title_activity_request"
