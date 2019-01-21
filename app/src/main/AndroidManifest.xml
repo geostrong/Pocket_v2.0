@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -41,6 +42,8 @@
 
         <activity android:name=".QuickQrActivity" />
         <activity android:name=".ScanQRActivity" />
+                <meta-data android:name="com.google.android.gms.vision.DEPENDENCIES"
+                            android:value="barcode"></meta-data>
         <activity
             android:name=".RequestActivity"
             android:label="@string/title_activity_request"
@@ -67,6 +70,8 @@
             android:value="@string/default_notification_channel_id" />
 
         <activity android:name=".RegisterActivity"></activity>
+
+        <uses-library android:name="org.apache.http.legacy" android:required="false" />
     </application>
 
 </manifest>
