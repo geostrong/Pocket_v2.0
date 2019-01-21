@@ -61,7 +61,7 @@ public class ScanQRActivity extends AppCompatActivity{
 
         surfaceView = (SurfaceView)findViewById(R.id.surfaceView);
         barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
-        cameraSource = new CameraSource.Builder(this,barcodeDetector).setRequestedPreviewSize(640,480).setAutoFocusEnabled(true).build();
+        //cameraSource = new CameraSource.Builder(this,barcodeDetector).setRequestedPreviewSize(720,360).setAutoFocusEnabled(true).build();
         mTextView = findViewById(R.id.mTextView);
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -71,6 +71,7 @@ public class ScanQRActivity extends AppCompatActivity{
                     return;
                 }
                 try{
+                    cameraSource = new CameraSource.Builder(ScanQRActivity.this,barcodeDetector).setRequestedPreviewSize(surfaceView.getWidth(),surfaceView.getHeight()).setAutoFocusEnabled(true).build();
                     cameraSource.start(holder);
                 }catch(IOException e){
                     e.printStackTrace();
