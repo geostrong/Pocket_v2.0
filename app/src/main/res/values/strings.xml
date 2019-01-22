@@ -30,6 +30,12 @@
     <string name="trans_id">Trans. ID: </string>
     <string name="transaction_id">109012930129</string>
 
+    <!--ScanQR Confirmation-->
+    <string name="fees">$50</string>
+    <string name="tax">$3.5</string>
+    <string name="subtotal">$53.5</string>
+    <string name="phoneNo_involved">5432 3456</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
