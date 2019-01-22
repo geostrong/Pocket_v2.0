@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -6,10 +6,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-    </style>
-
-    <style name="customEditText" parent="TextAppearance.AppCompat">
-        <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowActionBarOverlay">false</item>
+        <item name="android:fontFamily">@font/avenir</item>
     </style>
 
     <style name="AppTheme.NoActionBar">
@@ -22,5 +21,9 @@
     <!--Style for Splash Screen-->
     <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
         <item name ="android:windowBackground">@drawable/splash</item>
+    </style>
+    <!--End for Splash Screen-->
+    <style name="customEditText" parent="TextAppearance.AppCompat">
+        <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 </resources>
