@@ -74,9 +74,6 @@ public class MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ActionBar toolbar = getSupportActionBar();
-        toolbar.setElevation(0);
-        toolbar.setTitle("Pocket");
 
 
         //SETUP FRAGMENTS
