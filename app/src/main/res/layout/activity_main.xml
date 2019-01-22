@@ -48,7 +48,7 @@
         android:layout_width="0dp"
         android:layout_height="59dp"
         android:background="?android:attr/windowBackground"
-        app:elevation="5dp"
+        app:elevation="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toLeftOf="parent"
