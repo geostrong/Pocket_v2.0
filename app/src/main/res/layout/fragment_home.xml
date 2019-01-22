@@ -5,117 +5,104 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <RelativeLayout
+    <android.support.constraint.ConstraintLayout
         android:id="@+id/myPocketButton"
-        android:layout_width="match_parent"
-        android:layout_height="190dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/pocketlayout"
         android:clickable="true"
         android:elevation="1dp"
         android:focusable="true"
         android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="@+id/view5"
+        app:layout_constraintDimensionRatio="H,1.586:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/lastUpdated"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="160dp"
-            android:layout_marginEnd="32dp"
-            android:text="@string/last_updated"
+            android:layout_marginStart="16dp"
+            android:layout_marginBottom="16dp"
             android:autoSizeTextType="uniform"
-            android:textAlignment="center"
-            android:textColor="@android:color/white" />
+            android:text="@string/last_updated"
+            android:textAlignment="textStart"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/lastUpdated2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="96dp"
-            android:layout_marginTop="46dp"
-            android:autoText="false"
+            android:layout_marginBottom="8dp"
             android:text="Available Balance"
             android:textAlignment="textStart"
             android:textColor="@android:color/white"
-            app:autoSizeTextType="uniform" />
+            android:textSize="12sp"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toTopOf="@+id/balance"
+            app:layout_constraintStart_toStartOf="@+id/balance" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Last Updated:"
+            android:textColor="@android:color/white"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@+id/lastUpdated"
+            app:layout_constraintStart_toStartOf="@+id/lastUpdated" />
 
         <TextView
             android:id="@+id/balance"
-            android:layout_width="191dp"
-            android:layout_height="49dp"
-            android:layout_below="@+id/lastUpdated2"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginStart="96dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="96dp"
-            android:layout_marginBottom="70dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:text="@string/balance"
             android:textAlignment="textStart"
             android:textColor="@android:color/white"
-            app:autoSizeTextType="uniform" />
+            android:textSize="32sp"
+            android:textStyle="bold"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.39" />
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="0dp"
-        android:layout_height="252dp"
-        android:background="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-    </RelativeLayout>
+    </android.support.constraint.ConstraintLayout>
 
     <Button
         android:id="@+id/scanQRBtn"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_marginTop="64dp"
         android:background="@drawable/menubuttonlayout"
         android:text="Scan QR"
         android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toStartOf="@+id/reqBtn"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toTopOf="@+id/button"
+        app:layout_constraintEnd_toStartOf="@+id/quickQRBtn"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/quickQRBtn"
-        app:layout_constraintTop_toBottomOf="@+id/relativeLayout2" />
+        app:layout_constraintStart_toEndOf="@+id/reqBtn"
+        app:layout_constraintTop_toBottomOf="@+id/view5"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <Button
         android:id="@+id/reqBtn"
         android:layout_width="96dp"
         android:layout_height="96dp"
         android:background="@drawable/menubuttonlayout"
-        android:text="NFC/QR"
-        android:textAllCaps="false"
-        android:textColor="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/scanQRBtn"
-        app:layout_constraintTop_toTopOf="@+id/scanQRBtn" />
-
-    <Button
-        android:id="@+id/quickQRBtn"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:background="@drawable/menubuttonlayout"
-        android:drawableTop="@drawable/ic_notifications_black_24dp"
-        android:paddingTop="14dp"
-        android:text="Quick QR"
+        android:text="Request"
         android:textAllCaps="false"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toStartOf="@+id/scanQRBtn"
@@ -123,5 +110,54 @@
         app:layout_constraintHorizontal_chainStyle="spread"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/scanQRBtn" />
+
+    <Button
+        android:id="@+id/quickQRBtn"
+        android:layout_width="96dp"
+        android:layout_height="94dp"
+        android:background="@drawable/menubuttonlayout"
+        android:drawableTop="@drawable/ic_notifications_black_24dp"
+        android:paddingTop="14dp"
+        android:text="Quick QR"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/scanQRBtn"
+        app:layout_constraintTop_toTopOf="@+id/scanQRBtn" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <View
+        android:id="@+id/view5"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/colorPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/menubuttonlayout"
+        android:text="Button"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/scanQRBtn"
+        app:layout_constraintStart_toStartOf="@+id/scanQRBtn"
+        app:layout_constraintTop_toBottomOf="@+id/scanQRBtn" />
 
 </android.support.constraint.ConstraintLayout>

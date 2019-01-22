@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -33,7 +34,7 @@ public class HomeFragment extends Fragment {
     private TextView lastUpdatedTxt;
     private TextView balanceTxt;
 
-    private RelativeLayout myPocketButton;
+    private ConstraintLayout myPocketButton;
 
     @Nullable
     @Override
@@ -74,7 +75,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        myPocketButton = (RelativeLayout) view.findViewById(R.id.myPocketButton);
+        myPocketButton = (ConstraintLayout) view.findViewById(R.id.myPocketButton);
         myPocketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
