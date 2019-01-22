@@ -25,6 +25,12 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.SimpleTimeZone;
+import java.util.TimeZone;
+
 public class HomeFragment extends Fragment {
 
     private String GETBALANCE_URL;
@@ -107,18 +113,32 @@ public class HomeFragment extends Fragment {
                     final String balance = response.getString("balance");
                     final String updatedAsOf;
                     System.out.println(response.getString("balance"));
-                    updatedAsOf = response.getString("AS_OF").subSequence(0, response.getString("AS_OF").length() - 5)
-                            + "GMT+8";
-                    System.out.println("TESTING: " + updatedAsOf);
+                    updatedAsOf = response.getString("AS_OF").substring(0, response.getString("AS_OF").length() - 5);
+                    SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:a");
+                    localDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Singapore"));
+                    Date updatedTime = localDateFormat.parse(updatedAsOf);
+                    Date currentTime = localDateFormat.parse(localDateFormat.format(new Date()));
+                    long difference = currentTime.getTime() - updatedTime.getTime();
+                    System.out.println("Current Time = " + currentTime.toString() + " | Updated Time = " + updatedTime.toString() + " | Difference = " + difference/1000);
+
+                    final String lastUpdatedText;
+                    if (difference < 60) {
+                         lastUpdatedText = "Now";
+                    } else {
+                        lastUpdatedText = difference/60 + " minutes ago";
+                    }
+
                     lastUpdatedTxt.post(new Runnable() {
                         @Override
                         public void run() {
                             balanceTxt.setText("$"+balance);
-                            lastUpdatedTxt.setText(updatedAsOf);
+                            lastUpdatedTxt.setText(lastUpdatedText);
                         }
                     });
                 }catch(JSONException e){
                     e.printStackTrace();
+                } catch (ParseException p) {
+
                 }
             }
         }, new Response.ErrorListener() {

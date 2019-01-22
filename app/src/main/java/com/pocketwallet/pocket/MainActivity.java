@@ -107,16 +107,11 @@ public class MainActivity extends AppCompatActivity
             fragment.setArguments(extras);
             fragmentTransaction.replace(R.id.fragment_container, fragment);
             fragmentTransaction.commit();
-            /*
-            getSupportFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.fragment_container, fragment)
-                    .commit();
-            */
             return true;
         }
         return false;
     }
+
     //Get Authentication Code
     private void getAuthCode(){
         StringRequest requestString;
