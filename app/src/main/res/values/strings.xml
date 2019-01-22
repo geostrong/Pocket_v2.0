@@ -21,5 +21,17 @@
     <!--Me-->
     <string name="phoneNumber">8700 8900</string>
 
+    <!--TransactionResult-->
+    <string name="result">Receive Completed!</string>
+    <string name="received_sent">Received: </string>
+    <string name="amount">$200</string>
+    <string name="from_to">From: </string>
+    <string name="name_involved">Amanda</string>
+    <string name="trans_id">Trans. ID: </string>
+    <string name="transaction_id">109012930129</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 
 </resources>
