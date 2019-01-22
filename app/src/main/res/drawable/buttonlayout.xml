@@ -3,15 +3,7 @@
 <item>
     <shape android:shape="rectangle">
         <!-- solid background -->
-        <solid android:color="#FF8C00"/>\
-        <gradient
-            android:angle="0"
-            android:centerX="50%"
-            android:centerColor="#FF8C00"
-            android:startColor="#FF8C00"
-            android:endColor="#F08400"
-            android:type="linear"
-            />
+        <solid android:color="#5e76fa"/>\
         <!-- draw 35 dp radius for each corner -->
         <corners android:radius="10dp"/>
     </shape>

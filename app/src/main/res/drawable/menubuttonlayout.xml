@@ -1,0 +1,13 @@
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <layer-list>
+            <item
+                android:drawable="@drawable/shadow_96"
+                android:bottom="0dp"
+                android:left="0dp"
+                android:right="0dp"
+                android:top="-2dp">
+            </item>
+        </layer-list>
+    </item>
+</selector>
