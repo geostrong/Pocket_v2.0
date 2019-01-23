@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="96dp"
-        android:background="@drawable/buttonlayout"
+        android:background="@drawable/btn_layout"
         android:gravity="center"
         android:text="Generate"
         android:textColor="#FFFFFF"
