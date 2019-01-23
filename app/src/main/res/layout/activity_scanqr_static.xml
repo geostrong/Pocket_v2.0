@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="68dp"
+            android:layout_marginTop="78dp"
             android:text="Name:"
             android:textSize="20sp" />
 
@@ -43,7 +43,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="180dp"
-            android:layout_marginTop="68dp"
+            android:layout_marginTop="78dp"
             android:text="@string/name_involved"
             android:textColor="#5e76fa"
             android:textSize="20sp" />
@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="180dp"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="120dp"
             android:text="@string/phoneNo_involved"
             android:textColor="#5e76fa"
             android:textSize="20sp" />
@@ -63,7 +63,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:layout_marginTop="110dp"
+            android:layout_marginTop="120dp"
             android:layout_marginBottom="16dp"
             android:text="Phone Number:"
             android:textSize="20sp" />
@@ -99,7 +99,7 @@
             android:id="@+id/textView18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="220dp"
+            android:layout_marginStart="240dp"
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:text="$1000"
