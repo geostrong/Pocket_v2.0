@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ScanQRActivity_Static"></activity>
+        <activity android:name=".RequestActivity"></activity>
+        <activity android:name=".RequestActivity_NFC" />
+        <activity android:name=".ScanQRActivity_Static" />
         <activity android:name=".ResultActivity" />
         <activity android:name=".ScanQRActivity_Dynamic" />
         <activity android:name=".ScanQR_Static" /> <!-- ACTIVITIES -->
@@ -47,7 +49,7 @@
             android:value="barcode" />
 
         <activity
-            android:name=".RequestActivity"
+            android:name=".RequestActivity_Tabs"
             android:label="@string/title_activity_request"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">

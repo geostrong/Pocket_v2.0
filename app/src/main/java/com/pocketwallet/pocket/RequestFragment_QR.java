@@ -26,7 +26,7 @@ public class RequestFragment_QR extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_request_fragment__qr, container, false);
 
-        userId = ((RequestActivity)getActivity()).getUserId();
+        userId = ((RequestActivity_Tabs)getActivity()).getUserId();
 
         //<--Setup image view-->
         final ImageView generatedQR = (ImageView) view.findViewById(R.id.generatedDynamicQR);

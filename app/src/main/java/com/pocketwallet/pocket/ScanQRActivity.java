@@ -120,7 +120,7 @@ public class ScanQRActivity extends AppCompatActivity{
                         startActivity(dynamicIntent);
                     } else {
                         //Static
-                        Intent staticIntent = new Intent(ScanQRActivity.this, ScanQR_Static.class);
+                        Intent staticIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Static.class);
                         startActivity(staticIntent);
                     }
 
