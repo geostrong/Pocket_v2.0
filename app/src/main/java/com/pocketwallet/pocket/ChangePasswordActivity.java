@@ -1,6 +1,8 @@
 package com.pocketwallet.pocket;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,6 +24,9 @@ public class ChangePasswordActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+        getSupportActionBar().setTitle("Change Password");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
         currentPasswordInput = findViewById(R.id.currentPassword);
         newPasswordInput = findViewById(R.id.newPassword);
@@ -35,8 +40,11 @@ public class ChangePasswordActivity extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent confirmIntent = new Intent (ChangePasswordActivity.this, ChangePasswordActivity_Result.class);
-                startActivity(confirmIntent);
+                Intent intent = new Intent (ChangePasswordActivity.this, ResultActivity.class);
+                Bundle b = new Bundle();
+                b.putString("title", "Change Password");
+                intent.putExtras(b);
+                startActivity(intent);
                 finish();
             }
         });
@@ -62,4 +70,10 @@ public class ChangePasswordActivity extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

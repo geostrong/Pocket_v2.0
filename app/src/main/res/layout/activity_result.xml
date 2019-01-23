@@ -33,7 +33,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/nfc"
+        android:id="@+id/amountTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -48,16 +48,16 @@
         android:text="@string/amount"
         android:textColor="#5e76fa"
         app:layout_constraintEnd_toEndOf="@+id/result"
-        app:layout_constraintTop_toTopOf="@+id/nfc" />
+        app:layout_constraintTop_toTopOf="@+id/amountTitle" />
 
     <TextView
-        android:id="@+id/textView19"
+        android:id="@+id/transIdTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/trans_id"
-        app:layout_constraintStart_toStartOf="@+id/nfc"
-        app:layout_constraintTop_toBottomOf="@+id/nfc" />
+        app:layout_constraintStart_toStartOf="@+id/amountTitle"
+        app:layout_constraintTop_toBottomOf="@+id/amountTitle" />
 
     <TextView
         android:id="@+id/fromTo"
@@ -84,7 +84,7 @@
         android:text="@string/transaction_id"
         android:textColor="#5e76fa"
         app:layout_constraintEnd_toEndOf="@+id/result"
-        app:layout_constraintTop_toTopOf="@+id/textView19" />
+        app:layout_constraintTop_toTopOf="@+id/transIdTitle" />
 
     <ImageView
         android:id="@+id/resultImage"

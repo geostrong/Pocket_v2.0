@@ -17,7 +17,6 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".TopUpActivity"></activity>
-        <activity android:name=".ChangePasswordActivity_Result" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".RequestActivity_NFC_Ready" />
         <activity android:name=".RequestActivity_QR" />
