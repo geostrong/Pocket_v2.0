@@ -3,11 +3,11 @@ package com.pocketwallet.pocket;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class TransactionResultActivity extends AppCompatActivity {
+public class RequestActivity_QR extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_transaction_result);
+        setContentView(R.layout.activity_request__qr);
     }
 }
