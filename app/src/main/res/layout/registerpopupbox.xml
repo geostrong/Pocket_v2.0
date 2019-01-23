@@ -35,7 +35,7 @@
         android:layout_alignEnd="@+id/mTextView"
         android:layout_alignParentStart="true"
         android:layout_alignParentBottom="true"
-        android:background="@drawable/buttonlayout"
+        android:background="@drawable/btn_layout"
         android:textColor="#FFFFFF"
         android:text="Close"
         android:textSize="10sp"
