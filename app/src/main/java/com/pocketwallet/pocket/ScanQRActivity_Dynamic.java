@@ -22,6 +22,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                 //Move to transaction result
                 Intent newIntent = new Intent(ScanQRActivity_Dynamic.this, ResultActivity.class);
                 startActivity(newIntent);
+                finish();
             }
         });
 

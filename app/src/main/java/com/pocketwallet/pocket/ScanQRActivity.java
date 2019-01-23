@@ -6,6 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -54,6 +56,9 @@ public class ScanQRActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanqr);
+        getSupportActionBar().setTitle("Scan QR");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
         extras = getIntent().getExtras();
         if (extras != null) {
@@ -62,7 +67,6 @@ public class ScanQRActivity extends AppCompatActivity{
 
         surfaceView = (SurfaceView)findViewById(R.id.surfaceView);
         barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
-        //cameraSource = new CameraSource.Builder(this,barcodeDetector).setRequestedPreviewSize(720,360).setAutoFocusEnabled(true).build();
         mTextView = findViewById(R.id.mTextView);
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -189,5 +193,11 @@ public class ScanQRActivity extends AppCompatActivity{
     } catch (JSONException e) {
         e.printStackTrace();
     }
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }

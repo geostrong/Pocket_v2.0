@@ -22,13 +22,13 @@
     <string name="phoneNumber">Phone Number</string>
 
     <!--TransactionResultActivity-->
-    <string name="result">Request Completed!</string>
-    <string name="received_sent">Received: </string>
-    <string name="amount">$200</string>
+    <string name="result">-</string>
+    <string name="amountText">Amount: </string>
+    <string name="amount">$ -</string>
     <string name="from_to">From: </string>
-    <string name="name_involved">Amanda</string>
-    <string name="trans_id">Trans. ID: </string>
-    <string name="transaction_id">109012930129</string>
+    <string name="name_involved">-</string>
+    <string name="trans_id">Transaction ID: </string>
+    <string name="transaction_id">-</string>
 
     <!--ScanQR Confirmation-->
     <string name="phoneNo_involved">5432 3456</string>
@@ -38,6 +38,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_top_up">Top Up</string>
 
 
 </resources>
