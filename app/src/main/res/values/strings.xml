@@ -21,7 +21,7 @@
     <!--Me-->
     <string name="phoneNumber">8700 8900</string>
 
-    <!--TransactionResult-->
+    <!--TransactionResultActivity-->
     <string name="result">Receive Completed!</string>
     <string name="received_sent">Received: </string>
     <string name="amount">$200</string>

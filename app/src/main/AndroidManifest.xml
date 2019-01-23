@@ -16,8 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ScanQR_Static"></activity>
-        <!-- ACTIVITIES -->
+        <activity android:name=".ScanQRStaticActivity"></activity>
+        <activity android:name=".ResultActivity" />
+        <activity android:name=".ScanQRDynamicActivity" />
+        <activity android:name=".ScanQR_Static" /> <!-- ACTIVITIES -->
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashScreenTheme">
@@ -29,14 +31,14 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".RegisterActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".MainActivity"
             android:label="Pocket"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".QuickQrActivity" />
         <activity android:name=".ScanQRActivity" />
 

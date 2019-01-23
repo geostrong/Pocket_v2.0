@@ -11,7 +11,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -19,7 +18,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
@@ -28,7 +26,6 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.SimpleTimeZone;
 import java.util.TimeZone;
 
 public class HomeFragment extends Fragment {
@@ -92,6 +89,16 @@ public class HomeFragment extends Fragment {
 
         lastUpdatedTxt = (TextView)view.findViewById(R.id.lastUpdated);
         balanceTxt = (TextView)view.findViewById(R.id.balance);
+
+        Button testBtn = (Button) view.findViewById(R.id.testButton);
+        testBtn.setOnClickListener(new  View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent dynamicIntent = new Intent(getActivity(), ScanQRDynamicActivity.class);
+                startActivity(dynamicIntent);
+            }
+        });
 
         Bundle extras = new Bundle();
         extras = getArguments();

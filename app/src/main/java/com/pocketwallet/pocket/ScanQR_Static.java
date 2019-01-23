@@ -27,7 +27,7 @@ public class ScanQR_Static extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Move to transaction result
-                Intent newIntent = new Intent(ScanQR_Static.this, TransactionResult.class);
+                Intent newIntent = new Intent(ScanQR_Static.this, TransactionResultActivity.class);
                 startActivity(newIntent);
             }
         });
