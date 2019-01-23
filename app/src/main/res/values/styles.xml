@@ -24,4 +24,8 @@
     <style name="customEditText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
+
+    <style name="PrimaryButtonOverlay" parent="@style/Widget.AppCompat.Button.Colored">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
 </resources>
