@@ -16,10 +16,10 @@
     <string name="last_updated">-</string>
 
     <!--Profile-->
-    <string name="profile_name">Danielle Murray</string>
+    <string name="profile_name">Profile Name</string>
 
     <!--Me-->
-    <string name="phoneNumber">8700 8900</string>
+    <string name="phoneNumber">Phone Number</string>
 
     <!--TransactionResultActivity-->
     <string name="result">Request Completed!</string>
@@ -31,8 +31,10 @@
     <string name="transaction_id">109012930129</string>
 
     <!--ScanQR Confirmation-->
-    <string name="subtotal">$53.5</string>
     <string name="phoneNo_involved">5432 3456</string>
+
+    <!--Password Changed Confirmation-->
+    <string name="passwordChanged">Password changed successfully!</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

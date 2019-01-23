@@ -26,6 +26,8 @@ public class RequestActivity_NFC extends AppCompatActivity {
         confirmButton = (Button) findViewById(R.id.confirmButton);
         nfcImage = (ImageView) findViewById(R.id.nfcImage);
 
+        amountInput.addTextChangedListener(textWatcher);
+
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -36,7 +38,7 @@ public class RequestActivity_NFC extends AppCompatActivity {
 
     }
 
-    private TextWatcher loginTextWatcher = new TextWatcher() {
+    private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 

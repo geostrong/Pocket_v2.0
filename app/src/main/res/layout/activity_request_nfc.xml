@@ -35,7 +35,7 @@
         android:id="@+id/confirmButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/btn_layout"
         android:gravity="center"
         android:text="confirm"

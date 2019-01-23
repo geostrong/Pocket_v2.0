@@ -88,10 +88,10 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="277" />
-                            <entry key="outputName" value="img_transaction" />
+                            <entry key="height" value="285" />
+                            <entry key="outputName" value="img_settings_success" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Wilson\Desktop\PNG White background V2\svg2\QRscan_QuickQR success.svg" />
+                            <entry key="sourceFile" value="C:\Users\Wilson\Desktop\PNG White background V2\svg2\Settings success.svg" />
                             <entry key="width" value="375" />
                           </map>
                         </option>

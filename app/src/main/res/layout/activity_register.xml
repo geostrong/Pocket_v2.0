@@ -90,7 +90,7 @@
         android:id="@+id/registerBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="92dp"
+        android:layout_marginBottom="64dp"
         android:background="@drawable/btn_layout"
         android:enabled="false"
         android:text="CREATE ACCOUNT"
@@ -106,6 +106,8 @@
         android:layout_height="0dp"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toTopOf="@+id/guideline2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/shape_wave" />
 
