@@ -16,12 +16,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".RequestActivity"></activity>
+        <activity android:name=".RequestActivity_QR"></activity>
+        <activity android:name=".RequestActivity" />
         <activity android:name=".RequestActivity_NFC" />
         <activity android:name=".ScanQRActivity_Static" />
         <activity android:name=".ResultActivity" />
         <activity android:name=".ScanQRActivity_Dynamic" />
-        <activity android:name=".ScanQR_Static" /> <!-- ACTIVITIES -->
+        <!-- ACTIVITIES -->
         <activity
             android:name=".SplashActivity"
             android:theme="@style/SplashScreenTheme">
