@@ -6,15 +6,33 @@
     android:layout_height="match_parent"
     tools:context=".ContractActivity">
 
+    <Button
+        android:id="@+id/logoutButton2"
+        android:layout_width="300sp"
+        android:layout_height="49sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="52dp"
+        android:background="@drawable/btn_layout"
+        android:text="Create New Contract"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/contractListView"
-        android:layout_width="395dp"
-        android:layout_height="272dp"
+        android:layout_width="match_parents"
+        android:layout_height="426dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:background="@drawable/btn_menubuttonlayout"
+        app:layout_constraintBottom_toTopOf="@+id/logoutButton2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
