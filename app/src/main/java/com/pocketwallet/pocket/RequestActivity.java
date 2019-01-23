@@ -13,7 +13,8 @@ public class RequestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request);
 
-        CardView nfcCard = (CardView) findViewById(R.id.nfcCard);
+        CardView nfcCard = findViewById(R.id.nfcCard);
+        CardView qrCard = findViewById(R.id.qrCard);
 
         nfcCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -22,5 +23,15 @@ public class RequestActivity extends AppCompatActivity {
                 startActivity(nfcIntent);
             }
         });
+
+
+        qrCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent nfcIntent = new Intent(RequestActivity.this, RequestActivity_QR.class);
+                startActivity(nfcIntent);
+            }
+        });
+
     }
 }

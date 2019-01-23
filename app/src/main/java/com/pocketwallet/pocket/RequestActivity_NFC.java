@@ -26,10 +26,14 @@ public class RequestActivity_NFC extends AppCompatActivity {
         confirmButton = (Button) findViewById(R.id.confirmButton);
         nfcImage = (ImageView) findViewById(R.id.nfcImage);
 
-        /* TO GO TO RESULT ACTIVITY
-        Intent newIntent = new Intent(RequestActivity_NFC.this, ResultActivity.class);
-        startActivity(newIntent);
-        */
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(RequestActivity_NFC.this, RequestActivity_NFC_Ready.class);
+                startActivity(newIntent);
+            }
+        });
+
     }
 
     private TextWatcher loginTextWatcher = new TextWatcher() {
