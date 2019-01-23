@@ -72,7 +72,7 @@ public class HomeFragment extends Fragment {
         {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(getActivity(), RequestActivity.class);
+                Intent newIntent = new Intent(getActivity(), RequestActivity_NFC.class);
                 newIntent.putExtra("userId",userId);
                 startActivity(newIntent);
             }
@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
         {
             @Override
             public void onClick(View v) {
-                Intent dynamicIntent = new Intent(getActivity(), ScanQRDynamicActivity.class);
+                Intent dynamicIntent = new Intent(getActivity(), ScanQRActivity_Static.class);
                 startActivity(dynamicIntent);
             }
         });
