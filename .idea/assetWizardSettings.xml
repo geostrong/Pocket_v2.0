@@ -73,11 +73,11 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="height" value="345" />
+                            <entry key="height" value="277" />
                             <entry key="outputName" value="img_transfer" />
                             <entry key="overrideSize" value="true" />
-                            <entry key="sourceFile" value="C:\Users\Wilson\Desktop\PNG White background V2\transfer.svg" />
-                            <entry key="width" value="375" />
+                            <entry key="sourceFile" value="C:\Users\Wilson\Desktop\PNG White background V2\1.svg" />
+                            <entry key="width" value="345" />
                           </map>
                         </option>
                       </PersistentState>
