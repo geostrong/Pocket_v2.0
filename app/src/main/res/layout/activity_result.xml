@@ -11,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="@string/result"
         android:textColor="#4f5f8e"
@@ -36,7 +35,7 @@
         app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/nfc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -51,7 +50,7 @@
         android:text="@string/amount"
         android:textColor="#5e76fa"
         app:layout_constraintEnd_toEndOf="@+id/result"
-        app:layout_constraintTop_toTopOf="@+id/textView17" />
+        app:layout_constraintTop_toTopOf="@+id/nfc" />
 
     <TextView
         android:id="@+id/textView19"
@@ -59,8 +58,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/trans_id"
-        app:layout_constraintStart_toStartOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintStart_toStartOf="@+id/nfc"
+        app:layout_constraintTop_toBottomOf="@+id/nfc" />
 
     <TextView
         android:id="@+id/textView20"

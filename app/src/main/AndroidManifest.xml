@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ContractActivity"></activity>
+        <activity android:name=".RequestActivity_NFC_Ready"></activity>
         <activity android:name=".RequestActivity_QR" />
         <activity android:name=".RequestActivity" />
         <activity android:name=".RequestActivity_NFC" />
