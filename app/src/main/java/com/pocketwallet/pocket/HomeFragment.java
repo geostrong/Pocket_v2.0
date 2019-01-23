@@ -95,7 +95,7 @@ public class HomeFragment extends Fragment {
         {
             @Override
             public void onClick(View v) {
-                Intent dynamicIntent = new Intent(getActivity(), ScanQRActivity_Static.class);
+                Intent dynamicIntent = new Intent(getActivity(), ScanQRActivity_Dynamic.class);
                 startActivity(dynamicIntent);
             }
         });
