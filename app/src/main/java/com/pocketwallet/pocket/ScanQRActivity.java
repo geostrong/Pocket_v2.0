@@ -116,7 +116,7 @@ public class ScanQRActivity extends AppCompatActivity{
                     //HANDLE STATIC /DYNAMIC HERE
                     if (isDynamicQR) {
                         //Dynamic
-                        Intent dynamicIntent = new Intent(ScanQRActivity.this, ScanQRDynamicActivity.class);
+                        Intent dynamicIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Dynamic.class);
                         startActivity(dynamicIntent);
                     } else {
                         //Static

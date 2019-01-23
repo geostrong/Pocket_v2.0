@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-public class ScanQRDynamicActivity extends AppCompatActivity {
+public class ScanQRActivity_Dynamic extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +20,7 @@ public class ScanQRDynamicActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Move to transaction result
-                Intent newIntent = new Intent(ScanQRDynamicActivity.this, ResultActivity.class);
+                Intent newIntent = new Intent(ScanQRActivity_Dynamic.this, ResultActivity.class);
                 startActivity(newIntent);
             }
         });

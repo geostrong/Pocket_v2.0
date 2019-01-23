@@ -16,9 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ScanQRStaticActivity"></activity>
+        <activity android:name=".ScanQRActivity_Static"></activity>
         <activity android:name=".ResultActivity" />
-        <activity android:name=".ScanQRDynamicActivity" />
+        <activity android:name=".ScanQRActivity_Dynamic" />
         <activity android:name=".ScanQR_Static" /> <!-- ACTIVITIES -->
         <activity
             android:name=".SplashActivity"
