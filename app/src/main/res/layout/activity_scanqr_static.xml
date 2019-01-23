@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanQR_StaticPrompt">
+    tools:context=".ScanQR_Static">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/payButtonStatic"
         android:layout_width="300sp"
         android:layout_height="49sp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/btn_layout"
-        android:text="Continue"
+        android:background="@drawable/buttonlayout"
+        android:enabled="false"
+        android:text="PAY"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,9 +28,9 @@
         android:layout_width="307dp"
         android:layout_height="128dp"
         android:layout_marginStart="6dp"
-        android:layout_marginTop="216dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="6dp"
-        android:background="@drawable/btn_menubuttonlayout"
+        android:background="@drawable/menubuttonlayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -138,18 +139,4 @@
             android:textCursorDrawable="@color/colorPrimaryDark" />
 
     </android.support.design.widget.TextInputLayout>
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
 </android.support.constraint.ConstraintLayout>
