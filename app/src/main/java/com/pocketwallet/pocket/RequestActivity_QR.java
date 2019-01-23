@@ -1,6 +1,8 @@
 package com.pocketwallet.pocket;
 
 import android.graphics.Bitmap;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -28,7 +30,9 @@ public class RequestActivity_QR extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_qr);
-
+        getSupportActionBar().setTitle("Request QR");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         generatedQR = (ImageView) findViewById(R.id.generatedQR);
         amountInput = (EditText) findViewById(R.id.amountRequestQR);
         generateQrBtn = (Button) findViewById(R.id.generateButton);
@@ -74,4 +78,10 @@ public class RequestActivity_QR extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

@@ -1,7 +1,7 @@
 <resources xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -19,7 +19,7 @@
 
     <!--Style for Splash Screen-->
     <style name="SplashScreenTheme" parent="Theme.AppCompat.NoActionBar">
-        <item name ="android:windowBackground">@drawable/splash</item>
+        <item name="android:windowBackground">@drawable/splash</item>
     </style>
     <!--End for Splash Screen-->
     <style name="customEditText" parent="TextAppearance.AppCompat">
@@ -36,11 +36,14 @@
 
     <style name="dividerHorizontal" parent="dividerBase">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1dp</item> // You can change thickness here.
+        <item name="android:layout_height">1dp</item>
+        // You can change thickness here.
 
     </style>
 
     <style name="dividerVertical" parent="dividerBase">
         <item name="android:layout_height">match_parent</item>
     </style>
+
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

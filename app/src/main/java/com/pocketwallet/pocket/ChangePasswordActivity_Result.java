@@ -13,7 +13,7 @@ public class ChangePasswordActivity_Result extends AppCompatActivity {
         setContentView(R.layout.activity_change_password_result);
 
         // return back to home
-        Button returnBtn = findViewById(R.id.returnButton);
+        Button returnBtn = findViewById(R.id.returnButton2);
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

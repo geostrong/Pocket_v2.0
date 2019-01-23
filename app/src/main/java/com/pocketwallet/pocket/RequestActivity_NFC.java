@@ -1,6 +1,8 @@
 package com.pocketwallet.pocket;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,12 +24,14 @@ public class RequestActivity_NFC extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request_nfc);
 
-        amountInput = (EditText) findViewById(R.id.amountTxt);
-        confirmButton = (Button) findViewById(R.id.confirmButton);
-        nfcImage = (ImageView) findViewById(R.id.nfcImage);
+        getSupportActionBar().setTitle("Request NFC");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
+        amountInput = (EditText) findViewById(R.id.amountRequestNFC);
         amountInput.addTextChangedListener(textWatcher);
 
+        confirmButton = (Button) findViewById(R.id.confirmButton);
         confirmButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -55,4 +59,10 @@ public class RequestActivity_NFC extends AppCompatActivity {
 
         }
     };
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

@@ -90,12 +90,12 @@ public class HomeFragment extends Fragment {
         lastUpdatedTxt = (TextView)view.findViewById(R.id.lastUpdated);
         balanceTxt = (TextView)view.findViewById(R.id.balance);
 
-        Button testBtn = (Button) view.findViewById(R.id.testButton);
-        testBtn.setOnClickListener(new  View.OnClickListener()
+        Button topUpBtn = (Button) view.findViewById(R.id.topUpButton);
+        topUpBtn.setOnClickListener(new  View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
-                Intent dynamicIntent = new Intent(getActivity(), ScanQRActivity_Dynamic.class);
+                Intent dynamicIntent = new Intent(getActivity(), TopUpActivity.class);
                 startActivity(dynamicIntent);
             }
         });
