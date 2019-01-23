@@ -8,13 +8,14 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"
-        android:layout_width="305dp"
+        android:layout_width="345dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
         android:background="@drawable/btn_menubuttonlayout"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="@+id/cardView2"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="@+id/cardView2">
 
         <TextView
@@ -41,7 +42,7 @@
             android:id="@+id/involvedName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="170dp"
+            android:layout_marginStart="180dp"
             android:layout_marginTop="68dp"
             android:text="@string/name_involved"
             android:textColor="#5e76fa"
@@ -51,7 +52,7 @@
             android:id="@+id/involvedNumber"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="170dp"
+            android:layout_marginStart="180dp"
             android:layout_marginTop="110dp"
             android:text="@string/phoneNo_involved"
             android:textColor="#5e76fa"
@@ -71,12 +72,13 @@
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView2"
-        android:layout_width="305dp"
+        android:layout_width="345dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        app:cardCornerRadius="10dp"
         app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
