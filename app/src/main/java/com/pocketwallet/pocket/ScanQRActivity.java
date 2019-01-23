@@ -3,6 +3,7 @@ package com.pocketwallet.pocket;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 
 import android.os.Vibrator;
@@ -98,17 +99,34 @@ public class ScanQRActivity extends AppCompatActivity{
             @Override
             public void receiveDetections(com.google.android.gms.vision.Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> qrCodes = detections.getDetectedItems();
-                if(qrCodes.size()!=0){
-                    Vibrator vibrator = (Vibrator)getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
+                if(qrCodes.size()!=0) {
+                    Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                     vibrator.vibrate(1000);
                     System.out.println("Result is: " + qrCodes.valueAt(0).displayValue);
 
+                    /*
                     String resultText = qrCodes.valueAt(0).displayValue;
-                    String merchantUserId = (String) resultText.subSequence(0,36);
-                    String amount = (String)resultText.subSequence(37,resultText.length());
+                    String merchantUserId = (String) resultText.subSequence(0, 36);
+                    String amount = (String) resultText.subSequence(37, resultText.length());
                     System.out.println("Merchant User ID: " + merchantUserId);
                     System.out.println("Amount: " + amount);
-                    processPayment(merchantUserId,amount);
+                    */
+
+                    boolean isDynamicQR = true;
+                    //HANDLE STATIC /DYNAMIC HERE
+                    if (isDynamicQR) {
+                        //Dynamic
+                        Intent dynamicIntent = new Intent(ScanQRActivity.this, ScanQR_Dynamic.class);
+                        startActivity(dynamicIntent);
+                    } else {
+                        //Static
+                        Intent staticIntent = new Intent(ScanQRActivity.this, ScanQR_Static.class);
+                        startActivity(staticIntent);
+                    }
+
+                    //Change process payment
+                    //processPayment(merchantUserId,amount);
+
                     finish();
                 }
             }

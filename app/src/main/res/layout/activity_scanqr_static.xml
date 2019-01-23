@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanQR_StaticPrompt">
+    tools:context=".ScanQR_Static">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/payButtonStatic"
         android:layout_width="300sp"
         android:layout_height="49sp"
         android:layout_marginStart="8dp"
@@ -15,7 +15,8 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="16dp"
         android:background="@drawable/buttonlayout"
-        android:text="Continue"
+        android:enabled="false"
+        android:text="PAY"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
