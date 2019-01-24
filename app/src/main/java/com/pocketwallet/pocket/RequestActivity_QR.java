@@ -25,10 +25,18 @@ public class RequestActivity_QR extends AppCompatActivity {
     Button generateBtn;
 
     String amount;
+    Bundle extras;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("userId");
+        }
+
         setContentView(R.layout.activity_request_qr);
         getSupportActionBar().setTitle("Request QR");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -47,7 +55,7 @@ public class RequestActivity_QR extends AppCompatActivity {
                     System.out.println(amountInput.getText().toString());
                     String amount = amountInput.getText().toString();
                     //String toQR = userId + "|" + amount;
-                    String toQR = amount;
+                    String toQR = "Dynamic|" + userId + "|" + amount;
                     System.out.println("TOQR: " + toQR);
                     BitMatrix bitMatrix = multiFormatWriter.encode(toQR, BarcodeFormat.QR_CODE,generatedQR.getWidth(),generatedQR.getHeight());
                     BarcodeEncoder barcodeEncoder = new BarcodeEncoder();

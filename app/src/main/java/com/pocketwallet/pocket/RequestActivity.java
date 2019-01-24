@@ -10,6 +10,9 @@ import android.view.View;
 
 public class RequestActivity extends AppCompatActivity {
 
+    private String userId;
+    Bundle extras;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,6 +28,7 @@ public class RequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent nfcIntent = new Intent(RequestActivity.this, RequestActivity_NFC.class);
+                nfcIntent.putExtra("userId",userId);
                 startActivity(nfcIntent);
             }
         });
@@ -33,11 +37,16 @@ public class RequestActivity extends AppCompatActivity {
         qrCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent nfcIntent = new Intent(RequestActivity.this, RequestActivity_QR.class);
-                startActivity(nfcIntent);
+                Intent qrIntent = new Intent(RequestActivity.this, RequestActivity_QR.class);
+                qrIntent.putExtra("userId",userId);
+                startActivity(qrIntent);
             }
         });
 
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("userId");
+        }
     }
 
     @Override
