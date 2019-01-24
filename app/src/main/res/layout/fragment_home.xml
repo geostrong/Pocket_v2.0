@@ -107,7 +107,7 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toStartOf="@+id/scanQRBtn"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="spread"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/scanQRBtn" />
 
