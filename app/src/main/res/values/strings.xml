@@ -36,6 +36,12 @@
     <!--Password Changed Confirmation-->
     <string name="passwordChanged">Password changed successfully!</string>
 
+    <!--Contract receive thingy-->
+    <string name="frequency">Monthly</string>
+    <string name="feePerFreq">$500</string>
+    <string name="endDate">10 July 2020</string>
+    <string name="penaltyAmount">$300</string>
+
     <!--Strings for Frequency dropdown-->
     <string-array name="frequencies">
         <item>Daily</item>
