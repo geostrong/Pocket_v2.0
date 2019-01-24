@@ -38,7 +38,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.060000002">
 
         <EditText
             android:id="@+id/nameInvolved"
@@ -80,10 +81,10 @@
         android:id="@+id/textInputLayout10"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="45dp"
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="28dp"
         app:boxStrokeColor="@color/colorPrimaryLight"
         app:hintTextAppearance="@style/customEditText"
         app:layout_constraintBottom_toTopOf="@+id/frequency"
@@ -105,16 +106,14 @@
         android:id="@+id/textInputLayout12"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="41dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="160dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
         app:boxStrokeColor="@color/colorPrimaryLight"
         app:hintTextAppearance="@style/customEditText"
-        app:layout_constraintBottom_toTopOf="@+id/RequestContract"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvDate"
+        app:layout_constraintEnd_toEndOf="@+id/frequency"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent">
+        app:layout_constraintStart_toStartOf="@+id/frequency">
 
         <EditText
             android:id="@+id/penaltyAmount"
@@ -133,11 +132,28 @@
         android:layout_height="29dp"
         android:layout_marginStart="64dp"
         android:layout_marginEnd="64dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="36dp"
         android:spinnerMode="dropdown"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout12"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout10"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout10" />
+
+    <Button
+        android:id="@+id/tvDate"
+        style="@style/Widget.AppCompat.Button.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="49dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="96dp"
+        android:text="End Date"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        app:layout_constraintBottom_toTopOf="@+id/RequestContract"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout12"
+        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout12" />
 
 
 </android.support.constraint.ConstraintLayout>
