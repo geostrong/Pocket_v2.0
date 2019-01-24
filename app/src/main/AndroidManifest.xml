@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TopUpActivity"></activity>
+        <activity android:name=".SettingsActivity_Account"></activity>
+        <activity android:name=".TopUpActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".RequestActivity_NFC_Ready" />
         <activity android:name=".RequestActivity_QR" />

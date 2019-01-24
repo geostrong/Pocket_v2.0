@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+        <Preference
+            android:title="Profile">
+        </Preference>
+        <Preference
+            android:title="Account Settings">
+            <intent
+                android:action="ChangePasswordActivity"
+                android:targetPackage="com.pocketwallet.pocket"
+                android:targetClass="com.pocketwallet.pocket.SettingActivity_Account">
+
+            </intent>
+        </Preference>
+        <Preference
+            android:title="Manage Pocket">
+        </Preference>
+        <Preference
+            android:title="Support">
+        </Preference>
+</PreferenceScreen>

@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment homeFragment;
     private Fragment meFragment;
     private Fragment moreFragment;
+    private Fragment settingsFragment;
 
     private String GETAUTHCODE_URL;
     private String authCode;
@@ -80,6 +81,7 @@ public class MainActivity extends AppCompatActivity
         homeFragment = new HomeFragment();
         meFragment = new MeFragment();
         moreFragment = new MoreFragment();
+        settingsFragment = new SettingsFragment();
 
         extras = getIntent().getExtras();
         if (extras != null) {
