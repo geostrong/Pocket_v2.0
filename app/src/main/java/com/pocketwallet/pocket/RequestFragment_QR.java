@@ -32,6 +32,7 @@ public class RequestFragment_QR extends Fragment {
         final ImageView generatedQR = (ImageView) view.findViewById(R.id.generatedDynamicQR);
         //<--End-->
 
+
         final EditText amountEntered = (EditText) view.findViewById(R.id.requestAmountQR);
 
         //<--Setup buttons-->

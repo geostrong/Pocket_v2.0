@@ -57,6 +57,7 @@ public class RequestActivity_QR extends AppCompatActivity {
                     //String toQR = userId + "|" + amount;
                     String toQR = "Dynamic|" + userId + "|" + amount;
                     System.out.println("TOQR: " + toQR);
+                    System.out.println("MY QR SIZ 2 -> Width = " + generatedQR.getWidth() + " |  Height = " +  generatedQR.getHeight());
                     BitMatrix bitMatrix = multiFormatWriter.encode(toQR, BarcodeFormat.QR_CODE,generatedQR.getWidth(),generatedQR.getHeight());
                     BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
                     Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);

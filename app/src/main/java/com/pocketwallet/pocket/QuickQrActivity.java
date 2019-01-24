@@ -44,25 +44,32 @@ public class QuickQrActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
+        myQR = (ImageView) findViewById(R.id.myQR);
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
         }
         GETAUTHCODE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/"+ userId + "/auth-code";
 
-        myQR = (ImageView) findViewById(R.id.myQR);
         authCodeText = (TextView) findViewById(R.id.authCodeText);
         getAuthCode();
-        generateMyQR(myQR.getWidth(), myQR.getHeight());
+
+        myQR.post(new Runnable() {
+            @Override
+            public void run() {
+                generateMyQR();
+            }
+        });
+
     }
 
-    public void generateMyQR(int width, int height) {
+    public void generateMyQR() {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             //String toQR = userId + "|" + amount;
             String toQR = "Static|" + userId;
             System.out.println("TOQR: " + toQR);
-            BitMatrix bitMatrix = multiFormatWriter.encode(toQR, BarcodeFormat.QR_CODE, width, height);
+            BitMatrix bitMatrix = multiFormatWriter.encode(toQR, BarcodeFormat.QR_CODE, myQR.getWidth(), myQR.getHeight());
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             myQR.setImageBitmap(bitmap);
