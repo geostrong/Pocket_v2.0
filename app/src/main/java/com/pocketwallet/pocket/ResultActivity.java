@@ -88,12 +88,12 @@ public class ResultActivity extends AppCompatActivity {
         transactionID.setText("-");
 
         if (toolbarTitle.equalsIgnoreCase("top up") || toolbarTitle.equalsIgnoreCase("change password")) {
-            involvedName.setVisibility(View.GONE);
-            amount.setVisibility(View.GONE);
-            transactionID.setVisibility(View.GONE);
-            fromTo.setVisibility(View.GONE);
-            transIdTitle.setVisibility(View.GONE);
-            amountTitle.setVisibility(View.GONE);
+            involvedName.setVisibility(View.INVISIBLE);
+            amount.setVisibility(View.INVISIBLE);
+            transactionID.setVisibility(View.INVISIBLE);
+            fromTo.setVisibility(View.INVISIBLE);
+            transIdTitle.setVisibility(View.INVISIBLE);
+            amountTitle.setVisibility(View.INVISIBLE);
         }
     }
 }
