@@ -8,11 +8,11 @@
 
     <Button
         android:id="@+id/RequestContract"
-        android:layout_width="300sp"
-        android:layout_height="49sp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="52dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
         android:background="@drawable/btn_layout"
         android:text="Request Contract"
         android:textAllCaps="false"
@@ -20,7 +20,6 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent" />
 
     <android.support.design.widget.TextInputLayout
@@ -28,18 +27,16 @@
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="12dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
         app:boxStrokeColor="@color/colorPrimaryLight"
         app:hintTextAppearance="@style/customEditText"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout9"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.060000002">
+        app:layout_constraintTop_toTopOf="parent">
 
         <EditText
             android:id="@+id/nameInvolved"
@@ -55,16 +52,16 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout9"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="16dp"
         app:boxStrokeColor="@color/colorPrimaryLight"
         app:hintTextAppearance="@style/customEditText"
         app:layout_constraintBottom_toTopOf="@+id/textInputLayout10"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout8"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout8">
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout8"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout8">
 
         <EditText
             android:id="@+id/phoneInvolved"
@@ -80,23 +77,24 @@
     <android.support.design.widget.TextInputLayout
         android:id="@+id/textInputLayout10"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="28dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         app:boxStrokeColor="@color/colorPrimaryLight"
         app:hintTextAppearance="@style/customEditText"
-        app:layout_constraintBottom_toTopOf="@+id/frequency"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout9"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout9">
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout12"
+        app:layout_constraintEnd_toStartOf="@+id/frequency"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout9"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
 
         <EditText
             android:id="@+id/contractAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Amount per Frequency"
+            android:hint="Every"
             android:inputType="phone"
             android:textCursorDrawable="@color/colorPrimaryDark" />
 
@@ -106,14 +104,14 @@
         android:id="@+id/textInputLayout12"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         app:boxStrokeColor="@color/colorPrimaryLight"
         app:hintTextAppearance="@style/customEditText"
-        app:layout_constraintBottom_toTopOf="@+id/tvDate"
-        app:layout_constraintEnd_toEndOf="@+id/frequency"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/frequency">
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout9"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout9"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
 
         <EditText
             android:id="@+id/penaltyAmount"
@@ -128,32 +126,82 @@
 
     <Spinner
         android:id="@+id/frequency"
-        android:layout_width="match_parent"
-        android:layout_height="29dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
         android:spinnerMode="dropdown"
-        app:layout_constraintBottom_toTopOf="@+id/textInputLayout12"
-        app:layout_constraintEnd_toEndOf="@+id/textInputLayout10"
-        app:layout_constraintStart_toStartOf="@+id/textInputLayout10" />
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayout10"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout9"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayout10" />
 
     <Button
         android:id="@+id/tvDate"
         style="@style/Widget.AppCompat.Button.Colored"
-        android:layout_width="match_parent"
-        android:layout_height="49dp"
-        android:layout_marginStart="64dp"
-        android:layout_marginEnd="64dp"
-        android:layout_marginBottom="96dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
         android:text="End Date"
         android:textAlignment="center"
         android:textAllCaps="false"
         android:textColor="#FFFFFF"
         app:layout_constraintBottom_toTopOf="@+id/RequestContract"
         app:layout_constraintEnd_toEndOf="@+id/textInputLayout12"
-        app:layout_constraintHorizontal_bias="0.57"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/textInputLayout12" />
+
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout13"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:boxStrokeColor="@color/colorPrimaryLight"
+        app:hintTextAppearance="@style/customEditText"
+        app:layout_constraintEnd_toStartOf="@+id/textInputLayout14"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout12"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12">
+
+        <EditText
+            android:id="@+id/startDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:drawableEnd="@drawable/ic_date_range_24px"
+            android:ems="10"
+            android:hint="Start Date"
+            android:textCursorDrawable="@color/colorPrimaryDark" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout14"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        app:boxStrokeColor="@color/colorPrimaryLight"
+        app:hintTextAppearance="@style/customEditText"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout12"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textInputLayout13"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12">
+
+        <EditText
+            android:id="@+id/endDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:drawableEnd="@drawable/ic_date_range_24px"
+            android:ems="10"
+            android:hint="End Date"
+            android:textCursorDrawable="@color/colorPrimaryDark" />
+
+    </android.support.design.widget.TextInputLayout>
 
 
 </android.support.constraint.ConstraintLayout>

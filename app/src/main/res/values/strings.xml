@@ -38,9 +38,10 @@
 
     <!--Strings for Frequency dropdown-->
     <string-array name="frequencies">
-        <item>Daily</item>
-        <item>Weekly</item>
-        <item>Monthly</item>
+        <item>Day(s)</item>
+        <item>Week(s)</item>
+        <item>Month(s)</item>
+        <item>Year(s)</item>
     </string-array>
 
     <!-- TODO: Remove or change this placeholder text -->

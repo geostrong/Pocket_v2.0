@@ -9,29 +9,27 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="16dp"
+        app:cardCornerRadius="10dp">
 
 
         <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="84dp"
+            android:layout_height="wrap_content"
             android:padding="@dimen/activity_horizontal_margin">
 
             <TextView
                 android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
-                android:layout_marginStart="156dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="UserSetDescrip"
                 android:textAlignment="textEnd"
-                android:textSize="20sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toTopOf="@+id/endDate"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/nameInvolved"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="1.0" />
 
@@ -39,11 +37,12 @@
                 android:id="@+id/nameInvolved"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
                 android:text="Name"
-                android:textColor="#5e76fa"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="24sp"
-                android:textStyle="bold"
                 app:layout_constraintBottom_toTopOf="@+id/involvedNumber"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -52,24 +51,25 @@
                 android:id="@+id/numberInvolved"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:text="PhoneNumber"
-                android:textSize="20sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nameInvolved" />
 
             <TextView
                 android:id="@+id/endDate"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:text="Until: 10/10/10"
                 android:textAlignment="textEnd"
-                android:textSize="20sp"
+                android:textSize="14sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="1.0"
-                app:layout_constraintStart_toEndOf="@+id/numberInvolved" />
+                app:layout_constraintTop_toBottomOf="@+id/description" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 
