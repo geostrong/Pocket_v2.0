@@ -53,16 +53,16 @@ public class QuickQrActivity extends AppCompatActivity {
         myQR = (ImageView) findViewById(R.id.myQR);
         authCodeText = (TextView) findViewById(R.id.authCodeText);
         getAuthCode();
-        generateMyQR();
+        generateMyQR(myQR.getWidth(), myQR.getHeight());
     }
 
-    public void generateMyQR() {
+    public void generateMyQR(int width, int height) {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             //String toQR = userId + "|" + amount;
             String toQR = "Static|" + userId;
             System.out.println("TOQR: " + toQR);
-            BitMatrix bitMatrix = multiFormatWriter.encode(toQR, BarcodeFormat.QR_CODE, myQR.getWidth(), myQR.getHeight());
+            BitMatrix bitMatrix = multiFormatWriter.encode(toQR, BarcodeFormat.QR_CODE, width, height);
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
             myQR.setImageBitmap(bitmap);
