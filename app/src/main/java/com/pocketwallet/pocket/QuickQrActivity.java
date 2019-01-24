@@ -53,7 +53,12 @@ public class QuickQrActivity extends AppCompatActivity {
         myQR = (ImageView) findViewById(R.id.myQR);
         authCodeText = (TextView) findViewById(R.id.authCodeText);
         getAuthCode();
-        generateMyQR();
+        myQR.post(new Runnable() {
+            @Override
+            public void run() {
+                generateMyQR();
+            }
+        });
     }
 
     public void generateMyQR() {
