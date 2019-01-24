@@ -44,23 +44,16 @@ public class QuickQrActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
-        myQR = (ImageView) findViewById(R.id.myQR);
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
         }
         GETAUTHCODE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/"+ userId + "/auth-code";
 
+        myQR = (ImageView) findViewById(R.id.myQR);
         authCodeText = (TextView) findViewById(R.id.authCodeText);
         getAuthCode();
-
-        myQR.post(new Runnable() {
-            @Override
-            public void run() {
-                generateMyQR();
-            }
-        });
-
+        generateMyQR();
     }
 
     public void generateMyQR() {

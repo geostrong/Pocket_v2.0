@@ -115,25 +115,45 @@ public class ScanQRActivity extends AppCompatActivity{
                     //HANDLE STATIC /DYNAMIC HERE
                     if (qrType.equals("Dynamic")) {
                         //Dynamic
-                        String targetuserId = results[1];
+                        String targetUserId = results[1];
                         String amount = results[2];
                         System.out.println("Dynamic QR, the amount is: " + amount);
-                        System.out.println("The target userid is: + targetuserId");
+                        System.out.println("The target userid is: + targetUserId");
                         Intent dynamicIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Dynamic.class);
+                        dynamicIntent.putExtra("paymentType","Dynamic");
                         dynamicIntent.putExtra("title","transaction");
                         dynamicIntent.putExtra("userId",userId);
                         dynamicIntent.putExtra("amount",amount);
-                        dynamicIntent.putExtra("targetUserId",targetuserId);
+                        dynamicIntent.putExtra("targetUserId",targetUserId);
                         startActivity(dynamicIntent);
                         finish();
-                    } else {
+                    } else if (qrType.equals("Static")) {
                         //Static
-                        String targetuserId = results[1];
-                        System.out.println("Static QR, target/merchant userID is: " + targetuserId);
+                        String targetUserId = results[1];
+                        System.out.println("Static QR, target/merchant userID is: " + targetUserId);
                         Intent staticIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Static.class);
+                        staticIntent.putExtra("paymentType","Static");
                         staticIntent.putExtra("title","transaction");
                         staticIntent.putExtra("userId",userId);
-                        staticIntent.putExtra("targetUserId",targetuserId);
+                        staticIntent.putExtra("targetUserId",targetUserId);
+                        startActivity(staticIntent);
+                        finish();
+                    }else{
+                        //QuickQR
+                        //Static
+                        for(int i = 0; i < results.length; i++){
+                            System.out.println("Test + " + i + ": " + results[i]);
+                        }
+                        String targetUserId = results[1];
+                        String targetAuthCode = results[2];
+                        System.out.println("Quick QR, payee userID is: " + targetUserId);
+                        System.out.println("AuthCode is: " + targetAuthCode);
+                        Intent staticIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Static.class);
+                        staticIntent.putExtra("paymentType","QuickQR");
+                        staticIntent.putExtra("title","transaction");
+                        staticIntent.putExtra("userId",userId);
+                        staticIntent.putExtra("targetUserId",targetUserId);
+                        staticIntent.putExtra("targetAuthCode",targetAuthCode);
                         startActivity(staticIntent);
                         finish();
                     }

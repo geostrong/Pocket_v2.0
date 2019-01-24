@@ -86,6 +86,7 @@ public class MainActivity extends AppCompatActivity
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
+            UpdateSharedPreference("userId",userId);
         }
 
         GETAUTHCODE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/"+ userId + "/auth-code";

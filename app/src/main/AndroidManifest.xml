@@ -21,7 +21,13 @@
         <activity android:name=".ContractActivity" />
         <activity android:name=".TopUpActivity" />
         <activity android:name=".ChangePasswordActivity" />
-        <activity android:name=".RequestActivity_NFC_Ready" />
+        <activity android:name=".RequestActivity_NFC_Ready">
+            <intent-filter>
+                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
         <activity android:name=".RequestActivity_QR" />
         <activity android:name=".RequestActivity" />
         <activity android:name=".RequestActivity_NFC" />
@@ -59,13 +65,6 @@
             android:label="@string/title_activity_request"
             android:parentActivityName=".MainActivity"
             android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.nfc.action.NDEF_DISCOVERED" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-
-                <data android:mimeType="text/plain" />
-            </intent-filter>
         </activity> <!-- SERVICES -->
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
