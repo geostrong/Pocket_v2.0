@@ -48,9 +48,9 @@ public class ScanQRActivity extends AppCompatActivity{
 
     private Bundle extras;
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/";
-
     private String userId;
 
+    private boolean scanned = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,29 +103,39 @@ public class ScanQRActivity extends AppCompatActivity{
             @Override
             public void receiveDetections(com.google.android.gms.vision.Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> qrCodes = detections.getDetectedItems();
-                if(qrCodes.size()!=0) {
+                if(qrCodes.size()!=0 && scanned == false) {
                     Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                     vibrator.vibrate(1000);
+                    scanned = true;
                     System.out.println("Result is: " + qrCodes.valueAt(0).displayValue);
 
-                    /*
                     String resultText = qrCodes.valueAt(0).displayValue;
-                    String merchantUserId = (String) resultText.subSequence(0, 36);
-                    String amount = (String) resultText.subSequence(37, resultText.length());
-                    System.out.println("Merchant User ID: " + merchantUserId);
-                    System.out.println("Amount: " + amount);
-                    */
-
-                    boolean isDynamicQR = true;
+                    String results[] = resultText.split("\\|");
+                    String qrType = results[0];
                     //HANDLE STATIC /DYNAMIC HERE
-                    if (isDynamicQR) {
+                    if (qrType.equals("Dynamic")) {
                         //Dynamic
+                        String targetuserId = results[1];
+                        String amount = results[2];
+                        System.out.println("Dynamic QR, the amount is: " + amount);
+                        System.out.println("The target userid is: + targetuserId");
                         Intent dynamicIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Dynamic.class);
+                        dynamicIntent.putExtra("title","transaction");
+                        dynamicIntent.putExtra("userId",userId);
+                        dynamicIntent.putExtra("amount",amount);
+                        dynamicIntent.putExtra("targetUserId",targetuserId);
                         startActivity(dynamicIntent);
+                        finish();
                     } else {
                         //Static
+                        String targetuserId = results[1];
+                        System.out.println("Static QR, target/merchant userID is: " + targetuserId);
                         Intent staticIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Static.class);
+                        staticIntent.putExtra("title","transaction");
+                        staticIntent.putExtra("userId",userId);
+                        staticIntent.putExtra("targetUserId",targetuserId);
                         startActivity(staticIntent);
+                        finish();
                     }
 
                     //Change process payment
@@ -138,61 +148,10 @@ public class ScanQRActivity extends AppCompatActivity{
         System.out.println("userid: " + userId);
     }
 
-    public void processPayment(String merchantUserId,String amount){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        try{
-        JSONObject jsonBody = new JSONObject();
-
-        jsonBody.put("payee_id", userId);
-        jsonBody.put("merchant_id", merchantUserId);
-        jsonBody.put("amount", amount);
-        //jsonBody.put("auth_code", authCode);
-        System.out.println("TEST PRINTING: " + jsonBody);
-        final Activity act = this;
-        JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, urlPayment, jsonBody, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try {
-                    final String transactionNumber = response.getString("Transaction Number");
-                    final String result = response.getString("Result");
-
-                    System.out.println("Response : " + response);
-                    System.out.println("Result: " + result);
-                    System.out.println("Transaction Number: " + transactionNumber);
-                    act.runOnUiThread(new Runnable(){
-                        @Override
-                        public void run() {
-                            if(result.equals("Success")) {
-                                mTextView.setText("Transaction is successful!"
-                                        + "\nTransaction Number:" + transactionNumber);
-                            }else{
-                                mTextView.setText("Transaction failed"
-                                        + "\nTransaction Number:" + transactionNumber);
-                            }
-                        }
-                    });
-
-                }catch(JSONException e){
-
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                onBackPressed();
-            }
-        }){
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
-                final Map<String, String> headers = new HashMap<>();
-                //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
-                return headers;
-            }
-        };
-        requestQueue.add(jsonObject);
-    } catch (JSONException e) {
-        e.printStackTrace();
-    }
+    @Override
+    public void onResume(){
+        super.onResume();
+        scanned = false;
     }
 
     @Override

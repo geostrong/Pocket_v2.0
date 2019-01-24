@@ -98,7 +98,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/nametext" />
 
             <TextView
-                android:id="@+id/totalAmount"
+                android:id="@+id/totalAmountText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="24dp"
@@ -117,8 +117,8 @@
                 android:text="Amount:"
                 android:textSize="26sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/totalAmount"
-                app:layout_constraintTop_toTopOf="@+id/totalAmount" />
+                app:layout_constraintEnd_toStartOf="@+id/totalAmountText"
+                app:layout_constraintTop_toTopOf="@+id/totalAmountText" />
 
             <LinearLayout
                 style="@style/dividerHorizontal"

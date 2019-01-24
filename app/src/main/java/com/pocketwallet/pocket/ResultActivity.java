@@ -18,9 +18,11 @@ public class ResultActivity extends AppCompatActivity {
         TextView transactionID;
         TextView fromTo;
         TextView involvedName;
-        TextView amount;
+        TextView amountInvolved;
         TextView amountTitle;
         TextView transIdTitle;
+
+        String amount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +39,7 @@ public class ResultActivity extends AppCompatActivity {
         amountTitle = findViewById(R.id.amountTitle);
         transIdTitle = findViewById(R.id.transIdTitle);
         involvedName = findViewById(R.id.nameInvolved);
-        amount = findViewById(R.id.amountInvolved);
+        amountInvolved = findViewById(R.id.amountInvolved);
         Button returnBtn = findViewById(R.id.returnButton);
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +50,16 @@ public class ResultActivity extends AppCompatActivity {
 
         //Change toolbar title here
         toolbarTitle = info.getString("title");
+
+        String results = "-";
+        String transactionNumber = "-";
+        if (toolbarTitle.equalsIgnoreCase("transaction")){
+            results = info.getString("results");
+            if(results.equalsIgnoreCase("Success")) {
+                transactionNumber = info.getString("transactionNumber");
+                amount = info.getString("amount");
+            }
+        }
 
         getSupportActionBar().setTitle(toolbarTitle);
         //Change image here
@@ -62,7 +74,11 @@ public class ResultActivity extends AppCompatActivity {
 
         //Change result title here
         if (toolbarTitle.equalsIgnoreCase("transaction")) {
-            resultTitleText = "Transaction successful!";
+            if(results.equalsIgnoreCase("Success")){
+                resultTitleText = "Transaction successful!";
+            }else{
+                resultTitleText = "Transaction has failed";
+            }
         } else if (toolbarTitle.equalsIgnoreCase("top up")) {
             resultTitleText = "Top up successful!";
         } else if (toolbarTitle.equalsIgnoreCase("change password")) {
@@ -82,14 +98,14 @@ public class ResultActivity extends AppCompatActivity {
         involvedName.setText("-");
 
         //Change amount here
-        amount.setText("$ -");
+        amountInvolved.setText("$" + amount);
 
         //Change transaction id here
-        transactionID.setText("-");
+        transactionID.setText(transactionNumber);
 
         if (toolbarTitle.equalsIgnoreCase("top up") || toolbarTitle.equalsIgnoreCase("change password")) {
             involvedName.setVisibility(View.GONE);
-            amount.setVisibility(View.GONE);
+            amountInvolved.setVisibility(View.GONE);
             transactionID.setVisibility(View.GONE);
             fromTo.setVisibility(View.GONE);
             transIdTitle.setVisibility(View.GONE);

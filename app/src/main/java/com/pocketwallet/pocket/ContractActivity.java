@@ -38,8 +38,8 @@ public class ContractActivity extends AppCompatActivity {
             listContracts.add(listContract);
         }
 
-        adapter = new ContractAdapter(listContract,this); //i regret touching the java files
+        //adapter = new ContractAdapter(listContract,this); //i regret touching the java files
 
-        contractListView.setAdapter(adapter);
+        //contractListView.setAdapter(adapter);
     }
 }

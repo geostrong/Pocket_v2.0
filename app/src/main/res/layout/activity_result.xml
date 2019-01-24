@@ -54,7 +54,7 @@
         android:id="@+id/transIdTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="40dp"
         android:text="@string/trans_id"
         app:layout_constraintStart_toStartOf="@+id/amountTitle"
         app:layout_constraintTop_toBottomOf="@+id/amountTitle" />
