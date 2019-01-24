@@ -52,6 +52,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(getActivity(), QuickQrActivity.class);
+                newIntent.putExtra("userId",userId);
                 startActivity(newIntent);
             }
         });
