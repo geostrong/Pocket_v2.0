@@ -6,7 +6,7 @@ public class ListContract {
     private String description;
     private String endDate;
 
-    public ListContract(String nameInvolved, String number, String description, String endDate){
+    public ListContract(String nameInvolved, String numberInvolved, String description, String endDate){
         this.nameInvolved = nameInvolved;
         this.numberInvolved = numberInvolved;
         this.description = description;

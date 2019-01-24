@@ -10,11 +10,13 @@
         android:id="@+id/result"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:autoSizeTextType="uniform"
         android:text="@string/result"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="24sp"
+        app:layout_constraintBottom_toTopOf="@+id/fromTo"
         app:layout_constraintEnd_toEndOf="@+id/resultImage"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/resultImage"
         app:layout_constraintTop_toBottomOf="@+id/resultImage" />
 
@@ -36,8 +38,9 @@
         android:id="@+id/amountTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:autoSizeTextType="uniform"
         android:text="@string/amountText"
+        app:layout_constraintBottom_toTopOf="@+id/transIdTitle"
         app:layout_constraintStart_toStartOf="@+id/fromTo"
         app:layout_constraintTop_toBottomOf="@+id/fromTo" />
 
@@ -45,6 +48,7 @@
         android:id="@+id/amountInvolved"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
         android:text="@string/amount"
         android:textColor="#5e76fa"
         app:layout_constraintEnd_toEndOf="@+id/result"
@@ -54,8 +58,9 @@
         android:id="@+id/transIdTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:autoSizeTextType="uniform"
         android:text="@string/trans_id"
+        app:layout_constraintBottom_toTopOf="@+id/returnButton"
         app:layout_constraintStart_toStartOf="@+id/amountTitle"
         app:layout_constraintTop_toBottomOf="@+id/amountTitle" />
 
@@ -63,8 +68,9 @@
         android:id="@+id/fromTo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:autoSizeTextType="uniform"
         android:text="@string/from_to"
+        app:layout_constraintBottom_toTopOf="@+id/amountTitle"
         app:layout_constraintStart_toStartOf="@+id/result"
         app:layout_constraintTop_toBottomOf="@+id/result" />
 
@@ -72,6 +78,7 @@
         android:id="@+id/nameInvolved"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
         android:text="@string/name_involved"
         android:textColor="#5e76fa"
         app:layout_constraintEnd_toEndOf="@+id/result"
@@ -89,15 +96,24 @@
     <ImageView
         android:id="@+id/resultImage"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/img_transfer"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
         android:scaleType="fitXY"
+        android:src="@drawable/img_transfer"
+        app:layout_constraintBottom_toTopOf="@+id/guideline"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
 
 </android.support.constraint.ConstraintLayout>

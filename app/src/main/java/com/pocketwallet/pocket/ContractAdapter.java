@@ -44,17 +44,17 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
         return listContracts.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewName, textViewNumber, textViewDescription, textViewEndDate;
 
         public ViewHolder(View itemView){
             super(itemView);
 
-            //textViewName = itemView.findViewById(R.id.textViewName);                //also if the app fails to build and compile
-            //textViewNumber = itemView.findViewById(R.id.textViewNumber);            //and these files are still carrying errors
-            //textViewDescription = itemView.findViewById(R.id.textViewDescription);  //can just tempoarily remove first
-            //textViewEndDate = itemView.findViewById(R.id.textViewEndDate);          //to test out other featurespu
+            textViewName = itemView.findViewById(R.id.nameInvolved);
+            textViewNumber = itemView.findViewById(R.id.numberInvolved);
+            textViewDescription = itemView.findViewById(R.id.description);
+            textViewEndDate = itemView.findViewById(R.id.endDate);
         }
     }
 }
