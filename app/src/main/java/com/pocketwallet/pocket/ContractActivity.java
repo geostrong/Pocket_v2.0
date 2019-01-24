@@ -21,15 +21,15 @@ public class ContractActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contract);
 
-        contractListView = (RecyclerView) findViewById(R.id.contractListView);
+        contractListView = findViewById(R.id.contractListView);
         contractListView.setHasFixedSize(true);
         contractListView.setLayoutManager(new LinearLayoutManager(this));
 
         listContracts = new ArrayList<>();
 
-        for(int i=0; i<=10; i++){
+        for(int i=0; i<=9; i++){
             ListContract listContract = new ListContract(
-                    "Harold" + i++,
+                    "Harold" + i,
                     "1234 5678",
                     "HDB Rent",
                     "10-12-2022"
