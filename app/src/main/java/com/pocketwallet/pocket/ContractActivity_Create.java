@@ -28,7 +28,7 @@ public class ContractActivity_Create extends AppCompatActivity {
         setContentView(R.layout.activity_contract__create);
 
         // Calendar dropdown
-        mDisplayDate = (TextView) findViewById(R.id.tvDate);
+        mDisplayDate = findViewById(R.id.tvDate);
 
         mDisplayDate.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -98,9 +98,9 @@ public class ContractActivity_Create extends AppCompatActivity {
         };
 
         // Frequency
-        Spinner contractFrequency = (Spinner) findViewById(R.id.frequency);
+        Spinner contractFrequency = findViewById(R.id.frequency);
 
-        ArrayAdapter<String> frequencyAdapter = new ArrayAdapter<String>(ContractActivity_Create.this,
+        ArrayAdapter<String> frequencyAdapter = new ArrayAdapter<>(ContractActivity_Create.this,
                 android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.frequencies));
 
         frequencyAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

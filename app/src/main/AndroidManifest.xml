@@ -16,7 +16,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ContractActivity_Create"></activity>
+        <activity android:name=".ContractActivity_Create"/>
+        <activity android:name=".ContractActivity"/>
         <activity android:name=".TopUpActivity" />
         <activity android:name=".ChangePasswordActivity" />
         <activity android:name=".RequestActivity_NFC_Ready" />
