@@ -45,6 +45,7 @@ public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHo
         holder.textViewTransactID.setVisibility(isExpanded?View.VISIBLE:View.GONE);
         holder.textViewTransactDate.setVisibility(isExpanded?View.VISIBLE:View.GONE);
         holder.textViewTransactTime.setVisibility(isExpanded?View.VISIBLE:View.GONE);
+        holder.textViewMoreBtn.setVisibility(isExpanded?View.VISIBLE:View.GONE);
         holder.itemView.setActivated(isExpanded);
 
         if (isExpanded)
@@ -67,17 +68,18 @@ public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewName, textViewNumber, textViewTransactAmount, textViewTransactID, textViewTransactDate, textViewTransactTime;
+        TextView textViewName, textViewNumber, textViewTransactAmount, textViewTransactID, textViewTransactDate, textViewTransactTime, textViewMoreBtn;
 
         public ViewHolder(View itemView){
             super(itemView);
 
             textViewName = itemView.findViewById(R.id.nameInvolved);
             textViewNumber = itemView.findViewById(R.id.numberInvolved);
-            textViewTransactAmount = itemView.findViewById(R.id.description);
-            textViewTransactID = itemView.findViewById(R.id.endDate);
-            textViewTransactDate = itemView.findViewById(R.id.description2);
-            textViewTransactTime = itemView.findViewById(R.id.endDate2);
+            textViewTransactAmount = itemView.findViewById(R.id.transactAmount);
+            textViewTransactID = itemView.findViewById(R.id.transactionID);
+            textViewTransactDate = itemView.findViewById(R.id.transactDate);
+            textViewTransactTime = itemView.findViewById(R.id.transactTime);
+            textViewMoreBtn = itemView.findViewById(R.id.moreBtn);
         }
 
     }

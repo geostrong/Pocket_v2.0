@@ -51,6 +51,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
         holder.textViewFrequency.setVisibility(isExpanded?View.VISIBLE:View.GONE);
         holder.textViewPerSign.setVisibility(isExpanded?View.VISIBLE:View.GONE);
         holder.textViewTerminateContractBtn.setVisibility(isExpanded?View.VISIBLE:View.GONE);
+        holder.textViewMoreBtn.setVisibility(isExpanded?View.VISIBLE:View.GONE);
         holder.itemView.setActivated(isExpanded);
 
         if (isExpanded)
@@ -73,7 +74,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewName, textViewNumber, textViewDescription, textViewEndDate, textViewDescription2, textViewEndDate2, textViewFeePerFreq, textViewFrequency, textViewPerSign, textViewTerminateContractBtn;
+        TextView textViewName, textViewNumber, textViewDescription, textViewEndDate, textViewDescription2, textViewEndDate2, textViewFeePerFreq, textViewFrequency, textViewPerSign, textViewTerminateContractBtn, textViewMoreBtn;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -88,6 +89,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             textViewFrequency = itemView.findViewById(R.id.frequency);
             textViewPerSign = itemView.findViewById(R.id.perSign);
             textViewTerminateContractBtn = itemView.findViewById(R.id.terminateContractBtn);
+            textViewMoreBtn = itemView.findViewById(R.id.moreBtn);
         }
     }
 }
