@@ -19,10 +19,10 @@ public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHo
     int mExpandedPosition = -1;
     int previousExpandedPosition = -1;
 
-    private List<ListTransaction> listTransactions;
+    private List<Transaction> listTransactions;
     private Context context;
 
-    public TransactAdapter(List<ListTransaction> listTransactions, Context context) {
+    public TransactAdapter(List<Transaction> listTransactions, Context context) {
         this.listTransactions = listTransactions;
         this.context = context;
     }
@@ -35,7 +35,7 @@ public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHo
 
     @Override
     public void onBindViewHolder (ViewHolder holder, final int position){
-        ListTransaction listTransaction = listTransactions.get(position);
+        Transaction listTransaction = listTransactions.get(position);
 
         holder.textViewName.setText(listTransaction.getName());
         holder.textViewTransactAmount.setText(listTransaction.getTransactAmount());
