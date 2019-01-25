@@ -23,6 +23,7 @@
     <!--End for Splash Screen-->
     <style name="customEditText" parent="TextAppearance.AppCompat">
         <item name="android:textColor">?attr/colorPrimary</item>
+        <item name="android:textSize">12sp</item>
     </style>
 
     <style name="PrimaryButtonOverlay" parent="@style/Widget.AppCompat.Button.Colored">
