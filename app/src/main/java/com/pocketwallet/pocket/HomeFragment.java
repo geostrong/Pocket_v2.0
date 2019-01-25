@@ -101,6 +101,16 @@ public class HomeFragment extends Fragment {
             }
         });
 
+        Button testBtn = (Button) view.findViewById(R.id.testBtn);
+        testBtn.setOnClickListener(new  View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent testIntent = new Intent(getActivity(), ContractActivity_Details.class);
+                startActivity(testIntent);
+            }
+        });
+
         Bundle extras = new Bundle();
         extras = getArguments();
         if (extras != null) {
