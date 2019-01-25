@@ -33,7 +33,7 @@ public class ContractActivity_Create extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_contract__create);
-        getSupportActionBar().setTitle("Creare New Contract");
+        getSupportActionBar().setTitle("Create New Contract");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
