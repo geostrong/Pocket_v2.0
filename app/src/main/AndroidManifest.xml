@@ -16,8 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ContractActivity_Details"></activity>
-        <activity android:name=".TransactionLogsActivity"></activity>
+        <activity android:name=".TransactionActivity_Details"></activity>
+        <activity android:name=".ContractActivity_Details" />
+        <activity android:name=".TransactionLogsActivity" />
         <activity android:name=".ContractPromptReceive" />
         <activity android:name=".ContractActivity_Create" />
         <activity android:name=".ContractActivity" />
@@ -26,7 +27,9 @@
         <activity android:name=".RequestActivity_NFC_Ready">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
+
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <data android:mimeType="text/plain" />
             </intent-filter>
         </activity>
@@ -66,8 +69,7 @@
             android:name=".RequestActivity_Tabs"
             android:label="@string/title_activity_request"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-        </activity> <!-- SERVICES -->
+            android:theme="@style/AppTheme.NoActionBar"></activity> <!-- SERVICES -->
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
