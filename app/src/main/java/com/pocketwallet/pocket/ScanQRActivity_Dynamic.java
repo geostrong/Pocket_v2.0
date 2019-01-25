@@ -28,9 +28,12 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
     private String userId;
     private String amount;
     private String targetUserId;
+    private String authCode;
+    private String paymentType;
 
     private Bundle extras;
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/";
+    private String urlPaymentQuickPay = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/quickpay";
 
     TextView totalAmountText;
 

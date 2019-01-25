@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -31,9 +32,12 @@ public class ScanQRActivity_Static extends AppCompatActivity {
     private String amount;
     private String userId;
     private String targetUserId;
+    private String paymentType;
+    private String authCode;
     private Bundle extras;
 
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/";
+    private String urlPaymentQuickPay = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/quickpay/";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,14 +53,25 @@ public class ScanQRActivity_Static extends AppCompatActivity {
                 //Move to transaction result
                 //Intent newIntent = new Intent(ScanQRActivity_Static.this, ResultActivity.class);
                 //startActivity(newIntent);
-                processPayment(targetUserId, amount);
+                if (paymentType.equalsIgnoreCase("Static")) {
+                    processPayment(targetUserId,amount);
+                }else{
+                    processPaymentQuickPay(targetUserId,authCode,amount);
+                }
             }
         });
 
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
+            amount = extras.getString("amount");
             targetUserId = extras.getString("targetUserId");
+            authCode = extras.getString("targetAuthCode");
+            paymentType = extras.getString("paymentType");
+        }
+        if (paymentType.equalsIgnoreCase("QuickQR")){
+            TextView payText = (TextView) findViewById(R.id.payText);
+            payText.setText("");
         }
         amount = "";
     }
@@ -152,4 +167,76 @@ public class ScanQRActivity_Static extends AppCompatActivity {
         }
     };
 
+    public void processPaymentQuickPay(String payeeUserId, String authCode, String amount){
+        //SENDER IS MERCHANT
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        try{
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("payee_id", payeeUserId);
+            jsonBody.put("merchant_id", userId);
+            jsonBody.put("amount", amount);
+            jsonBody.put("auth_code", authCode);
+            System.out.println("TEST PRINTING: " + jsonBody);
+            final String amount1 = amount;
+            final Activity act = this;
+            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, urlPaymentQuickPay, jsonBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        final String transactionNumber = response.getString("transaction_id");
+                        final String result = response.getString("result");
+
+                        System.out.println("Response : " + response);
+                        System.out.println("Result: " + result);
+                        System.out.println("Transaction ID: " + transactionNumber);
+                        act.runOnUiThread(new Runnable(){
+                            @Override
+                            public void run() {
+                                if(result.equalsIgnoreCase("Success")) {
+                                    System.out.println("Successful Payment!");
+                                    //Move to transaction result
+                                    Intent newIntent = new Intent(ScanQRActivity_Static.this, ResultActivity.class);
+                                    newIntent.putExtra("title","Transaction");
+                                    newIntent.putExtra("results",result);
+                                    newIntent.putExtra("transactionNumber",transactionNumber);
+                                    newIntent.putExtra("amount", amount1);
+                                    System.out.println("Amount : " + amount1);
+                                    startActivity(newIntent);
+                                    finish();
+                                }else{
+                                    System.out.println("NOT Successful Payment!");
+                                    Intent newIntent = new Intent(ScanQRActivity_Static.this, ResultActivity.class);
+                                    newIntent.putExtra("title","Transaction");
+                                    newIntent.putExtra("results",result);
+                                    startActivity(newIntent);
+                                    finish();
+                                }
+                            }
+                        });
+                    }catch(JSONException e){
+                        System.out.println("Error: " + e);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    onBackPressed();
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
+                    HashMap<String, String> headers = new HashMap<String, String>();
+                    headers.put("Content-Type", "application/json; charset=utf-8");
+                    return headers;
+                }
+            };
+            requestQueue.add(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.out.println("Error: " + e);
+            e.getMessage();
+        }
+    }
 }

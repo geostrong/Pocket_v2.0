@@ -19,6 +19,9 @@ public class RequestActivity_NFC extends AppCompatActivity {
     String amount;
     ImageView nfcImage;
 
+    String userId;
+    Bundle extras;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +31,11 @@ public class RequestActivity_NFC extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("userId");
+        }
+
         amountInput = (EditText) findViewById(R.id.amountRequestNFC);
         amountInput.addTextChangedListener(textWatcher);
 
@@ -36,6 +44,8 @@ public class RequestActivity_NFC extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(RequestActivity_NFC.this, RequestActivity_NFC_Ready.class);
+                newIntent.putExtra("userId",userId);
+                newIntent.putExtra("amount",amount);
                 startActivity(newIntent);
             }
         });

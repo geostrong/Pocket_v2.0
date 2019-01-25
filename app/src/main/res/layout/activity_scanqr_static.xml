@@ -28,7 +28,7 @@
             android:textSize="20sp" />
 
         <TextView
-            android:id="@+id/nametext2"
+            android:id="@+id/payText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
