@@ -10,12 +10,14 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -65,20 +67,38 @@ public class ScanQRActivity extends AppCompatActivity{
             userId = extras.getString("userId");
         }
 
-        surfaceView = (SurfaceView)findViewById(R.id.surfaceView);
-        barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
+        startScan();
+
+    }
+
+    @Override
+    public void onResume(){
+        super.onResume();
+        scanned = false;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
+
+    public void startScan () {
+
+        surfaceView = (SurfaceView) findViewById(R.id.surfaceView);
         mTextView = findViewById(R.id.mTextView);
+        barcodeDetector = new BarcodeDetector.Builder(this).setBarcodeFormats(Barcode.QR_CODE).build();
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder holder) {
-                if(ActivityCompat.checkSelfPermission(getApplicationContext(),Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
                     return;
                 }
-                try{
-                    cameraSource = new CameraSource.Builder(ScanQRActivity.this,barcodeDetector).setRequestedPreviewSize(surfaceView.getWidth(),surfaceView.getHeight()).setAutoFocusEnabled(true).build();
+                try {
+                    cameraSource = new CameraSource.Builder(ScanQRActivity.this, barcodeDetector).setRequestedPreviewSize(surfaceView.getWidth(), surfaceView.getHeight()).setAutoFocusEnabled(true).build();
                     cameraSource.start(holder);
-                }catch(IOException e){
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -103,7 +123,7 @@ public class ScanQRActivity extends AppCompatActivity{
             @Override
             public void receiveDetections(com.google.android.gms.vision.Detector.Detections<Barcode> detections) {
                 final SparseArray<Barcode> qrCodes = detections.getDetectedItems();
-                if(qrCodes.size()!=0 && scanned == false) {
+                if (qrCodes.size() != 0 && scanned == false) {
                     Vibrator vibrator = (Vibrator) getApplicationContext().getSystemService(Context.VIBRATOR_SERVICE);
                     vibrator.vibrate(1000);
                     scanned = true;
@@ -120,11 +140,11 @@ public class ScanQRActivity extends AppCompatActivity{
                         System.out.println("Dynamic QR, the amount is: " + amount);
                         System.out.println("The target userid is: + targetUserId");
                         Intent dynamicIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Dynamic.class);
-                        dynamicIntent.putExtra("paymentType","Dynamic");
-                        dynamicIntent.putExtra("title","transaction");
-                        dynamicIntent.putExtra("userId",userId);
-                        dynamicIntent.putExtra("amount",amount);
-                        dynamicIntent.putExtra("targetUserId",targetUserId);
+                        dynamicIntent.putExtra("paymentType", "Dynamic");
+                        dynamicIntent.putExtra("title", "transaction");
+                        dynamicIntent.putExtra("userId", userId);
+                        dynamicIntent.putExtra("amount", amount);
+                        dynamicIntent.putExtra("targetUserId", targetUserId);
                         startActivity(dynamicIntent);
                         finish();
                     } else if (qrType.equals("Static")) {
@@ -132,16 +152,16 @@ public class ScanQRActivity extends AppCompatActivity{
                         String targetUserId = results[1];
                         System.out.println("Static QR, target/merchant userID is: " + targetUserId);
                         Intent staticIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Static.class);
-                        staticIntent.putExtra("paymentType","Static");
-                        staticIntent.putExtra("title","transaction");
-                        staticIntent.putExtra("userId",userId);
-                        staticIntent.putExtra("targetUserId",targetUserId);
+                        staticIntent.putExtra("paymentType", "Static");
+                        staticIntent.putExtra("title", "transaction");
+                        staticIntent.putExtra("userId", userId);
+                        staticIntent.putExtra("targetUserId", targetUserId);
                         startActivity(staticIntent);
                         finish();
-                    }else{
+                    } else {
                         //QuickQR
                         //Static
-                        for(int i = 0; i < results.length; i++){
+                        for (int i = 0; i < results.length; i++) {
                             System.out.println("Test + " + i + ": " + results[i]);
                         }
                         String targetUserId = results[1];
@@ -149,11 +169,11 @@ public class ScanQRActivity extends AppCompatActivity{
                         System.out.println("Quick QR, payee userID is: " + targetUserId);
                         System.out.println("AuthCode is: " + targetAuthCode);
                         Intent staticIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Static.class);
-                        staticIntent.putExtra("paymentType","QuickQR");
-                        staticIntent.putExtra("title","transaction");
-                        staticIntent.putExtra("userId",userId);
-                        staticIntent.putExtra("targetUserId",targetUserId);
-                        staticIntent.putExtra("targetAuthCode",targetAuthCode);
+                        staticIntent.putExtra("paymentType", "QuickQR");
+                        staticIntent.putExtra("title", "transaction");
+                        staticIntent.putExtra("userId", userId);
+                        staticIntent.putExtra("targetUserId", targetUserId);
+                        staticIntent.putExtra("targetAuthCode", targetAuthCode);
                         startActivity(staticIntent);
                         finish();
                     }
@@ -166,17 +186,5 @@ public class ScanQRActivity extends AppCompatActivity{
             }
         });
         System.out.println("userid: " + userId);
-    }
-
-    @Override
-    public void onResume(){
-        super.onResume();
-        scanned = false;
-    }
-
-    @Override
-    public boolean onSupportNavigateUp() {
-        onBackPressed();
-        return true;
     }
 }
