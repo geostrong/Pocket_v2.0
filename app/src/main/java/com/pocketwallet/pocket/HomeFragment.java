@@ -106,7 +106,8 @@ public class HomeFragment extends Fragment {
         {
             @Override
             public void onClick(View v) {
-                Intent testIntent = new Intent(getActivity(), ContractActivity_Details.class);
+                Intent testIntent = new Intent(getActivity(), TransactionLogsActivity.class);
+                testIntent.putExtra("userId",userId);
                 startActivity(testIntent);
             }
         });
