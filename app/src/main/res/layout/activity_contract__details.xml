@@ -70,11 +70,23 @@
                 android:id="@+id/nameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
                 android:text="Name:"
                 android:textSize="20sp"
-                app:layout_constraintTop_toTopOf="@+id/guideline10"
-                tools:layout_editor_absoluteX="16dp" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/guideline10" />
+
+            <TextView
+                android:id="@+id/nameInvolved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:text="@string/name_involved"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/nameText"
+                app:layout_constraintTop_toTopOf="@+id/guideline10" />
 
             <TextView
                 android:id="@+id/feeText"
@@ -82,10 +94,43 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="30dp"
-                android:text="Phone Number:"
+                android:text="Phone No:"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/nameText"
                 app:layout_constraintTop_toBottomOf="@+id/nameText" />
+
+            <TextView
+                android:id="@+id/phoneInvolved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/phoneNo_involved"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/feeText"
+                app:layout_constraintTop_toBottomOf="@+id/nameText" />
+
+            <TextView
+                android:id="@+id/feePerFreq"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/feePerFreq"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/colonText"
+                app:layout_constraintTop_toBottomOf="@+id/feeText" />
+
+            <TextView
+                android:id="@+id/penaltyAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/penaltyAmount"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/penaltyFeeText"
+                app:layout_constraintTop_toBottomOf="@+id/feePerText" />
 
             <TextView
                 android:id="@+id/feePerText"
@@ -99,15 +144,71 @@
                 app:layout_constraintTop_toBottomOf="@+id/feeText" />
 
             <TextView
-                android:id="@+id/nameInvolved4"
+                android:id="@+id/frequency"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginTop="30dp"
+                android:text="Month"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/feePerText"
+                app:layout_constraintTop_toBottomOf="@+id/feeText" />
+
+            <TextView
+                android:id="@+id/colonText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="30dp"
-                android:text="Name:"
+                android:text=":"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/frequency"
+                app:layout_constraintTop_toBottomOf="@+id/feeText" />
+
+            <TextView
+                android:id="@+id/penaltyFeeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="30dp"
+                android:text="Penalty Fee:"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/feePerText"
                 app:layout_constraintTop_toBottomOf="@+id/feePerText" />
+
+            <TextView
+                android:id="@+id/startDate"
+                android:layout_width="121dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="8dp"
+                android:text="10 June 2018"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toStartOf="@+id/dashText"
+                app:layout_constraintTop_toBottomOf="@+id/penaltyFeeText" />
+
+            <TextView
+                android:id="@+id/dashText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="-"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="293dp" />
+
+            <TextView
+                android:id="@+id/endDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
+                android:text="@string/endDate"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/dashText"
+                app:layout_constraintTop_toBottomOf="@+id/penaltyFeeText" />
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
@@ -122,7 +223,7 @@
     <View
         android:id="@+id/view4"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="241dp"
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
