@@ -16,7 +16,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ContractPromptReceive"></activity>
+        <activity android:name=".ContractActivity_Details"></activity>
+        <activity android:name=".TransactionLogsActivity"></activity>
+        <activity android:name=".ContractPromptReceive" />
         <activity android:name=".ContractActivity_Create" />
         <activity android:name=".ContractActivity" />
         <activity android:name=".TopUpActivity" />
