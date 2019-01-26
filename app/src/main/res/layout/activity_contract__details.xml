@@ -37,6 +37,26 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <Button
+                android:id="@+id/terminateContractBtn"
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/btn_logoutlayout"
+                android:text="Terminate"
+                android:textAllCaps="false"
+                android:textColor="#FFFFFF"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.934" />
+
             <android.support.constraint.Guideline
                 android:id="@+id/guideline10"
                 android:layout_width="wrap_content"
@@ -133,6 +153,17 @@
                 app:layout_constraintTop_toBottomOf="@+id/feePerText" />
 
             <TextView
+                android:id="@+id/payingOn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
+                android:text="10 Mar 2018"
+                android:textSize="20sp"
+                app:layout_constraintStart_toEndOf="@+id/nextPaymentText"
+                app:layout_constraintTop_toBottomOf="@+id/dashText" />
+
+            <TextView
                 android:id="@+id/feePerText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -177,8 +208,19 @@
                 app:layout_constraintTop_toBottomOf="@+id/feePerText" />
 
             <TextView
+                android:id="@+id/nextPaymentText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
+                android:text="Next Payment:"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="@+id/penaltyFeeText"
+                app:layout_constraintTop_toBottomOf="@+id/dashText" />
+
+            <TextView
                 android:id="@+id/startDate"
-                android:layout_width="121dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="8dp"
@@ -192,12 +234,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="8dp"
                 android:text="-"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="293dp" />
+                app:layout_constraintTop_toBottomOf="@+id/penaltyFeeText" />
 
             <TextView
                 android:id="@+id/endDate"

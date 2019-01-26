@@ -5,22 +5,23 @@ public class ListContract {
     private String numberInvolved;
     private String description;
     private String endDate;
-    private String description2;
-    private String endDate2;
     private String feePerFreq;
     private String frequency;
+    private String status;
+    private String startDate;
+    private String payingOn;
 
 
-
-    public ListContract(String nameInvolved, String numberInvolved, String description, String endDate, String description2, String endDate2, String feePerFreq, String frequency){
+    public ListContract(String nameInvolved, String numberInvolved, String description, String endDate, String payingOn, String endDate2, String feePerFreq, String frequency, String status, String startDate){
         this.nameInvolved = nameInvolved;
         this.numberInvolved = numberInvolved;
         this.description = description;
         this.endDate = endDate;
-        this.description2 = description2;
-        this.endDate2 = endDate2;
         this.feePerFreq = feePerFreq;
         this.frequency = frequency;
+        this.status = status;
+        this.startDate = startDate;
+        this.payingOn = payingOn;
     }
 
     public String getName(){
@@ -39,12 +40,8 @@ public class ListContract {
         return endDate;
     }
 
-    public String getDescription2(){
-        return description2;
-    }
-
     public String getEndDate2(){
-        return endDate2;
+        return endDate;
     }
 
     public String getFeePerFreq(){
@@ -53,5 +50,17 @@ public class ListContract {
 
     public String getFrequency(){
         return frequency;
+    }
+
+    public String getStatus(){
+        return status;
+    }
+
+    public String getStartDate(){
+        return startDate;
+    }
+
+    public String getPayingOn(){
+        return payingOn;
     }
 }

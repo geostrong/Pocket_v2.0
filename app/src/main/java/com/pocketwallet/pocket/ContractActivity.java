@@ -49,11 +49,13 @@ public class ContractActivity extends AppCompatActivity {
                     "Harold" + i,
                     "1234 5678",
                     "HDB Rent",
-                    "10-12-2022",
-                    "HDB Rent 2",
-                    "10-12-2022 2",
+                    "10 Feb 2022",
+                    "10 Mar 2018",
+                    "10 Feb 2022 2",
                     "$200",
-                    "Monthly"
+                    "Monthly",
+                    "Active",
+                    "10 Feb 18"
             );
 
             listContracts.add(listContract);
