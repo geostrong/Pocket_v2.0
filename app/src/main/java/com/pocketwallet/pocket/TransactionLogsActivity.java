@@ -89,7 +89,10 @@ public class TransactionLogsActivity extends AppCompatActivity {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user_id", userId);
             System.out.println("User ID: " +jsonBody);
-            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlRetrieveTransactionHistory, jsonBody, new Response.Listener<JSONObject>() {
+            urlRetrieveTransactionHistory += "/" + userId;
+            System.out.println("urlRetrieveTransactionHistory: " + urlRetrieveTransactionHistory);
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlRetrieveTransactionHistory, jsonBody,
+                    new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
@@ -106,13 +109,17 @@ public class TransactionLogsActivity extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.printStackTrace();
+                    System.out.println("Error Message: " + error.getMessage());
+                    System.out.println("Error Network Response Data: " + new String(error.networkResponse.data));
+                    System.out.println("Error Network Response Status Code" + error.networkResponse.statusCode);
                     //onBackPressed();
                 }
             });
-
+            System.out.println("Error Json Body = " + new String(jsonObjectRequest.getBody()));
             requestQueue.add(jsonObjectRequest);
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
     }
 }
