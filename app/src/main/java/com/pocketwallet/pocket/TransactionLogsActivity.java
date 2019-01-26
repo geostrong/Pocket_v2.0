@@ -26,6 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -87,12 +88,31 @@ public class TransactionLogsActivity extends AppCompatActivity {
         try {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user_id", userId);
-            System.out.println("TEST PRINTING: " + jsonBody);
+            System.out.println("User ID: " +jsonBody);
+            JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlRetrieveTransactionHistory, jsonBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        String result = response.getString("result");
+                        System.out.println("Results: " + result);
+                        if(result.equalsIgnoreCase("Success")){
 
-            //requestQueue.add(jsonObjectRequest);
+                        }
+                    }catch(JSONException e){
+                        System.out.println("Error: " + e);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    //onBackPressed();
+                }
+            });
+
+            requestQueue.add(jsonObjectRequest);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
-
 }
