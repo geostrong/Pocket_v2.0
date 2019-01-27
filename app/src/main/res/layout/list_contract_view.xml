@@ -42,7 +42,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/numberInvolved"
+                android:id="@+id/transactTimestamp"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
                 android:text="@string/phoneNo_involved"
@@ -125,7 +125,7 @@
                 android:textAlignment="textEnd"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/dashText"
-                app:layout_constraintTop_toBottomOf="@+id/numberInvolved" />
+                app:layout_constraintTop_toBottomOf="@+id/transactTimestamp" />
 
             <TextView
                 android:id="@+id/startDate"
@@ -136,8 +136,8 @@
                 android:text="10/10/18"
                 android:textAlignment="textEnd"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/numberInvolved"
-                app:layout_constraintTop_toBottomOf="@+id/numberInvolved" />
+                app:layout_constraintStart_toStartOf="@+id/transactTimestamp"
+                app:layout_constraintTop_toBottomOf="@+id/transactTimestamp" />
 
             <TextView
                 android:id="@+id/dashText"
@@ -149,7 +149,7 @@
                 android:textAlignment="textEnd"
                 android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/startDate"
-                app:layout_constraintTop_toBottomOf="@+id/numberInvolved" />
+                app:layout_constraintTop_toBottomOf="@+id/transactTimestamp" />
 
             <TextView
                 android:id="@+id/feePerFreq"

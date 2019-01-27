@@ -7,16 +7,17 @@
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
-        android:layout_height="192dp"
+        android:layout_height="240dp"
         android:layout_width="match_parent"
+        android:background="?android:colorBackground"
         >
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:contentScrim="?attr/colorPrimary"
+            app:contentScrim="?android:colorBackground"
+            app:titleEnabled="false"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-
             app:toolbarId="@+id/toolbar">
 
             <com.github.mikephil.charting.charts.LineChart

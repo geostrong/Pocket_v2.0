@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -21,10 +22,14 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.google.android.gms.vision.text.Line;
 
 import org.json.JSONArray;
@@ -61,7 +66,9 @@ public class TransactionLogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_logs);
 
-        processGraph();
+        getSupportActionBar().setTitle("Transaction History");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
         //Transaction List
         transactionListView = findViewById(R.id.transactionsListView);
@@ -69,12 +76,12 @@ public class TransactionLogsActivity extends AppCompatActivity {
         transactionListView.setLayoutManager(new LinearLayoutManager(this));
 
         listTransactions = new ArrayList<>();
-
+        String test[] = {"100", "-100"};
         for(int i=0; i<=9; i++){
             Transaction listTransaction = new Transaction(
                     "Harold" + i,
                     "1234 5678",
-                    "-$100",
+                    test[i%2],
                     "654820842081",
                     "10 June 2018",
                     "15:30"
@@ -87,13 +94,16 @@ public class TransactionLogsActivity extends AppCompatActivity {
                 userId = extras.getString("userId");
             }
         }
-        GetTransactions();
+        
+        getTransactions();
+        processGraph();
 
         adapter = new TransactAdapter(listTransactions,this);
+        transactionListView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         transactionListView.setAdapter(adapter);
     }
 
-    public void GetTransactions(){
+    public void getTransactions(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         try {
             JSONObject jsonBody = new JSONObject();
@@ -143,13 +153,43 @@ public class TransactionLogsActivity extends AppCompatActivity {
         entries.add(new Entry(3, 4));
 
         LineDataSet dataSet = new LineDataSet(entries, "Transactions");
-        chart.getAxisRight().setEnabled(false);
-        chart.getXAxis().setEnabled(false);
+
+
+        IAxisValueFormatter formatter = new IAxisValueFormatter() {
+            @Override
+            public String getFormattedValue(float value, AxisBase axis) {
+                return months[(int) value];
+            }
+        };
+
+        //Line style
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSet.setColor(getColor(R.color.colorPrimary));
+        dataSet.setDrawHighlightIndicators(false);
+        dataSet.setCircleColor(getResources().getColor(R.color.colorPrimary));
+
+        //Chart Style
+        chart.getAxisRight().setEnabled(false);
+        chart.getAxisLeft().setEnabled(false);
+        chart.getXAxis().setValueFormatter(formatter);
+        chart.getXAxis().setGranularity(1f);
+        chart.getXAxis().setTextColor(getResources().getColor(R.color.colorPrimary));
+        chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+        chart.getXAxis().setDrawGridLines(false);
+        chart.getXAxis().setDrawAxisLine(false);
+        chart.getDescription().setEnabled(false);
+        chart.getLegend().setEnabled(false);
 
         //Set Data
         LineData lineData = new LineData(dataSet);
         chart.setData(lineData);
+        chart.animateY(2000, Easing.Linear);
         chart.invalidate();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
