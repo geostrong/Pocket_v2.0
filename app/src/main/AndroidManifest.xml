@@ -18,7 +18,7 @@
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name=".TransactionActivity_Details"></activity>
         <activity android:name=".ContractActivity_Details" />
-        <activity android:name=".TransactionLogsActivity" />
+        <activity android:name=".TransactionLogsActivity"/>
         <activity android:name=".ContractPromptReceive" />
         <activity android:name=".ContractActivity_Create" />
         <activity android:name=".ContractActivity" />

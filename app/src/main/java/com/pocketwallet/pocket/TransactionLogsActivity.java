@@ -21,6 +21,11 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+import com.google.android.gms.vision.text.Line;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,11 +54,16 @@ public class TransactionLogsActivity extends AppCompatActivity {
 
     Bundle extras;
 
+    private final String[] months = {"Jan", "Feb", "Apr", "Mar", "Jun", "July", "August", "Sep", "Oct", "Nov", "December" };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_logs);
 
+        processGraph();
+
+        //Transaction List
         transactionListView = findViewById(R.id.transactionsListView);
         transactionListView.setHasFixedSize(true);
         transactionListView.setLayoutManager(new LinearLayoutManager(this));
@@ -120,6 +130,26 @@ public class TransactionLogsActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
 
+    public void processGraph() {
+        //Graphs
+        LineChart chart = (LineChart) findViewById(R.id.chart);
+        List<Entry> entries = new ArrayList<Entry>();
+
+        entries.add(new Entry(0, 4));
+        entries.add(new Entry(1, 1));
+        entries.add(new Entry(2, 2));
+        entries.add(new Entry(3, 4));
+
+        LineDataSet dataSet = new LineDataSet(entries, "Transactions");
+        chart.getAxisRight().setEnabled(false);
+        chart.getXAxis().setEnabled(false);
+        dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+
+        //Set Data
+        LineData lineData = new LineData(dataSet);
+        chart.setData(lineData);
+        chart.invalidate();
     }
 }
