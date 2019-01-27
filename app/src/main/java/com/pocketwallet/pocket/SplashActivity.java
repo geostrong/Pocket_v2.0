@@ -3,8 +3,10 @@ package com.pocketwallet.pocket;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -15,7 +17,7 @@ import com.google.firebase.messaging.FirebaseMessaging;
 
 public class SplashActivity extends Activity {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 200;
-
+    private SharedPreferences logInPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,15 +29,28 @@ public class SplashActivity extends Activity {
             ActivityCompat.requestPermissions(SplashActivity.this,
                     new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
         } else {
+
+            //Check for logged in before
+            logInPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                    startActivity(intent);
-                    finish();
+                    if (!logInPreferences.getBoolean("isLoggedIn", false)) {
+                        //Go to sign up page
+                        Intent intent = new Intent(SplashActivity.this, RegisterActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        //Go to log in page
+                        Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
                 }
             }, 1000);
         }
+
     }
 
     @Override
@@ -49,9 +64,9 @@ public class SplashActivity extends Activity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                            startActivity(intent);
-                            finish();
+                            //Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
+                            //startActivity(intent);
+                            //finish();
                         }
                     }, 1000);
                 } else {

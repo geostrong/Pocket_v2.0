@@ -1,6 +1,7 @@
 package com.pocketwallet.pocket;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText registerNameInput;
     EditText registerPasswordInput;
     EditText registerPhoneInput;
+    private TextView login;
 
     Dialog popupBox;
     private String result;
@@ -43,6 +45,15 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
 
         //SETUP BUTTONS
+        login = (TextView)findViewById(R.id.alreadyHaveButton);
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(intent);
+            }
+        });
+
         registerBtn = (Button) findViewById(R.id.registerBtn);
         registerNameInput = (EditText) findViewById(R.id.registerName);
         registerPasswordInput = (EditText) findViewById(R.id.registerPassword);

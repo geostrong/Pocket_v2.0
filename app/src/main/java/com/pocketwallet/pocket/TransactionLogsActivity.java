@@ -79,8 +79,8 @@ public class TransactionLogsActivity extends AppCompatActivity {
         }
         GetTransactions();
 
-        //adapter = new TransactAdapter(listTransactions,this);
-        //transactionListView.setAdapter(adapter);
+        adapter = new TransactAdapter(listTransactions,this);
+        transactionListView.setAdapter(adapter);
     }
 
     public void GetTransactions(){

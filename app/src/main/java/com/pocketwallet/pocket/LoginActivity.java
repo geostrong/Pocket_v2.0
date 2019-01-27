@@ -37,6 +37,7 @@ public class LoginActivity extends AppCompatActivity {
     private String phoneNumber;
     private String password;
     private boolean doubleBackToExitPressedOnce = false;
+    private SharedPreferences logInPreferences;
 
     //LOGIN API URL
     final String LOGIN_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/login";
@@ -210,12 +211,19 @@ public class LoginActivity extends AppCompatActivity {
 
     //LAUNCH MAIN ACTIVITY
     public void launchMainActivity(String userId){
+        //Update logged in
+        logInPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = logInPreferences.edit();
+        editor.putBoolean("isLoggedin", true);
+        editor.commit();
+
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("userId",userId);
         startActivity(intent);
         finish();
     }
 
+    /*
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
@@ -234,6 +242,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         }, 2000);
     }
+    */
 
     //---TEST---
     private void LoginTestUser1(){

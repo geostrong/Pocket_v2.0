@@ -134,4 +134,10 @@ public class ContractActivity_Create extends AppCompatActivity {
                 endDate.setText(date);
             }};
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }

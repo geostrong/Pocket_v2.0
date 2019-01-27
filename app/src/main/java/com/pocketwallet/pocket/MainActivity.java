@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity
     private Fragment meFragment;
     private Fragment moreFragment;
     private Fragment settingsFragment;
+    private Toolbar toolbar;
 
     private String GETAUTHCODE_URL;
     private String authCode;
@@ -76,6 +77,9 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        toolbar = findViewById(R.id.toolbar2);
+        setSupportActionBar(toolbar);
+        //setActionBar(toolbar);
 
         //SETUP FRAGMENTS
         homeFragment = new HomeFragment();
@@ -192,4 +196,5 @@ public class MainActivity extends AppCompatActivity
             }
         }, 2000);
     }
+
 }

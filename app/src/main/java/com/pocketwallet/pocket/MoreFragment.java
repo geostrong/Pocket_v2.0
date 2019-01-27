@@ -1,6 +1,8 @@
 package com.pocketwallet.pocket;
 
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,8 +17,10 @@ public class MoreFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_more, null);
-        getActivity().setTitle("Settings");
-
+        ((MainActivity)getActivity()).getSupportActionBar().show();
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Settings");
+        ((MainActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+        ((MainActivity)getActivity()).getSupportActionBar().setElevation(4);
         Button changepasswordBtn = (Button) view.findViewById(R.id.changePassword);
         changepasswordBtn.setOnClickListener(new  View.OnClickListener()
         {

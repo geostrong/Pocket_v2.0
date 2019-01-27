@@ -1,17 +1,20 @@
 package com.pocketwallet.pocket;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -43,7 +46,11 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, null);
-        getActivity().setTitle("Home");
+
+        //((MainActivity)getActivity()).getSupportActionBar().hide();
+        ((MainActivity)getActivity()).getSupportActionBar().setTitle("Pocket");
+        ((MainActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this.getActivity(), R.color.colorPrimary)));
+        ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
 
         //<--Setup buttons-->
         Button quickQrBtn = (Button) view.findViewById(R.id.quickQRBtn);
