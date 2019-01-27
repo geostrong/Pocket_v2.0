@@ -26,6 +26,7 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -40,6 +41,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +61,7 @@ public class TransactionLogsActivity extends AppCompatActivity {
 
     Bundle extras;
 
-    private final String[] months = {"Jan", "Feb", "Apr", "Mar", "Jun", "July", "August", "Sep", "Oct", "Nov", "December" };
+    private final String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +96,7 @@ public class TransactionLogsActivity extends AppCompatActivity {
                 userId = extras.getString("userId");
             }
         }
-        
+
         getTransactions();
         processGraph();
 
@@ -147,10 +149,19 @@ public class TransactionLogsActivity extends AppCompatActivity {
         LineChart chart = (LineChart) findViewById(R.id.chart);
         List<Entry> entries = new ArrayList<Entry>();
 
+        //Add data x and y data here
         entries.add(new Entry(0, 4));
         entries.add(new Entry(1, 1));
         entries.add(new Entry(2, 2));
         entries.add(new Entry(3, 4));
+        entries.add(new Entry(4, 4));
+        entries.add(new Entry(5, 1));
+        entries.add(new Entry(6, 2));
+        entries.add(new Entry(7, 4));
+        entries.add(new Entry(8, 1));
+        entries.add(new Entry(9, 2));
+        entries.add(new Entry(10, 4));
+        entries.add(new Entry(11, 3));
 
         LineDataSet dataSet = new LineDataSet(entries, "Transactions");
 
@@ -164,9 +175,11 @@ public class TransactionLogsActivity extends AppCompatActivity {
 
         //Line style
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        dataSet.setCubicIntensity(0.1f);
         dataSet.setColor(getColor(R.color.colorPrimary));
         dataSet.setDrawHighlightIndicators(false);
         dataSet.setCircleColor(getResources().getColor(R.color.colorPrimary));
+        dataSet.setLineWidth(2f);
 
         //Chart Style
         chart.getAxisRight().setEnabled(false);
@@ -179,12 +192,17 @@ public class TransactionLogsActivity extends AppCompatActivity {
         chart.getXAxis().setDrawAxisLine(false);
         chart.getDescription().setEnabled(false);
         chart.getLegend().setEnabled(false);
+        chart.getXAxis().setTextSize(14f);
+        chart.setExtraOffsets(10, 10, 10, 10);
+        chart.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
+        chart.getRenderer().getPaintRender().setShadowLayer(1, 0, 2, Color.GRAY);
 
         //Set Data
         LineData lineData = new LineData(dataSet);
         chart.setData(lineData);
+        chart.setVisibleXRange(1,3);
         chart.animateY(2000, Easing.Linear);
-        chart.invalidate();
+        chart.centerViewToAnimated(Calendar.getInstance().get(Calendar.MONDAY),0, YAxis.AxisDependency.LEFT,2000);
     }
 
     @Override
