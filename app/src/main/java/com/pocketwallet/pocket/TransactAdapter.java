@@ -1,14 +1,12 @@
 package com.pocketwallet.pocket;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 
 import java.util.List;
 
@@ -35,15 +33,14 @@ public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHo
     @Override
     public void onBindViewHolder (ViewHolder holder, final int position){
         Transaction listTransaction = listTransactions.get(position);
-
         holder.textViewName.setText(listTransaction.getName());
 
-        if (Integer.valueOf(listTransaction.getTransactAmount()) < 0) {
+        if (listTransaction.getAmount().charAt(0) == '-') {
             holder.textViewTransactAmount.setTextColor(    ContextCompat.getColor(context,R.color.colorAccent));
-            holder.textViewTransactAmount.setText("-$" + listTransaction.getTransactAmount());
+            holder.textViewTransactAmount.setText("-$" + listTransaction.getAmount());
         } else {
             holder.textViewTransactAmount.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
-            holder.textViewTransactAmount.setText("+$" + listTransaction.getTransactAmount());
+            holder.textViewTransactAmount.setText("+$" + listTransaction.getAmount());
         }
 
         final boolean isExpanded = position==mExpandedPosition;

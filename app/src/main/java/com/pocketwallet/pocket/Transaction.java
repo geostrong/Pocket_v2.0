@@ -1,5 +1,7 @@
 package com.pocketwallet.pocket;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class Transaction {
@@ -34,13 +36,16 @@ public class Transaction {
         this.origin = senderID;
         this.destination = receiverID;
         this.amount = amount;
-        //Date date1 = null;
-        //try {
-        //    date1 = new SimpleDateFormat("dd/MM/yyyy").parse(date);
-        //} catch (ParseException e) {
-        //    e.printStackTrace();
-        //}
-        //this.timestamp = date1;
+        Date date1 = null;
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        try {
+            date1 = formatter.parse(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        this.timestamp = date1;
+        System.out.println("Timestamp: " + timestamp);
+        //Test
     }
     public String getTransactionID(){
         return transactionID;
