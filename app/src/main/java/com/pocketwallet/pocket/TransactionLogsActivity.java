@@ -1,45 +1,23 @@
 package com.pocketwallet.pocket;
 
-import android.app.LauncherActivity;
-import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.View;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.LineData;
-import com.github.mikephil.charting.data.LineDataSet;
-import com.google.android.gms.vision.text.Line;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.TimeZone;
 
 public class TransactionLogsActivity extends AppCompatActivity {
 
@@ -61,7 +39,7 @@ public class TransactionLogsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_logs);
 
-        processGraph();
+        //processGraph();
 
         //Transaction List
         transactionListView = findViewById(R.id.transactionsListView);
@@ -69,8 +47,10 @@ public class TransactionLogsActivity extends AppCompatActivity {
         transactionListView.setLayoutManager(new LinearLayoutManager(this));
 
         listTransactions = new ArrayList<>();
+        transactionsArrayList = new ArrayList<>();
 
-        for(int i=0; i<=9; i++){
+        for(int i=0; i<1; i++){
+
             Transaction listTransaction = new Transaction(
                     "Harold" + i,
                     "1234 5678",
@@ -79,13 +59,11 @@ public class TransactionLogsActivity extends AppCompatActivity {
                     "10 June 2018",
                     "15:30"
             );
-
             listTransactions.add(listTransaction);
-
-            extras = getIntent().getExtras();
-            if (extras != null) {
-                userId = extras.getString("userId");
-            }
+        }
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("userId");
         }
         GetTransactions();
 
@@ -109,7 +87,24 @@ public class TransactionLogsActivity extends AppCompatActivity {
                         String result = response.getString("result");
                         System.out.println("Results: " + result);
                         if(result.equalsIgnoreCase("Success")){
-
+                            JSONArray transactionArray = response.getJSONArray("transactions");
+                            for(int i = 0; i < transactionArray.length(); i++){
+                                JSONObject tempTransaction = transactionArray.getJSONObject(i);
+                                //System.out.println("i: " + i + "|" + tempTransaction);
+                                if(tempTransaction.getString("from").equals("-")){
+                                   Transaction transaction = new Transaction(tempTransaction.getString("transactionID"), tempTransaction.getString("type"),
+                                                                             tempTransaction.getString("from"),tempTransaction.getString("to"),tempTransaction.getString("amount"),
+                                                                                tempTransaction.getString("timestamp"));
+                                   transactionsArrayList.add(transaction);
+                                }else{
+                                    Transaction transaction = new Transaction(tempTransaction.getString("transactionID"), tempTransaction.getString("type"),
+                                            tempTransaction.getString("from"),tempTransaction.getString("to"),"-" + tempTransaction.getString("amount"),
+                                            tempTransaction.getString("timestamp"));
+                                    transactionsArrayList.add(transaction);
+                                }
+                            }
+                            System.out.println("Test 0:" + transactionsArrayList.get(0));
+                        System.out.println("Test 1:" + transactionsArrayList.get(1));
                         }
                     }catch(JSONException e){
                         System.out.println("Error: " + e);
@@ -125,7 +120,6 @@ public class TransactionLogsActivity extends AppCompatActivity {
                     //onBackPressed();
                 }
             });
-            System.out.println("Error Json Body = " + new String(jsonObjectRequest.getBody()));
             requestQueue.add(jsonObjectRequest);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -133,6 +127,7 @@ public class TransactionLogsActivity extends AppCompatActivity {
     }
 
     public void processGraph() {
+        /*
         //Graphs
         LineChart chart = (LineChart) findViewById(R.id.chart);
         List<Entry> entries = new ArrayList<Entry>();
@@ -151,5 +146,6 @@ public class TransactionLogsActivity extends AppCompatActivity {
         LineData lineData = new LineData(dataSet);
         chart.setData(lineData);
         chart.invalidate();
+    */
     }
 }

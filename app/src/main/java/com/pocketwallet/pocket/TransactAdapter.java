@@ -2,15 +2,11 @@ package com.pocketwallet.pocket;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -37,8 +33,10 @@ public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHo
     public void onBindViewHolder (ViewHolder holder, final int position){
         Transaction listTransaction = listTransactions.get(position);
 
-        holder.textViewName.setText(listTransaction.getName());
-        holder.textViewTransactAmount.setText(listTransaction.getTransactAmount());
+        holder.textViewName.setText(listTransaction.getOrigin());
+        holder.textViewTransactAmount.setText(listTransaction.getAmount());
+        holder.textViewTransactID.setText(listTransaction.getTransactionID());
+        holder.textViewNumber.setText(listTransaction.getDestination());
 
         final boolean isExpanded = position==mExpandedPosition;
         holder.textViewNumber.setVisibility(isExpanded?View.VISIBLE:View.GONE);
