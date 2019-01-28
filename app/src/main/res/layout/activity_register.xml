@@ -121,7 +121,7 @@
         app:layout_constraintStart_toStartOf="@+id/textInputLayout4"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout4" />
     <TextView
-        android:id="@+id/textView9"
+        android:id="@+id/pocketTitle2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
@@ -144,9 +144,9 @@
         android:textColor="@android:color/white"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="@+id/textView9"
-        app:layout_constraintStart_toStartOf="@+id/textView9"
-        app:layout_constraintTop_toBottomOf="@+id/textView9" />
+        app:layout_constraintEnd_toEndOf="@+id/pocketTitle2"
+        app:layout_constraintStart_toStartOf="@+id/pocketTitle2"
+        app:layout_constraintTop_toBottomOf="@+id/pocketTitle2" />
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline2"

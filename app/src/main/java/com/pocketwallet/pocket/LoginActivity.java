@@ -1,9 +1,7 @@
 package com.pocketwallet.pocket;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,7 +11,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -41,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
     //LOGIN API URL
     final String LOGIN_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/login";
-    String POSTFCM_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/fcmtoken";
+    final String POSTFCM_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/fcmtoken";
     //---TEST---
     private Button loginTest1;
     private Button loginTest2;
@@ -60,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
         //SETUP BUTTONS AND EDITTEXT
         phonenumberInput = (EditText)findViewById(R.id.loginPhone);
         passwordInput = (EditText)findViewById(R.id.loginPassword);
-        login = (Button)findViewById(R.id.loginButton);
+        login = (Button)findViewById(R.id.loginButton2);
         signup = (TextView)findViewById(R.id.signupButton);
 
         phonenumberInput.addTextChangedListener(loginTextWatcher);

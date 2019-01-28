@@ -16,9 +16,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".TransactionActivity_Details"></activity>
+        <activity android:name=".LoginActivity_Logged"></activity>
+        <activity android:name=".TransactionActivity_Details" />
         <activity android:name=".ContractActivity_Details" />
-        <activity android:name=".TransactionLogsActivity"/>
+        <activity android:name=".TransactionLogsActivity" />
         <activity android:name=".ContractPromptReceive" />
         <activity android:name=".ContractActivity_Create" />
         <activity android:name=".ContractActivity" />
@@ -69,7 +70,7 @@
             android:name=".RequestActivity_Tabs"
             android:label="@string/title_activity_request"
             android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity> <!-- SERVICES -->
+            android:theme="@style/AppTheme.NoActionBar" /> <!-- SERVICES -->
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />

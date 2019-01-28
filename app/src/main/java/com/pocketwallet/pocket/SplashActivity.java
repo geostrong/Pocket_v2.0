@@ -46,6 +46,13 @@ public class SplashActivity extends Activity {
                         Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
                         startActivity(intent);
                         finish();
+
+                        /*
+                        //GO TO LOG IN PAGE (THAT HAS DETAILS SAVED);
+                        Intent intent = new Intent(SplashActivity.this, LoginActivity_Logged.class);
+                        startActivity(intent);
+                        finish();
+                        */
                     }
                 }
             }, 1000);
@@ -54,8 +61,7 @@ public class SplashActivity extends Activity {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode,
-                                           String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
         switch (requestCode) {
             case MY_PERMISSIONS_REQUEST_CAMERA: {
                 // If request is cancelled, the result arrays are empty.

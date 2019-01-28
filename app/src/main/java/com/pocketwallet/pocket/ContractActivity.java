@@ -65,4 +65,10 @@ public class ContractActivity extends AppCompatActivity {
 
         contractListView.setAdapter(adapter);
     }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
+    }
 }
