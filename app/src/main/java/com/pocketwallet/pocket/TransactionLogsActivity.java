@@ -180,13 +180,14 @@ public class TransactionLogsActivity extends AppCompatActivity {
         dataSet.setDrawHighlightIndicators(false);
         dataSet.setCircleColor(getResources().getColor(R.color.colorPrimary));
         dataSet.setLineWidth(2f);
+        dataSet.setCircleRadius(10f);
 
         //Chart Style
         chart.getAxisRight().setEnabled(false);
         chart.getAxisLeft().setEnabled(false);
         chart.getXAxis().setValueFormatter(formatter);
         chart.getXAxis().setGranularity(1f);
-        chart.getXAxis().setTextColor(getResources().getColor(R.color.colorPrimary));
+        //chart.getXAxis().setTextColor(getResources().getColor(R.color.colorPrimary));
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         chart.getXAxis().setDrawGridLines(false);
         chart.getXAxis().setDrawAxisLine(false);
