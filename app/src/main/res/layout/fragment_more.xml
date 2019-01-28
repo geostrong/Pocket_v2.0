@@ -5,55 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profile_image2"
-        android:layout_width="128dp"
-        android:layout_height="128dp"
-        android:layout_marginTop="64dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/temporary_profilepic"
-        app:civ_border_color="#FF000000"
-        app:civ_border_width="2dp"
-        app:layout_constraintDimensionRatio="H,1:1"
-        app:layout_constraintEnd_toStartOf="@+id/textView6"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="34dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/profile_name"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="@dimen/_20ssp"
-        android:textStyle="bold"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toTopOf="@+id/phoneNumber2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/profile_image2"
-        app:layout_constraintTop_toTopOf="@+id/profile_image2"
-        app:layout_constraintVertical_chainStyle="packed" />
-
-    <TextView
-        android:id="@+id/phoneNumber2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:text="@string/phoneNumber"
-        android:textColor="@color/colorPrimaryLight"
-        android:textSize="@dimen/_12ssp"
-        android:textStyle="bold"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintBottom_toBottomOf="@+id/profile_image2"
-        app:layout_constraintEnd_toEndOf="@+id/textView6"
-        app:layout_constraintStart_toStartOf="@+id/textView6"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
     <Button
         android:id="@+id/logoutButton"
         android:layout_width="0dp"
@@ -76,9 +27,9 @@
         android:id="@+id/changePassword"
         android:layout_width="0dp"
         android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
         android:background="@android:color/transparent"
         android:drawableEnd="@drawable/ic_right_arrow"
         android:gravity="center_vertical"
@@ -87,9 +38,9 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/changePIN"
-        app:layout_constraintEnd_toEndOf="@+id/textView6"
-        app:layout_constraintStart_toStartOf="@+id/profile_image2"
-        app:layout_constraintTop_toBottomOf="@+id/profile_image2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="spread" />
 
     <Button
@@ -155,7 +106,7 @@
 
     <Switch
         android:id="@+id/biometricLogin"
-        android:layout_width="309dp"
+        android:layout_width="0dp"
         android:layout_height="47dp"
         android:text="Biometric Login"
         android:textColor="@color/colorPrimaryDark"

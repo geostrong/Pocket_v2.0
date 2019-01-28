@@ -52,6 +52,13 @@ public class HomeFragment extends Fragment {
         ((MainActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this.getActivity(), R.color.colorPrimary)));
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
 
+        //Retrieve bundle information
+        Bundle extras = new Bundle();
+        extras = getArguments();
+        if (extras != null) {
+            userId = extras.getString("userId");
+        }
+
         //<--Setup buttons-->
         Button quickQrBtn = (Button) view.findViewById(R.id.quickQRBtn);
         quickQrBtn.setOnClickListener(new  View.OnClickListener()
@@ -98,32 +105,6 @@ public class HomeFragment extends Fragment {
         lastUpdatedTxt = (TextView)view.findViewById(R.id.lastUpdated);
         balanceTxt = (TextView)view.findViewById(R.id.balance);
 
-        Button topUpBtn = (Button) view.findViewById(R.id.topUpButton);
-        topUpBtn.setOnClickListener(new  View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                Intent dynamicIntent = new Intent(getActivity(), TopUpActivity.class);
-                startActivity(dynamicIntent);
-            }
-        });
-
-        Button testBtn = (Button) view.findViewById(R.id.testBtn);
-        testBtn.setOnClickListener(new  View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                Intent testIntent = new Intent(getActivity(), TransactionLogsActivity.class);
-                testIntent.putExtra("userId",userId);
-                startActivity(testIntent);
-            }
-        });
-
-        Bundle extras = new Bundle();
-        extras = getArguments();
-        if (extras != null) {
-            userId = extras.getString("userId");
-        }
         //Update Balance
         GETBALANCE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/"+ userId + "/balance";
         updateBalance();
