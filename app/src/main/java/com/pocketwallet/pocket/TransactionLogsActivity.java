@@ -50,14 +50,19 @@ public class TransactionLogsActivity extends AppCompatActivity {
         transactionsArrayList = new ArrayList<>();
 
         for(int i=0; i<1; i++){
-
             Transaction listTransaction = new Transaction(
-                    "Harold" + i,
-                    "1234 5678",
-                    "-$100",
-                    "654820842081",
-                    "10 June 2018",
-                    "15:30"
+                    //"Harold" + i,
+                    //"1234 5678",
+                    //"-$100",
+                    //"654820842081",
+                    //"10 June 2018",
+                   // "15:30"
+                    "TestID",
+                    "type",
+                    "senderID",
+                    "receiverID",
+                    "amount",
+                    "date"
             );
             listTransactions.add(listTransaction);
         }
@@ -66,9 +71,6 @@ public class TransactionLogsActivity extends AppCompatActivity {
             userId = extras.getString("userId");
         }
         GetTransactions();
-
-        adapter = new TransactAdapter(listTransactions,this);
-        transactionListView.setAdapter(adapter);
     }
 
     public void GetTransactions(){
@@ -93,22 +95,21 @@ public class TransactionLogsActivity extends AppCompatActivity {
                                 //System.out.println("i: " + i + "|" + tempTransaction);
                                 if(tempTransaction.getString("from").equals("-")){
                                    Transaction transaction = new Transaction(tempTransaction.getString("transactionID"), tempTransaction.getString("type"),
-                                                                             tempTransaction.getString("from"),tempTransaction.getString("to"),tempTransaction.getString("amount"),
+                                                                             tempTransaction.getString("from"),tempTransaction.getString("to"),"-" + tempTransaction.getString("amount"),
                                                                                 tempTransaction.getString("timestamp"));
-                                   transactionsArrayList.add(transaction);
+                                    listTransactions.add(transaction);
                                 }else{
                                     Transaction transaction = new Transaction(tempTransaction.getString("transactionID"), tempTransaction.getString("type"),
-                                            tempTransaction.getString("from"),tempTransaction.getString("to"),"-" + tempTransaction.getString("amount"),
+                                            tempTransaction.getString("from"),tempTransaction.getString("to"), tempTransaction.getString("amount"),
                                             tempTransaction.getString("timestamp"));
-                                    transactionsArrayList.add(transaction);
+                                    listTransactions.add(transaction);
                                 }
                             }
-                            System.out.println("Test 0:" + transactionsArrayList.get(0));
-                        System.out.println("Test 1:" + transactionsArrayList.get(1));
                         }
                     }catch(JSONException e){
                         System.out.println("Error: " + e);
                     }
+                    CreateAdapterView();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -124,6 +125,11 @@ public class TransactionLogsActivity extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void CreateAdapterView(){
+        adapter = new TransactAdapter(listTransactions,this);
+        transactionListView.setAdapter(adapter);
     }
 
     public void processGraph() {

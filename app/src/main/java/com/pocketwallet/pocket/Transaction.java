@@ -57,6 +57,7 @@ public class Transaction {
     public String getDestination(){
         return destination;
     }
+
     public String getAmount(){
         return amount;
     }
@@ -67,21 +68,5 @@ public class Transaction {
 
     public String getNumber(){
         return numberInvolved;
-    }
-
-    public String getTransactAmount(){
-        return transactAmount;
-    }
-
-    public String getTransactID(){
-        return transactID;
-    }
-
-    public String getTransactDate(){
-        return transactDate;
-    }
-
-    public String getTransactTime(){
-        return transactTime;
     }
 }
