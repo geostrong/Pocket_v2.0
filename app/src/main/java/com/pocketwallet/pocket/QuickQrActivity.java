@@ -41,7 +41,7 @@ public class QuickQrActivity extends AppCompatActivity {
         setContentView(R.layout.activity_quickqr);
 
         getSupportActionBar().setTitle("Quick QR");
-        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
         extras = getIntent().getExtras();
@@ -103,6 +103,12 @@ public class QuickQrActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(key,value);
         editor.commit();
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
+        return true;
     }
 }
 

@@ -2,15 +2,12 @@ package com.pocketwallet.pocket;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
-import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -29,7 +26,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_view,parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_contract_view,parent, false);
         return new ViewHolder(v);
     }
 
@@ -89,7 +86,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             super(itemView);
 
             textViewName = itemView.findViewById(R.id.nameInvolved);
-            textViewNumber = itemView.findViewById(R.id.numberInvolved);
+            textViewNumber = itemView.findViewById(R.id.transactTimestamp);
             textViewDescription = itemView.findViewById(R.id.description);
             textViewEndDate = itemView.findViewById(R.id.endDate);
             textViewEndDate2 = itemView.findViewById(R.id.endDate2);

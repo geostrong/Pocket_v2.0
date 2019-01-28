@@ -213,10 +213,12 @@ public class LoginActivity extends AppCompatActivity {
     public void launchMainActivity(String userId){
         //Update logged in
         logInPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        System.out.println("isLoggedin = " + logInPreferences.getBoolean("isLoggedIn", false));
+        System.out.println("isLoggedIn = " + logInPreferences.getBoolean("isLoggedIn", false));
         SharedPreferences.Editor editor = logInPreferences.edit();
-        editor.putBoolean("isLoggedin", true);
+        editor.putBoolean("isLoggedIn", true);
         editor.commit();
+
+        System.out.println("isLoggedIn = " + logInPreferences.getBoolean("isLoggedIn", false));
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("userId",userId);

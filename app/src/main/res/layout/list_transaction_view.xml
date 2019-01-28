@@ -4,18 +4,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="8dp">
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/activity_horizontal_margin">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="10">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/circleImageView"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="0dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:background="@drawable/circle"
             android:elevation="16dp"
             android:padding="16dp"
@@ -23,91 +24,67 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/moreBtn"
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:clickable="true"
-            android:text="MORE >"
-            android:textAlignment="viewEnd"
-            android:textColor="#0645AD"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            android:layout_height="match_parent"
+            android:layout_weight="9"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nameInvolved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_weight="1"
+                android:text="Name"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toStartOf="@+id/description"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/transactTimestamp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:drawablePadding="10sp"
+                android:text="Time Date"
+                android:textSize="14sp"
+                app:layout_constraintStart_toEndOf="@+id/circleImageView"
+                app:layout_constraintTop_toBottomOf="@+id/nameInvolved"
+                tools:text="Timestamp" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/transactAmount"
             android:layout_width="wrap_content"
-            android:layout_height="22dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
-            android:text="-$100"
-            android:textStyle="bold"
-            android:textAlignment="textEnd"
-            android:textSize="24sp"
+            android:layout_weight="1"
             android:drawablePadding="10sp"
+            android:gravity="end"
+            android:text="-"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/transactionID"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:text="TransactionID"
-            android:textAlignment="textEnd"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/circleImageView"
-            app:layout_constraintTop_toBottomOf="@+id/numberInvolved" />
+    </LinearLayout>
 
-        <TextView
-            android:id="@+id/nameInvolved"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="Name"
-            android:textColor="#5e76fa"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@+id/description"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/circleImageView"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/numberInvolved"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:drawablePadding="10sp"
-            android:text="PhoneNumber"
-            android:textAlignment="center"
-            android:textSize="20sp"
-            app:layout_constraintStart_toEndOf="@+id/circleImageView"
-            app:layout_constraintTop_toBottomOf="@+id/nameInvolved" />
-
-        <TextView
-            android:id="@+id/transactDate"
-            android:layout_width="wrap_content"
-            android:layout_height="19dp"
-            android:layout_marginTop="4dp"
-            android:text="10 June 2018"
-            android:textAlignment="textEnd"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/transactionID"
-            app:layout_constraintTop_toBottomOf="@+id/transactionID" />
-
-        <TextView
-            android:id="@+id/transactTime"
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginTop="8dp"
-            android:text="15:30"
-            android:textAlignment="textEnd"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="@+id/transactDate"
-            app:layout_constraintTop_toBottomOf="@+id/transactDate" />
-    </android.support.constraint.ConstraintLayout>
+    <Button
+        android:id="@+id/moreButton"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="MORE"
+        android:textColor="@color/colorPrimaryDark" />
 
 </LinearLayout>
