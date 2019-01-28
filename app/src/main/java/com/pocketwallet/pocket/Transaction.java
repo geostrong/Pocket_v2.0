@@ -3,6 +3,7 @@ package com.pocketwallet.pocket;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class Transaction {
     private String nameInvolved;
@@ -18,6 +19,7 @@ public class Transaction {
     private String destination;
     private String amount;
     private Date timestamp;
+    private boolean isIncoming;
 
         /*
     public Transaction (String nameInvolved, String numberInvolved, String transactAmount, String transactID, String transactDate, String transactTime){
@@ -30,23 +32,29 @@ public class Transaction {
     }*/
 
     public Transaction(String transactionRefID, String type, String senderID, String receiverID, String amount,
-                       String date){
+                       String dateStr, boolean incoming){
         this.transactionID = transactionRefID;
         this.type = type;
         this.origin = senderID;
         this.destination = receiverID;
         this.amount = amount;
-        Date date1 = null;
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+        this.isIncoming = incoming;
+
+        SimpleDateFormat sourceFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
+
+        Date date = null;
+
         try {
-            date1 = formatter.parse(date);
+            date = sourceFormat.parse(dateStr);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        this.timestamp = date1;
+
+        this.timestamp = date;
         System.out.println("Timestamp: " + timestamp);
-        //Test
+
     }
+
     public String getTransactionID(){
         return transactionID;
     }
@@ -55,23 +63,27 @@ public class Transaction {
         return type;
     }
 
-    public String getOrigin(){
-        return origin;
-    }
-
-    public String getDestination(){
-        return destination;
-    }
-
     public String getAmount(){
         return amount;
     }
 
-    public String getName(){
-        return nameInvolved;
-    }
-
     public String getNumber(){
         return numberInvolved;
+    }
+
+    public boolean getisIncoming() {return isIncoming; }
+
+    public String getName() {
+        if (!getisIncoming()) {
+            return destination;
+        }
+
+        return origin;
+    }
+    public String getTimestampToString () {
+        SimpleDateFormat destinationFormat = new SimpleDateFormat("yyyy-MM-dd 'at' hh:mma");
+        destinationFormat.setTimeZone(TimeZone.getTimeZone("Asia/Singapore"));
+        String dateFormat = destinationFormat.format(timestamp);
+        return dateFormat;
     }
 }

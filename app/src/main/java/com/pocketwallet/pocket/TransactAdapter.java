@@ -33,14 +33,17 @@ public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHo
     @Override
     public void onBindViewHolder (ViewHolder holder, final int position){
         Transaction listTransaction = listTransactions.get(position);
+
         holder.textViewName.setText(listTransaction.getName());
 
-        if (listTransaction.getAmount().charAt(0) == '-') {
+        if (!listTransaction.getisIncoming()) {
             holder.textViewTransactAmount.setTextColor(    ContextCompat.getColor(context,R.color.colorAccent));
             holder.textViewTransactAmount.setText("-$" + listTransaction.getAmount());
+            holder.textViewTimestamp.setText("Sent on " + listTransaction.getTimestampToString());
         } else {
             holder.textViewTransactAmount.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
             holder.textViewTransactAmount.setText("+$" + listTransaction.getAmount());
+            holder.textViewTimestamp.setText(listTransaction.getTimestampToString());
         }
 
         final boolean isExpanded = position==mExpandedPosition;
@@ -68,7 +71,7 @@ public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewName, textViewNumber, textViewTransactAmount, textViewTransactID, textViewMoreBtn;
+        TextView textViewName, textViewNumber, textViewTransactAmount, textViewTransactID, textViewMoreBtn, textViewTimestamp;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -77,6 +80,7 @@ public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHo
             textViewNumber = itemView.findViewById(R.id.transactTimestamp);
             textViewTransactAmount = itemView.findViewById(R.id.transactAmount);
             textViewMoreBtn = itemView.findViewById(R.id.moreButton);
+            textViewTimestamp = itemView.findViewById(R.id.transactTimestamp);
         }
 
     }

@@ -29,6 +29,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -65,33 +66,26 @@ public class TransactionLogsActivity extends AppCompatActivity {
         listTransactions = new ArrayList<>();
         transactionsArrayList = new ArrayList<>();
 
-        for(int i=0; i<1; i++){
-            Transaction listTransaction = new Transaction(
-                    "TestID",
-                    "type",
-                    "senderID",
-                    "receiverID",
-                    "amount",
-                    "date");
-            listTransactions.add(listTransaction);
-        }
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
         }
+
         getTransactions();
         processGraph();
-        CreateAdapterView();
     }
 
     public void getTransactions(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
+
         try {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user_id", userId);
             System.out.println("User ID: " +jsonBody);
             urlRetrieveTransactionHistory += "/" + userId;
+
             System.out.println("urlRetrieveTransactionHistory: " + urlRetrieveTransactionHistory);
+
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlRetrieveTransactionHistory, jsonBody,
                     new Response.Listener<JSONObject>() {
                 @Override
@@ -99,19 +93,24 @@ public class TransactionLogsActivity extends AppCompatActivity {
                     try {
                         String result = response.getString("result");
                         System.out.println("Results: " + result);
+
                         if(result.equalsIgnoreCase("Success")){
                             JSONArray transactionArray = response.getJSONArray("transactions");
+
                             for(int i = 0; i < transactionArray.length(); i++){
                                 JSONObject tempTransaction = transactionArray.getJSONObject(i);
+
                                 if(tempTransaction.getString("from").equals("-")){
+
                                    Transaction transaction = new Transaction(tempTransaction.getString("transactionID"), tempTransaction.getString("type"),
-                                                                             tempTransaction.getString("from"),tempTransaction.getString("to"),"-" + tempTransaction.getString("amount"),
-                                                                                tempTransaction.getString("timestamp"));
+                                                                             tempTransaction.getString("from"),tempTransaction.getString("to"), tempTransaction.getString("amount"),
+                                                                                tempTransaction.getString("timestamp"), false);
                                     listTransactions.add(transaction);
                                 }else{
+
                                     Transaction transaction = new Transaction(tempTransaction.getString("transactionID"), tempTransaction.getString("type"),
                                             tempTransaction.getString("from"),tempTransaction.getString("to"), tempTransaction.getString("amount"),
-                                            tempTransaction.getString("timestamp"));
+                                            tempTransaction.getString("timestamp"), true);
                                     listTransactions.add(transaction);
                                 }
                             }
@@ -119,7 +118,8 @@ public class TransactionLogsActivity extends AppCompatActivity {
                     }catch(JSONException e){
                         System.out.println("Error: " + e);
                     }
-                    CreateAdapterView();
+
+                    createAdapterView();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -137,7 +137,7 @@ public class TransactionLogsActivity extends AppCompatActivity {
         }
     }
 
-    public void CreateAdapterView(){
+    public void createAdapterView(){
         adapter = new TransactAdapter(listTransactions,this);
         transactionListView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         transactionListView.setAdapter(adapter);
