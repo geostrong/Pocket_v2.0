@@ -37,26 +37,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <Button
-                android:id="@+id/terminateContractBtn"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/btn_logoutlayout"
-                android:text="Terminate"
-                android:textAllCaps="false"
-                android:textColor="#FFFFFF"
-                android:textSize="16sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.934" />
-
             <android.support.constraint.Guideline
                 android:id="@+id/guideline10"
                 android:layout_width="wrap_content"
@@ -72,186 +52,270 @@
                 app:layout_constraintGuide_begin="112dp" />
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/contractName"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
                 android:autoSizeTextType="uniform"
-                android:text="Contract Description"
+                android:text="Contract Name"
                 android:textAlignment="textStart"
                 android:textColor="@color/colorPrimaryDark"
-                app:layout_constraintBottom_toTopOf="@+id/guideline10"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline9"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/nameText"
+                android:id="@+id/statusText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Status: "
+                android:textSize="16sp"
+                app:layout_constraintEnd_toStartOf="@+id/status"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@+id/contractName"
+                app:layout_constraintTop_toBottomOf="@+id/contractName" />
+
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:text="Active"
+                android:textColor="@color/colorGreen"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@+id/contractName"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/statusText"
+                app:layout_constraintTop_toTopOf="@+id/statusText" />
+
+            <TextView
+                android:id="@+id/receiverNameText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
-                android:layout_marginTop="32dp"
-                android:text="Name:"
-                android:textSize="20sp"
+                android:layout_marginTop="16dp"
+                android:text="Receiving Party :"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/receiverPhoneNumberText"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/guideline10" />
+                app:layout_constraintTop_toBottomOf="@+id/statusText"
+                app:layout_constraintVertical_bias="0.0"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/nameInvolved"
+                android:id="@+id/receiverName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
                 android:text="@string/name_involved"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/nameText"
-                app:layout_constraintTop_toTopOf="@+id/guideline10" />
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/receiverNameText" />
 
             <TextView
-                android:id="@+id/feeText"
+                android:id="@+id/receiverPhoneNumberText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="30dp"
-                android:text="Phone No:"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/nameText"
-                app:layout_constraintTop_toBottomOf="@+id/nameText" />
+                android:layout_marginTop="32dp"
+                android:text="Receiving Party's phone no. :"
+                app:layout_constraintBottom_toTopOf="@+id/payingNameText"
+                app:layout_constraintStart_toStartOf="@+id/receiverNameText"
+                app:layout_constraintTop_toBottomOf="@+id/receiverNameText" />
 
             <TextView
-                android:id="@+id/phoneInvolved"
+                android:id="@+id/receiverPhoneNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginEnd="32dp"
+                android:text="-"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/receiverPhoneNumberText" />
+
+            <TextView
+                android:id="@+id/payingNameText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Paying Party :"
+                app:layout_constraintBottom_toTopOf="@+id/secondPartyPhoneNumberText"
+                app:layout_constraintStart_toStartOf="@+id/receiverNameText"
+                app:layout_constraintTop_toBottomOf="@+id/receiverPhoneNumberText" />
+
+            <TextView
+                android:id="@+id/payingName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="-"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/payingNameText" />
+
+            <TextView
+                android:id="@+id/secondPartyPhoneNumberText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Paying Party's phone no. :"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/amountText"
+                app:layout_constraintStart_toStartOf="@+id/payingNameText"
+                app:layout_constraintTop_toBottomOf="@+id/payingNameText" />
+
+            <TextView
+                android:id="@+id/secondPartyPhoneNumber"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
                 android:text="@string/phoneNo_involved"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/feeText"
-                app:layout_constraintTop_toBottomOf="@+id/nameText" />
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/secondPartyPhoneNumberText" />
 
             <TextView
-                android:id="@+id/feePerFreq"
+                android:id="@+id/amountText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="30dp"
+                android:text="Amount :"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/periodtext"
+                app:layout_constraintStart_toStartOf="@+id/secondPartyPhoneNumberText"
+                app:layout_constraintTop_toBottomOf="@+id/secondPartyPhoneNumberText" />
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
                 android:text="@string/feePerFreq"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/colonText"
-                app:layout_constraintTop_toBottomOf="@+id/feeText" />
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/amountText" />
 
             <TextView
-                android:id="@+id/penaltyAmount"
+                android:id="@+id/periodtext"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="30dp"
-                android:text="@string/penaltyAmount"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/penaltyFeeText"
-                app:layout_constraintTop_toBottomOf="@+id/feePerText" />
-
-            <TextView
-                android:id="@+id/payingOn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="30dp"
-                android:text="10 Mar 2018"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/nextPaymentText"
-                app:layout_constraintTop_toBottomOf="@+id/dashText" />
-
-            <TextView
-                android:id="@+id/feePerText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="30dp"
-                android:text="Fee per"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/feeText"
-                app:layout_constraintTop_toBottomOf="@+id/feeText" />
-
-            <TextView
-                android:id="@+id/frequency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="30dp"
-                android:text="Month"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/feePerText"
-                app:layout_constraintTop_toBottomOf="@+id/feeText" />
-
-            <TextView
-                android:id="@+id/colonText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="30dp"
-                android:text=":"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/frequency"
-                app:layout_constraintTop_toBottomOf="@+id/feeText" />
-
-            <TextView
-                android:id="@+id/penaltyFeeText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="30dp"
-                android:text="Penalty Fee:"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/feePerText"
-                app:layout_constraintTop_toBottomOf="@+id/feePerText" />
-
-            <TextView
-                android:id="@+id/nextPaymentText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="30dp"
-                android:text="Next Payment:"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/penaltyFeeText"
-                app:layout_constraintTop_toBottomOf="@+id/dashText" />
+                android:layout_marginTop="32dp"
+                android:text="Active Period:"
+                app:layout_constraintBottom_toTopOf="@+id/penaltyFeeText"
+                app:layout_constraintStart_toStartOf="@+id/amountText"
+                app:layout_constraintTop_toBottomOf="@+id/amountText" />
 
             <TextView
                 android:id="@+id/startDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
                 android:layout_marginEnd="8dp"
-                android:text="10 June 2018"
-                android:textSize="20sp"
+                android:text="@string/startDate"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@+id/dashText"
-                app:layout_constraintTop_toBottomOf="@+id/penaltyFeeText" />
+                app:layout_constraintTop_toTopOf="@+id/periodtext" />
 
             <TextView
                 android:id="@+id/dashText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="30dp"
                 android:layout_marginEnd="8dp"
-                android:text="-"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/penaltyFeeText" />
+                android:text="~"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/endDate"
+                app:layout_constraintTop_toTopOf="@+id/startDate" />
 
             <TextView
                 android:id="@+id/endDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginEnd="32dp"
                 android:text="@string/endDate"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/dashText"
+                android:textColor="@color/colorPrimaryDark"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/dashText" />
+
+            <TextView
+                android:id="@+id/penaltyFeeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Penalty Fee:"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toTopOf="@+id/descriptionText"
+                app:layout_constraintStart_toStartOf="@+id/periodtext"
+                app:layout_constraintTop_toBottomOf="@+id/periodtext" />
+
+            <TextView
+                android:id="@+id/penaltyAmount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="@string/penaltyAmount"
+                android:textColor="@color/colorPrimaryDark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/penaltyFeeText" />
+
+            <Button
+                android:id="@+id/acceptButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/btn_layout"
+                android:backgroundTint="@color/colorGreen"
+                android:text="ACCEPT"
+                android:textColor="#FFFFFF"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <Button
+                android:id="@+id/declineButton"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:text="Decline"
+                android:textAllCaps="true"
+                android:textColor="@color/colorRed"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/acceptButton" />
+
+            <TextView
+                android:id="@+id/descriptionText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="8dp"
+                android:text="Description"
+                app:layout_constraintBottom_toTopOf="@+id/declineButton"
+                app:layout_constraintStart_toStartOf="@+id/penaltyFeeText"
                 app:layout_constraintTop_toBottomOf="@+id/penaltyFeeText" />
+
+            <TextView
+                android:id="@+id/description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="-"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/descriptionText" />
+
         </android.support.constraint.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
@@ -270,7 +334,9 @@
         android:background="@color/colorPrimary"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

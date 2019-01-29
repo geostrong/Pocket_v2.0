@@ -88,8 +88,10 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
                     List<Transaction> filteredList = new ArrayList<>();
                     for (Transaction t: listTransactions) {
 
-                        //name match condition
-                        if (t.getName().toLowerCase().contains(charString.toLowerCase())) {
+                        //PUT SEARCH CONDITIONS HERE
+                        if (t.getName().toLowerCase().contains(charString.toLowerCase()) ||
+                                t.getTimestampToString().toLowerCase().contains(charString.toLowerCase()) ||
+                                t.getType().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(t);
                         }
                     }
@@ -120,7 +122,7 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         public ViewHolder(View itemView){
             super(itemView);
 
-            textViewName = itemView.findViewById(R.id.nameInvolved);
+            textViewName = itemView.findViewById(R.id.receiverName);
             textViewNumber = itemView.findViewById(R.id.transactTimestamp);
             textViewTransactAmount = itemView.findViewById(R.id.transactAmount);
             textViewMoreBtn = itemView.findViewById(R.id.moreButton);

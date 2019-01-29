@@ -82,6 +82,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         createAdapterView();
         getTransactions();
         processGraph();
+
     }
 
     public void getTransactions(){
@@ -161,11 +162,14 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         searchView.setSearchableInfo((searchManager.getSearchableInfo(getComponentName())));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
+
+        System.out.println("Submit = " + searchView.isSubmitButtonEnabled());
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                searchView.clearFocus();
                 adapter.getFilter().filter(query);
-                return false;
+                return true;
             }
 
             @Override

@@ -85,12 +85,12 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
         public ViewHolder(View itemView){
             super(itemView);
 
-            textViewName = itemView.findViewById(R.id.nameInvolved);
+            textViewName = itemView.findViewById(R.id.receiverName);
             textViewNumber = itemView.findViewById(R.id.transactTimestamp);
-            textViewDescription = itemView.findViewById(R.id.description);
+            textViewDescription = itemView.findViewById(R.id.contractName);
             textViewEndDate = itemView.findViewById(R.id.endDate);
             textViewEndDate2 = itemView.findViewById(R.id.endDate2);
-            textViewFeePerFreq = itemView.findViewById(R.id.feePerFreq);
+            textViewFeePerFreq = itemView.findViewById(R.id.amount);
             textViewFrequency = itemView.findViewById(R.id.frequency);
             textViewPerSign = itemView.findViewById(R.id.perSign);
             textViewMoreBtn = itemView.findViewById(R.id.moreBtn);

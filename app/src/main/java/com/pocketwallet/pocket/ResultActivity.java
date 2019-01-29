@@ -40,7 +40,7 @@ public class ResultActivity extends AppCompatActivity {
         fromTo = findViewById(R.id.fromTo);
         amountTitle = findViewById(R.id.amountTitle);
         transIdTitle = findViewById(R.id.transIdTitle);
-        involvedName = findViewById(R.id.nameInvolved);
+        involvedName = findViewById(R.id.receiverName);
         amountText = findViewById(R.id.amountInvolved);
         Button returnBtn = findViewById(R.id.returnButton);
         returnBtn.setOnClickListener(new View.OnClickListener() {

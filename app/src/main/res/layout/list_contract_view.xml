@@ -48,11 +48,11 @@
                 android:text="@string/phoneNo_involved"
                 android:textAlignment="textEnd"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/nameInvolved"
-                app:layout_constraintTop_toBottomOf="@+id/nameInvolved" />
+                app:layout_constraintStart_toStartOf="@+id/receiverName"
+                app:layout_constraintTop_toBottomOf="@+id/receiverName" />
 
             <TextView
-                android:id="@+id/description"
+                android:id="@+id/contractName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -68,7 +68,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/nameInvolved"
+                android:id="@+id/receiverName"
                 android:layout_width="wrap_content"
                 android:layout_height="23dp"
                 android:layout_marginTop="8dp"
@@ -77,8 +77,8 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toStartOf="@+id/endDate"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/description"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
+                app:layout_constraintStart_toStartOf="@+id/contractName"
+                app:layout_constraintTop_toBottomOf="@+id/contractName" />
 
             <TextView
                 android:id="@+id/payingOn"
@@ -112,8 +112,8 @@
                 android:text="Until: 10 Feb 2022"
                 android:textAlignment="textEnd"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/description"
-                app:layout_constraintTop_toBottomOf="@+id/description" />
+                app:layout_constraintStart_toStartOf="@+id/contractName"
+                app:layout_constraintTop_toBottomOf="@+id/contractName" />
 
             <TextView
                 android:id="@+id/endDate2"
@@ -152,7 +152,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/transactTimestamp" />
 
             <TextView
-                android:id="@+id/feePerFreq"
+                android:id="@+id/amount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -172,7 +172,7 @@
                 android:text="/"
                 android:textAlignment="textEnd"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/feePerFreq"
+                app:layout_constraintStart_toEndOf="@+id/amount"
                 app:layout_constraintTop_toBottomOf="@+id/endDate2" />
 
             <TextView

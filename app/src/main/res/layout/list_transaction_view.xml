@@ -31,7 +31,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/nameInvolved"
+                android:id="@+id/receiverName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -42,7 +42,7 @@
                 android:textColor="@color/colorPrimaryDark"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toStartOf="@+id/description"
+                app:layout_constraintEnd_toStartOf="@+id/contractName"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/circleImageView"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -55,9 +55,9 @@
                 android:layout_weight="1"
                 android:drawablePadding="10sp"
                 android:text="Time Date"
-                android:textSize="14sp"
+                android:textSize="12sp"
                 app:layout_constraintStart_toEndOf="@+id/circleImageView"
-                app:layout_constraintTop_toBottomOf="@+id/nameInvolved"
+                app:layout_constraintTop_toBottomOf="@+id/receiverName"
                 tools:text="Timestamp" />
 
         </LinearLayout>
