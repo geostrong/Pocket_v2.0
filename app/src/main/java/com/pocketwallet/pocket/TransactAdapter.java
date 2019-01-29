@@ -6,44 +6,50 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
-public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHolder> {
+public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHolder> implements Filterable {
 
     int mExpandedPosition = -1;
     int previousExpandedPosition = -1;
 
     private List<Transaction> listTransactions;
+    private List<Transaction> transactionListFiltered;
     private Context context;
+    private TransactAdapterListener listener;
 
     public TransactAdapter(List<Transaction> listTransactions, Context context) {
         this.listTransactions = listTransactions;
         this.context = context;
+        this.transactionListFiltered = listTransactions;
     }
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_transaction_view,parent, false);
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder (ViewHolder holder, final int position){
-        Transaction listTransaction = listTransactions.get(position);
+        Transaction t = transactionListFiltered.get(position);
 
-        holder.textViewName.setText(listTransaction.getName());
+        holder.textViewName.setText(t.getName());
 
-        if (!listTransaction.getisIncoming()) {
+        if (!t.getisIncoming()) {
             holder.textViewTransactAmount.setTextColor(    ContextCompat.getColor(context,R.color.colorAccent));
-            holder.textViewTransactAmount.setText("-$" + listTransaction.getAmount());
-            holder.textViewTimestamp.setText("Sent on " + listTransaction.getTimestampToString());
+            holder.textViewTransactAmount.setText("-$" + t.getAmount());
+            holder.textViewTimestamp.setText("Sent on " + t.getTimestampToString());
         } else {
             holder.textViewTransactAmount.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
-            holder.textViewTransactAmount.setText("+$" + listTransaction.getAmount());
-            holder.textViewTimestamp.setText(listTransaction.getTimestampToString());
+            holder.textViewTransactAmount.setText("+$" + t.getAmount());
+            holder.textViewTimestamp.setText(t.getTimestampToString());
         }
 
         final boolean isExpanded = position==mExpandedPosition;
@@ -66,7 +72,45 @@ public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHo
 
     @Override
     public int getItemCount(){
-        return listTransactions.size();
+        return transactionListFiltered.size();
+    }
+
+    @Override
+    public Filter getFilter() {
+        return new Filter() {
+            @Override
+            protected FilterResults performFiltering(CharSequence charSequence) {
+                String charString = charSequence.toString();
+                System.out.println("F) Filtered string: + " + charSequence.toString());
+                if (charString.isEmpty()) {
+                    transactionListFiltered = listTransactions;
+                } else {
+                    List<Transaction> filteredList = new ArrayList<>();
+                    for (Transaction t: listTransactions) {
+
+                        //name match condition
+                        if (t.getName().toLowerCase().contains(charString.toLowerCase())) {
+                            filteredList.add(t);
+                        }
+                    }
+
+                    System.out.println("F) Filtered list size: + " + filteredList.size());
+                    transactionListFiltered = filteredList;
+                }
+                FilterResults filterResults = new FilterResults();
+                filterResults.values = transactionListFiltered;
+                return filterResults;
+            }
+
+            @Override
+            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+                transactionListFiltered = (ArrayList<Transaction>) filterResults.values;
+                notifyDataSetChanged();
+            }
+        };
+    }
+    public interface TransactAdapterListener {
+        void onTransactionSelected(Transaction transaction);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

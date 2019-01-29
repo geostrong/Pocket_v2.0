@@ -1,5 +1,7 @@
 package com.pocketwallet.pocket;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -7,7 +9,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -34,13 +40,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class TransactionLogsActivity extends AppCompatActivity {
+public class TransactionLogsActivity extends AppCompatActivity implements TransactAdapter.TransactAdapterListener{
 
     private RecyclerView transactionListView;
-    private RecyclerView.Adapter adapter;
+    private TransactAdapter adapter;
 
     private List<Transaction> listTransactions;
     private ArrayList transactionsArrayList;
+
+    private SearchView searchView;
 
     private String userId;
     private String urlRetrieveTransactionHistory = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/transactionhistory";
@@ -71,6 +79,7 @@ public class TransactionLogsActivity extends AppCompatActivity {
             userId = extras.getString("userId");
         }
 
+        createAdapterView();
         getTransactions();
         processGraph();
     }
@@ -118,8 +127,8 @@ public class TransactionLogsActivity extends AppCompatActivity {
                     }catch(JSONException e){
                         System.out.println("Error: " + e);
                     }
-
-                    createAdapterView();
+                    //createAdapterView();
+                    adapter.notifyDataSetChanged();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -141,6 +150,42 @@ public class TransactionLogsActivity extends AppCompatActivity {
         adapter = new TransactAdapter(listTransactions,this);
         transactionListView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         transactionListView.setAdapter(adapter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.transact_search, menu);
+
+        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
+        searchView.setSearchableInfo((searchManager.getSearchableInfo(getComponentName())));
+        searchView.setMaxWidth(Integer.MAX_VALUE);
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String query) {
+                adapter.getFilter().filter(query);
+                return false;
+            }
+        });
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_search) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     public void processGraph() {
@@ -211,5 +256,20 @@ public class TransactionLogsActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        // close search view on back button pressed
+        if (!searchView.isIconified()) {
+            searchView.setIconified(true);
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    public void onTransactionSelected(Transaction transaction) {
+        Toast.makeText(getApplicationContext(), "Selected: " + transaction.getName() + ", " + transaction.getAmount(), Toast.LENGTH_LONG).show();
     }
 }
