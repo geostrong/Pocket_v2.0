@@ -62,7 +62,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             targetUserId = extras.getString("targetUserId");
         }
 
-        totalAmountText = (TextView) findViewById(R.id.totalAmountText);
+        totalAmountText = (TextView) findViewById(R.id.amountText);
         totalAmountText.setText("$:"+ amount);
     }
 
