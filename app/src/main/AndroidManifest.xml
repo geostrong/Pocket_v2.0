@@ -16,11 +16,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LoginActivity_Logged"></activity>
+        <activity android:name=".TransferActivity_Bill_Confirmation"></activity>
+        <activity android:name=".TransferActivity_Phone_Confirmation" />
+        <activity android:name=".TransferActivity" />
+        <activity android:name=".LoginActivity_Logged" />
         <activity android:name=".TransactionActivity_Details" />
         <activity android:name=".ContractActivity_Details" />
-
-
         <activity android:name=".TransactionLogsActivity">
             <meta-data
                 android:name="android.app.searchable"
@@ -30,8 +31,6 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-
-
         <activity android:name=".ContractPromptReceive" />
         <activity android:name=".ContractActivity_Create" />
         <activity android:name=".ContractActivity" />

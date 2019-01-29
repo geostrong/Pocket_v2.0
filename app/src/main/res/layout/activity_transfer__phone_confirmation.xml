@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ScanQRActivity_Static">
+    tools:context=".TransferActivity_Phone_Confirmation">
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline7"
@@ -34,7 +34,7 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/payButtonStatic"
+        app:layout_constraintBottom_toTopOf="@+id/payButtonPhone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -42,7 +42,7 @@
         app:layout_constraintVertical_bias="0.0">
 
         <EditText
-            android:id="@+id/amountTransferStatic"
+            android:id="@+id/amountTransferPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawableLeft="@drawable/ic_attach_money_black_24dp"
@@ -107,7 +107,7 @@
     </android.support.v7.widget.CardView>
 
     <Button
-        android:id="@+id/payButtonStatic"
+        android:id="@+id/payButtonPhone"
         android:layout_width="300sp"
         android:layout_height="49sp"
         android:layout_marginBottom="16dp"
