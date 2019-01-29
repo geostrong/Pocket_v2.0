@@ -1,6 +1,7 @@
 package com.pocketwallet.pocket;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -71,6 +72,14 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
                 notifyItemChanged(position);
             }
         });
+
+        holder.textViewMoreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(v.getContext(), ContractActivity_Details.class);
+                v.getContext().startActivity(newIntent);
+            }
+        });
     }
 
     @Override
@@ -85,12 +94,12 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
         public ViewHolder(View itemView){
             super(itemView);
 
-            textViewName = itemView.findViewById(R.id.nameInvolved);
+            textViewName = itemView.findViewById(R.id.receiverName);
             textViewNumber = itemView.findViewById(R.id.transactTimestamp);
-            textViewDescription = itemView.findViewById(R.id.description);
+            textViewDescription = itemView.findViewById(R.id.contractName);
             textViewEndDate = itemView.findViewById(R.id.endDate);
             textViewEndDate2 = itemView.findViewById(R.id.endDate2);
-            textViewFeePerFreq = itemView.findViewById(R.id.feePerFreq);
+            textViewFeePerFreq = itemView.findViewById(R.id.amount);
             textViewFrequency = itemView.findViewById(R.id.frequency);
             textViewPerSign = itemView.findViewById(R.id.perSign);
             textViewMoreBtn = itemView.findViewById(R.id.moreBtn);
