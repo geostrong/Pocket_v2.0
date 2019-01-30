@@ -35,15 +35,14 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
-public class TransactionLogsActivity extends AppCompatActivity implements TransactAdapter.TransactAdapterListener{
+public class TransactionLogsActivity extends AppCompatActivity implements TransactionLogsAdapter.TransactAdapterListener{
 
     private RecyclerView transactionListView;
-    private TransactAdapter adapter;
+    private TransactionLogsAdapter adapter;
 
     private List<Transaction> listTransactions;
     private ArrayList transactionsArrayList;
@@ -148,7 +147,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
     }
 
     public void createAdapterView(){
-        adapter = new TransactAdapter(listTransactions,this);
+        adapter = new TransactionLogsAdapter(listTransactions,this);
         transactionListView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         transactionListView.setAdapter(adapter);
     }

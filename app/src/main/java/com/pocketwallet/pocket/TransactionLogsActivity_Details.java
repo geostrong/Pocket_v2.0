@@ -3,7 +3,7 @@ package com.pocketwallet.pocket;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class TransactionActivity_Details extends AppCompatActivity {
+public class TransactionLogsActivity_Details extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

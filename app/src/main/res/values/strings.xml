@@ -130,5 +130,7 @@
 
     <string name="action_search">Search</string>
     <string name="search_hint">Type..</string>
+    <string name="title_activity_transfer2">TransferActivity2</string>
+    <string name="tab_text_3">Tab 3</string>
 
 </resources>

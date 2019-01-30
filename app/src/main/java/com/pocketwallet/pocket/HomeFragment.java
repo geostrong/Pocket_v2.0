@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toolbar;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -33,8 +32,7 @@ import java.util.TimeZone;
 
 public class HomeFragment extends Fragment {
 
-    private String GETBALANCE_URL;
-    private String GETAUTHCODE_URL;
+    private String GETBALANCE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/";
     private String userId;
 
     private TextView lastUpdatedTxt;
@@ -47,7 +45,6 @@ public class HomeFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, null);
 
-        //((MainActivity)getActivity()).getSupportActionBar().hide();
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Pocket");
         ((MainActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(this.getActivity(), R.color.colorPrimary)));
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(0);
@@ -57,10 +54,12 @@ public class HomeFragment extends Fragment {
         extras = getArguments();
         if (extras != null) {
             userId = extras.getString("userId");
+            //SET URL
+            GETBALANCE_URL += userId + "/balance";
         }
 
         //<--Setup buttons-->
-        Button quickQrBtn = (Button) view.findViewById(R.id.quickQRBtn);
+        Button quickQrBtn = view.findViewById(R.id.quickQRBtn);
         quickQrBtn.setOnClickListener(new  View.OnClickListener()
         {
             @Override
@@ -71,7 +70,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        Button scanQrBtn = (Button) view.findViewById(R.id.scanQRBtn);
+        Button scanQrBtn = view.findViewById(R.id.scanQRBtn);
         scanQrBtn.setOnClickListener(new  View.OnClickListener()
         {
             @Override
@@ -82,7 +81,7 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        Button requestBtn = (Button) view.findViewById(R.id.reqBtn);
+        Button requestBtn = view.findViewById(R.id.reqBtn);
         requestBtn.setOnClickListener(new  View.OnClickListener()
         {
             @Override
@@ -93,17 +92,17 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        Button testBtn = (Button) view.findViewById(R.id.testBtn);
-        testBtn.setOnClickListener(new  View.OnClickListener()
+        Button payBtn = view.findViewById(R.id.payButton);
+        payBtn.setOnClickListener(new  View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(getActivity(), ContractActivity_Details.class);
+                Intent newIntent = new Intent(getActivity(), TransferActivity.class);
                 startActivity(newIntent);
             }
         });
 
-        myPocketButton = (ConstraintLayout) view.findViewById(R.id.myPocketButton);
+        myPocketButton = view.findViewById(R.id.myPocketButton);
         myPocketButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -112,12 +111,12 @@ public class HomeFragment extends Fragment {
         });
         //<--End of setup buttons-->
 
-        lastUpdatedTxt = (TextView)view.findViewById(R.id.lastUpdated);
-        balanceTxt = (TextView)view.findViewById(R.id.balance);
+        lastUpdatedTxt = view.findViewById(R.id.lastUpdated);
+        balanceTxt = view.findViewById(R.id.balance);
 
-        //Update Balance
-        GETBALANCE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/"+ userId + "/balance";
+        //Update balance
         updateBalance();
+
         return view;
     }
 

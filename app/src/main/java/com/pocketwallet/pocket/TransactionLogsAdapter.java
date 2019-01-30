@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHolder> implements Filterable {
+public class TransactionLogsAdapter extends RecyclerView.Adapter<TransactionLogsAdapter.ViewHolder> implements Filterable {
 
     int mExpandedPosition = -1;
     int previousExpandedPosition = -1;
@@ -24,7 +24,7 @@ public class TransactAdapter extends RecyclerView.Adapter<TransactAdapter.ViewHo
     private Context context;
     private TransactAdapterListener listener;
 
-    public TransactAdapter(List<Transaction> listTransactions, Context context) {
+    public TransactionLogsAdapter(List<Transaction> listTransactions, Context context) {
         this.listTransactions = listTransactions;
         this.context = context;
         this.transactionListFiltered = listTransactions;

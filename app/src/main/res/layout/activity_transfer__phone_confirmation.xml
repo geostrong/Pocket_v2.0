@@ -28,81 +28,99 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardView6"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
         app:cardCornerRadius="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/payButtonPhone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout3">
 
-        <EditText
-            android:id="@+id/amountTransferPhone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ic_attach_money_black_24dp"
-            android:ems="10"
-            android:hint="Amount"
-            android:layout_marginStart="65dp"
-            android:layout_marginTop="200dp"
-            android:inputType="numberDecimal"
-            android:textCursorDrawable="@color/colorPrimaryDark"
-            app:layout_constraintTop_toBottomOf="@id/numbertext2" />
-
-        <TextView
-            android:id="@+id/nametext2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="78dp"
-            android:text="Name:"
-            android:textSize="16sp" />
-
-        <TextView
-            android:id="@+id/payText"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="8dp"
-            android:text="You're Paying"
-            android:textAlignment="center"
-            android:textSize="20sp" />
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/involvedName2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="180dp"
-            android:layout_marginTop="78dp"
-            android:text="@string/name_involved"
-            android:textColor="#5e76fa"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/payText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
 
-        <TextView
-            android:id="@+id/involvedNumber2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="180dp"
-            android:layout_marginTop="120dp"
-            android:text="@string/phoneNo_involved"
-            android:textColor="#5e76fa"
-            android:textSize="14sp" />
+                android:layout_marginTop="32dp"
+                android:text="You're Paying"
+                android:textAlignment="center"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/numbertext2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="120dp"
-            android:layout_marginBottom="16dp"
-            android:text="Phone Number:"
-            android:textSize="16sp" />
+            <TextView
+                android:id="@+id/nametext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:text="Name:"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/payText" />
+
+            <TextView
+                android:id="@+id/numbertext2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:text="Phone Number:"
+                android:textSize="14sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/nametext2" />
+
+            <TextView
+                android:id="@+id/involvedName2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="@string/name_involved"
+                android:textColor="#5e76fa"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/nametext2" />
+
+            <TextView
+                android:id="@+id/involvedNumber2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="@string/phoneNo_involved"
+                android:textColor="#5e76fa"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/numbertext2" />
+
+            <TextView
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginBottom="32dp"
+                android:text="Amount :"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/numbertext2" />
+
+            <TextView
+                android:id="@+id/amountInvolved"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="32dp"
+                android:text="-"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/amount" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </android.support.v7.widget.CardView>
 
