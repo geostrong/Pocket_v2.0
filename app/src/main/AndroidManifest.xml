@@ -16,10 +16,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
+        <activity android:name=".NotificationsActivity"></activity>
         <activity
             android:name=".TransferActivity"
             android:label="@string/title_activity_transfer2"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".TransferActivity_Bill_Confirmation" />
         <activity android:name=".TransferActivity_Phone_Confirmation" />
         <activity android:name=".LoginActivity_Logged" />

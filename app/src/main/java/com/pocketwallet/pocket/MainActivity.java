@@ -1,6 +1,7 @@
 package com.pocketwallet.pocket;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.nfc.NdefMessage;
@@ -19,6 +20,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -79,7 +81,6 @@ public class MainActivity extends AppCompatActivity
 
         toolbar = findViewById(R.id.toolbar2);
         setSupportActionBar(toolbar);
-        //setActionBar(toolbar);
 
         //SETUP FRAGMENTS
         homeFragment = new HomeFragment();
@@ -176,6 +177,25 @@ public class MainActivity extends AppCompatActivity
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(key,value);
         editor.commit();
+    }
+
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.home_notif, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+        if(id == R.id.action_notification) {
+            Intent newIntent = new Intent(MainActivity.this, NotificationsActivity.class);
+            startActivity(newIntent);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

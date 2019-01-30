@@ -45,7 +45,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
     private TransactionLogsAdapter adapter;
 
     private List<Transaction> listTransactions;
-    private ArrayList transactionsArrayList;
 
     private SearchView searchView;
 
@@ -71,7 +70,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         transactionListView.setLayoutManager(new LinearLayoutManager(this));
 
         listTransactions = new ArrayList<>();
-        transactionsArrayList = new ArrayList<>();
 
         extras = getIntent().getExtras();
         if (extras != null) {

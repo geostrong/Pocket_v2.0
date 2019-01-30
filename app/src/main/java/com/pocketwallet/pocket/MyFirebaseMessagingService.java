@@ -22,6 +22,7 @@ import java.util.Random;
 import static android.support.constraint.Constraints.TAG;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
+    private DatabaseHelper db;
 
     @Override
     public void onNewToken(String token) {
@@ -50,8 +51,12 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         String test = String.valueOf(remoteMessage.getData().size());
 
         if (remoteMessage.getData().size() > 0) {
+            db = new DatabaseHelper(this);
+
             String title = remoteMessage.getData().get("title");
             String message = remoteMessage.getData().get("message");
+
+            db.addNotification(title, message);
 
             Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, getString(R.string.default_notification_channel_id))

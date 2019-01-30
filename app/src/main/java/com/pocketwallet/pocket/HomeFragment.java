@@ -101,6 +101,15 @@ public class HomeFragment extends Fragment {
                 startActivity(newIntent);
             }
         });
+        Button testBtn = view.findViewById(R.id.testBtn);
+        testBtn.setOnClickListener(new  View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(getActivity(), NotificationsActivity.class);
+                startActivity(newIntent);
+            }
+        });
 
         myPocketButton = view.findViewById(R.id.myPocketButton);
         myPocketButton.setOnClickListener(new View.OnClickListener() {
