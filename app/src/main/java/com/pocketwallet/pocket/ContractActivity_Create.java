@@ -195,7 +195,7 @@ public class ContractActivity_Create extends AppCompatActivity {
             description = "NoDescription";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user1_id", userId);
-            jsonBody.put("user2_id", "user2ID");
+            jsonBody.put("user2_phone", phoneInvolved);
             jsonBody.put("description", description);
             jsonBody.put("amount", amount);
             jsonBody.put("frequency", frequency);
