@@ -261,6 +261,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("PhoneNumber", phoneNumber);
         editor.commit();
 
+        System.out.println("Phone Number login = " + logInPreferences.getString("PhoneNumber", "DEFAULT"));
         System.out.println("isLoggedIn = " + logInPreferences.getBoolean("isLoggedIn", false));
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);

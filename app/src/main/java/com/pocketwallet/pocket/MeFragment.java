@@ -1,7 +1,9 @@
 package com.pocketwallet.pocket;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -11,9 +13,16 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class MeFragment extends Fragment {
     private String userId;
+    private SharedPreferences userPreferences;
+    private TextView phoneNumber;
+    private TextView profileName;
+
 
     @Nullable
     @Override
@@ -61,6 +70,13 @@ public class MeFragment extends Fragment {
                 startActivity(dynamicIntent);
             }
         });
+
+        phoneNumber = view.findViewById(R.id.phoneNumber);
+        profileName = view.findViewById(R.id.profileName);
+
+        userPreferences = PreferenceManager.getDefaultSharedPreferences(this.getActivity());
+        phoneNumber.setText(userPreferences.getString("PhoneNumber", "Phone Number"));
+        profileName.setText(userPreferences.getString("user_name", "Name"));
 
         return view;
     }

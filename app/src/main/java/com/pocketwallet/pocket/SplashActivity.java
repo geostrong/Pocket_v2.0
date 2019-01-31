@@ -21,6 +21,7 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.splash_screen);
         FirebaseMessaging.getInstance().subscribeToTopic("all");
+        logInPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -29,29 +30,11 @@ public class SplashActivity extends Activity {
         } else {
 
             //Check for logged in before
-            logInPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (!logInPreferences.getBoolean("isLoggedIn", false)) {
-                        //Go to sign up page
-                        Intent intent = new Intent(SplashActivity.this, RegisterActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        //Go to log in page
-                        //Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                        //startActivity(intent);
-                        //finish();
-
-
-                        //GO TO LOG IN PAGE (THAT HAS DETAILS SAVED);
-                        Intent intent = new Intent(SplashActivity.this, LoginActivity_Logged.class);
-                        startActivity(intent);
-                        finish();
-
-                    }
+                    next();
                 }
             }, 1000);
         }
@@ -68,9 +51,7 @@ public class SplashActivity extends Activity {
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            //Intent intent = new Intent(SplashActivity.this, LoginActivity.class);
-                            //startActivity(intent);
-                            //finish();
+                            next();
                         }
                     }, 1000);
                 } else {
@@ -78,6 +59,21 @@ public class SplashActivity extends Activity {
                 }
                 return;
             }
+
+        }
+    }
+
+    public void next () {
+        if (!logInPreferences.getBoolean("isLoggedIn", false)) {
+            //Go to sign up page
+            Intent intent = new Intent(SplashActivity.this, RegisterActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            //GO TO LOG IN PAGE (THAT HAS DETAILS SAVED);
+            Intent intent = new Intent(SplashActivity.this, LoginActivity_Logged.class);
+            startActivity(intent);
+            finish();
 
         }
     }
