@@ -1,12 +1,11 @@
 package com.pocketwallet.pocket;
 
-import android.app.LauncherActivity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -22,6 +21,9 @@ public class ContractActivity extends AppCompatActivity {
     private List<ListContract> listContracts;
     private FloatingActionButton createBtn;
 
+    private Bundle extras;
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +32,17 @@ public class ContractActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("userId");
+        }
+
         createBtn = findViewById(R.id.addBtn);
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent (ContractActivity.this, ContractActivity_Create.class);
+                intent.putExtra("userId",userId);
                 startActivity(intent);
             }
         });
