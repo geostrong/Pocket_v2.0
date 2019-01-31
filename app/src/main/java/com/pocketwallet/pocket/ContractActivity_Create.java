@@ -3,16 +3,26 @@ package com.pocketwallet.pocket;
 import android.app.DatePickerDialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.CalendarView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.Calendar;
 
@@ -29,6 +39,24 @@ public class ContractActivity_Create extends AppCompatActivity {
 
     private String[] months = {"Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
+    private Button requestContractButton;
+    private TextView receiverNameView;
+    private TextView frequencyView;
+    private TextView contractAmountView;
+    private TextView phoneInvolvedView;
+    private TextView penaltyAmountView;
+
+    private Bundle extras;
+    private String receiverName;
+    private String userId;
+    private String phoneInvolved;
+    private String description;
+    private String amount;
+    private String frequency;
+    private String penaltyAmount;
+
+    private String urlCreateContract = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/contract";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +64,33 @@ public class ContractActivity_Create extends AppCompatActivity {
         getSupportActionBar().setTitle("Create New Contract");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("userId");
+        }
+
+        phoneInvolvedView = findViewById(R.id.phoneInvolved);
+        receiverNameView = findViewById(R.id.receiverName);
+        contractAmountView = findViewById(R.id.contractAmount);
+        penaltyAmountView = findViewById(R.id.penaltyAmount);
+        frequencyView = findViewById(R.id.frequencyText);
+
+        //RequestContractButton
+        requestContractButton = findViewById(R.id.RequestContract);
+        requestContractButton.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Spinner mySpinner = (Spinner) findViewById(R.id.frequency);
+                receiverName = receiverNameView.getText().toString();
+                phoneInvolved = phoneInvolvedView.getText().toString();
+                //frequency = mySpinner.getSelectedItem().toString();
+                frequency = frequencyView.getText().toString();
+                amount = contractAmountView.getText().toString();
+                penaltyAmount = penaltyAmountView.getText().toString();
+                createContract();
+            }
+        });;
 
         // Calendar dropdown
         mDisplayDate = findViewById(R.id.tvDate);
@@ -68,8 +123,6 @@ public class ContractActivity_Create extends AppCompatActivity {
                 String date = "Ends: " + dayOfMonth + " " + monthWord + " " + year;
                 mDisplayDate.setText(date);
             }
-
-
         };
 
         // Frequency
@@ -133,6 +186,54 @@ public class ContractActivity_Create extends AppCompatActivity {
                 String date = dayOfMonth + "-" + ++month + "-" + year;
                 endDate.setText(date);
             }};
+    }
+
+    public void createContract(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        try {
+            description = "NoDescription";
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("user1_id", userId);
+            jsonBody.put("user2_phone", phoneInvolved);
+            jsonBody.put("description", description);
+            jsonBody.put("amount", amount);
+            jsonBody.put("frequency", frequency);
+            jsonBody.put("penaltyAmount", penaltyAmount);
+            jsonBody.put("startDate", startDate.getText().toString());
+            jsonBody.put("endDate", endDate.getText().toString());
+
+            System.out.println("JSON BODY: " +jsonBody);
+
+
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlCreateContract, jsonBody,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            try {
+                                String result = response.getString("result");
+                                System.out.println("Results: " + result);
+                                if(result.equalsIgnoreCase("Success")){
+                                    System.out.println(response.getString("contract_id"));
+                                }
+                            }catch(JSONException e){
+                                System.out.println("Error: " + e);
+                            }
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    System.out.println("Error Message: " + error.getMessage());
+                    System.out.println("Error Network Response Data: " + new String(error.networkResponse.data));
+                    System.out.println("Error Network Response Status Code" + error.networkResponse.statusCode);
+                    //onBackPressed();
+                }
+            });
+            requestQueue.add(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -35,6 +35,7 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(getActivity(), ContractActivity.class);
+                newIntent.putExtra("userId",userId);
                 startActivity(newIntent);
             }
         });
@@ -56,6 +57,7 @@ public class MeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent dynamicIntent = new Intent(getActivity(), TopUpActivity.class);
+                dynamicIntent.putExtra("userId",userId);
                 startActivity(dynamicIntent);
             }
         });

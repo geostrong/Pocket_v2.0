@@ -6,6 +6,26 @@
     android:layout_height="match_parent"
     tools:context=".ContractActivity_Create">
 
+    <EditText
+        android:id="@+id/contractAmount"
+        android:layout_width="225dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:ems="10"
+        android:hint="Every"
+        android:inputType="phone"
+        android:textCursorDrawable="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/tvDate"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.141"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout12"
+        app:layout_constraintVertical_bias="0.57" />
+
     <Button
         android:id="@+id/RequestContract"
         android:layout_width="0dp"
@@ -44,9 +64,9 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Client's Name"
-            android:inputType="phone"
             android:textCursorDrawable="@color/colorPrimaryDark"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"/>
 
     </android.support.design.widget.TextInputLayout>
 
@@ -92,7 +112,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout9">
 
         <EditText
-            android:id="@+id/contractAmount"
+            android:id="@+id/frequencyText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
