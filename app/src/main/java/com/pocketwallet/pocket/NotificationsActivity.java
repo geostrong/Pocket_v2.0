@@ -17,6 +17,8 @@ public class NotificationsActivity extends AppCompatActivity {
 
     private List<Notification> notificationsList;
 
+    private DatabaseHelper db;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,12 +35,9 @@ public class NotificationsActivity extends AppCompatActivity {
         notificationsListView.setHasFixedSize(true);
         notificationsListView.setLayoutManager(new LinearLayoutManager(this));
 
-        for(int i=0; i<=9; i++){
-            Notification notification = new Notification();
-            notification.setTitle("Title " + i);
-            notification.setMessage(String.valueOf(i));
-            notificationsList.add(notification);
-        }
+        db = new DatabaseHelper(this);
+
+        notificationsList = db.getAllNotifications();
 
         adapter = new NotificationsAdapter(notificationsList,this);
         notificationsListView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
