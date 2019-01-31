@@ -98,6 +98,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(getActivity(), TransferActivity.class);
+                newIntent.putExtra("userId",userId);
                 startActivity(newIntent);
             }
         });
@@ -107,6 +108,7 @@ public class HomeFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(getActivity(), NotificationsActivity.class);
+                newIntent.putExtra("userId",userId);
                 startActivity(newIntent);
             }
         });

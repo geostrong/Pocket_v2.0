@@ -10,10 +10,22 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class ContractActivity extends AppCompatActivity {
+
+    String urlRetrieveContracts = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/contract";
 
     private RecyclerView contractListView;
     private RecyclerView.Adapter adapter;
@@ -51,8 +63,8 @@ public class ContractActivity extends AppCompatActivity {
         contractListView.setLayoutManager(new LinearLayoutManager(this));
 
         listContracts = new ArrayList<>();
-
-        for(int i=0; i<=9; i++){
+        /*
+        for(int i=0; i<=0; i++){
             ListContract listContract = new ListContract(
                     "Harold" + i,
                     "1234 5678",
@@ -67,16 +79,74 @@ public class ContractActivity extends AppCompatActivity {
             );
 
             listContracts.add(listContract);
+        }*/
+
+        createAdapterView();
+        getContracts();
+    }
+
+    public void getContracts(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+
+        try {
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("user_id", userId);
+            System.out.println("User ID: " +jsonBody);
+            urlRetrieveContracts += "/" + userId;
+            System.out.println("urlRetrieverContracts: " + urlRetrieveContracts);
+            final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlRetrieveContracts, jsonBody,
+                    new Response.Listener<JSONObject>() {
+                        @Override
+                        public void onResponse(JSONObject response) {
+                            //try {
+                                System.out.println("Cameeeeeeeeeee");
+                                //String result = response.getString("result");
+                                //System.out.println("Results: " + result);
+                               /* if(result.equalsIgnoreCase("Success")){
+                                    JSONArray contractsArray = response.getJSONArray("contracts");
+                                    for(int i = 0; i < contractsArray.length(); i++){
+                                        JSONObject tempContract = contractsArray.getJSONObject(i);
+                                        if(tempContract.getString("from").equals("-")){
+                                            ListContract contract = new ListContract(tempContract.getString("contractID"), tempContract.getString("contractStatus"),
+                                                    tempContract.getString("user1_id"),tempContract.getString("user2_id"), tempContract.getString("user1_ack"),
+                                                    tempContract.getString("user2_ack"),tempContract.getString("description"), tempContract.getString("amount"),
+                                                    tempContract.getString("frequency"), tempContract.getString("penaltyAmount"),tempContract.getString("createdDate"),
+                                                    tempContract.getString("startDate"),tempContract.getString("endDate"));
+                                            listContracts.add(contract);
+                                        }
+                                        System.out.println("ContractID: " + tempContract.getString("contractID"));
+                                    }
+                                }
+                            }catch(JSONException e){
+                                System.out.println("Error: " + e);
+                            }
+                            //createAdapterView();
+                            adapter.notifyDataSetChanged();*/
+                        }
+                    }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    System.out.println("Error Message: " + error.getMessage());
+                    System.out.println("Error Network Response Data: " + new String(error.networkResponse.data));
+                    System.out.println("Error Network Response Status Code" + error.networkResponse.statusCode);
+                    //onBackPressed();
+                }
+            });
+            requestQueue.add(jsonObjectRequest);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
-
-        adapter = new ContractAdapter(listContracts,this);
-
-        contractListView.setAdapter(adapter);
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    public void createAdapterView(){
+        adapter = new ContractAdapter(listContracts,this);
+        contractListView.setAdapter(adapter);
     }
 }

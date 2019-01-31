@@ -29,10 +29,18 @@ public class TransferActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    private Bundle extras;
+    private String userId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transfer);
+
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("userId");
+        }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -65,6 +73,7 @@ public class TransferActivity extends AppCompatActivity {
             switch(position) {
                 case 0:
                     TransferFragment_Phone phoneFragment = new TransferFragment_Phone();
+                    phoneFragment.setArguments(extras);
                     return phoneFragment;
                 case 1:
                     TransferFragment_Bills billsFragment = new TransferFragment_Bills();

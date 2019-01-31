@@ -25,6 +25,7 @@ public class ResultActivity extends AppCompatActivity {
         String result;
         String amount = "-";
         String transactionNumber = "-";
+        String sentTo = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,7 @@ public class ResultActivity extends AppCompatActivity {
             if(result.equalsIgnoreCase("Success")){
                 transactionNumber = info.getString("transactionNumber");
                 amount = info.getString("amount");
+                sentTo = info.getString("to");
             }
         }
 
@@ -91,7 +93,7 @@ public class ResultActivity extends AppCompatActivity {
         }
 
         //Change name here
-        involvedName.setText("-");
+        involvedName.setText(sentTo);
 
         //Change amount here
         amountText.setText("$" +amount);

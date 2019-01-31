@@ -49,6 +49,7 @@ import javax.crypto.SecretKey;
 public class LoginActivity_Logged extends AppCompatActivity {
 
     final String LOGIN_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/login";
+    final String POSTFCM_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/fcmtoken";
 
     private SharedPreferences userPreferences;
     private boolean doubleBackToExitPressedOnce = false;
@@ -120,6 +121,7 @@ public class LoginActivity_Logged extends AppCompatActivity {
                         System.out.println("Results: " + result);
                         System.out.println("User: " + userId);
                         if(!userId.equals("failed")){
+                            postFCMToken(userId);
                             launchMainActivity(userId);
                         }else{
                             System.out.println("===================Failed to Login===================");
@@ -148,6 +150,46 @@ public class LoginActivity_Logged extends AppCompatActivity {
             e.printStackTrace();
         }
     }
+
+    //POST FCMTOKEN
+    private void postFCMToken(String userId) {
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String fcmToken = prefs.getString("FCM_TOKEN", "DEFAULT");
+        System.out.println(fcmToken);
+        try {
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("user_id", userId);
+            jsonBody.put("fcm_token", fcmToken);
+            System.out.println("Login Details: " + jsonBody);
+            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, POSTFCM_URL, jsonBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        String result = response.getString("result");
+                        System.out.println("Results: " + result);
+                        if (result.equals("success")) {
+                            System.out.println("Post FCM Token Success!");
+                        } else {
+                            System.out.println("Post FCM Token Failed :(");
+                        }
+                    } catch (JSONException e) {
+
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    onBackPressed();
+                }
+            });
+            requestQueue.add(jsonObject);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     //LAUNCH MAIN ACTIVITY
     public void launchMainActivity(String userId){
