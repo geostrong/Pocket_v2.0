@@ -70,10 +70,14 @@ public class SplashActivity extends Activity {
             startActivity(intent);
             finish();
         } else {
-            //GO TO LOG IN PAGE (THAT HAS DETAILS SAVED);
-            Intent intent = new Intent(SplashActivity.this, LoginActivity_Logged.class);
+            //Go to sign up page
+            Intent intent = new Intent(SplashActivity.this, RegisterActivity.class);
             startActivity(intent);
             finish();
+            //GO TO LOG IN PAGE (THAT HAS DETAILS SAVED);
+            //Intent intent = new Intent(SplashActivity.this, LoginActivity_Logged.class);
+            //startActivity(intent);
+            //finish();
 
         }
     }

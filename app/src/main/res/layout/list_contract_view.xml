@@ -22,12 +22,15 @@
                 android:id="@+id/moreBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:clickable="true"
                 android:text="MORE >"
                 android:textAlignment="viewEnd"
                 android:textColor="#0645AD"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/endDate2"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/status"
@@ -42,14 +45,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/transactTimestamp"
+                android:id="@+id/user2ID"
                 android:layout_width="wrap_content"
                 android:layout_height="21dp"
-                android:text="@string/phoneNo_involved"
+                android:text="User 2 name"
                 android:textAlignment="textEnd"
                 android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/receiverName"
-                app:layout_constraintTop_toBottomOf="@+id/receiverName" />
+                app:layout_constraintStart_toStartOf="@+id/contractName"
+                app:layout_constraintTop_toBottomOf="@+id/contractName" />
 
             <TextView
                 android:id="@+id/contractName"
@@ -58,7 +61,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:text="Description"
+                android:text="-"
                 android:textColor="#5e76fa"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -68,124 +71,40 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/receiverName"
-                android:layout_width="wrap_content"
-                android:layout_height="23dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="8dp"
-                android:text="@string/name_involved"
-                android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/endDate"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/contractName"
-                app:layout_constraintTop_toBottomOf="@+id/contractName" />
-
-            <TextView
-                android:id="@+id/payingOn"
+                android:id="@+id/endDate2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="10 Mar 2018"
+                android:layout_marginTop="8dp"
+                android:text="10/10/22"
                 android:textAlignment="textEnd"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="@+id/status"
                 app:layout_constraintTop_toBottomOf="@+id/status" />
 
             <TextView
-                android:id="@+id/payingOnText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="68dp"
-                android:layout_marginBottom="0dp"
-                android:text="Paying on: "
-                android:textAlignment="textEnd"
-                android:textSize="14sp"
-                app:layout_constraintBottom_toTopOf="@+id/payingOn"
-                app:layout_constraintEnd_toEndOf="@+id/status" />
-
-            <TextView
-                android:id="@+id/endDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="8dp"
-                android:text="Until: 10 Feb 2022"
-                android:textAlignment="textEnd"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/contractName"
-                app:layout_constraintTop_toBottomOf="@+id/contractName" />
-
-            <TextView
-                android:id="@+id/endDate2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:text="10/10/22"
-                android:textAlignment="textEnd"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/dashText"
-                app:layout_constraintTop_toBottomOf="@+id/transactTimestamp" />
-
-            <TextView
                 android:id="@+id/startDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
                 android:text="10/10/18"
                 android:textAlignment="textEnd"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/transactTimestamp"
-                app:layout_constraintTop_toBottomOf="@+id/transactTimestamp" />
+                app:layout_constraintEnd_toStartOf="@+id/dashText"
+                app:layout_constraintTop_toBottomOf="@+id/status" />
 
             <TextView
                 android:id="@+id/dashText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="4dp"
                 android:text="-"
                 android:textAlignment="textEnd"
                 android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/startDate"
-                app:layout_constraintTop_toBottomOf="@+id/transactTimestamp" />
+                app:layout_constraintEnd_toStartOf="@+id/endDate2"
+                app:layout_constraintTop_toBottomOf="@+id/status" />
 
-            <TextView
-                android:id="@+id/amount"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:text="$200"
-                android:textAlignment="textEnd"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/startDate"
-                app:layout_constraintTop_toBottomOf="@+id/endDate2" />
-
-            <TextView
-                android:id="@+id/perSign"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:text="/"
-                android:textAlignment="textEnd"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/amount"
-                app:layout_constraintTop_toBottomOf="@+id/endDate2" />
-
-            <TextView
-                android:id="@+id/frequency"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="4dp"
-                android:text="@string/frequency"
-                android:textAlignment="textEnd"
-                android:textSize="20sp"
-                app:layout_constraintStart_toEndOf="@+id/perSign"
-                app:layout_constraintTop_toBottomOf="@+id/endDate2" />
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
 

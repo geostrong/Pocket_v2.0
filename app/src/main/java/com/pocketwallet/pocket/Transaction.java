@@ -21,6 +21,8 @@ public class Transaction {
     private Date timestamp;
     private boolean isIncoming;
 
+    private String title = " ";
+
         /*
     public Transaction (String nameInvolved, String numberInvolved, String transactAmount, String transactID, String transactDate, String transactTime){
         this.nameInvolved = nameInvolved;
@@ -85,5 +87,13 @@ public class Transaction {
         destinationFormat.setTimeZone(TimeZone.getTimeZone("Asia/Singapore"));
         String dateFormat = destinationFormat.format(timestamp);
         return dateFormat;
+    }
+
+    public String getTitle(){
+        return title;
+    }
+
+    public void setTitle(String tempTitle){
+        this.title = tempTitle;
     }
 }

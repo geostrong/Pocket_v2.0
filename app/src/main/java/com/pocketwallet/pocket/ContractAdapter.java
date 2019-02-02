@@ -36,29 +36,16 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
         ListContract listContract = listContracts.get(position);
 
         holder.textViewDescription.setText((listContract.getDescription()));
-        holder.textViewName.setText(listContract.getName());
-        holder.textViewNumber.setText(listContract.getNumber());
-        holder.textViewStatus.setText(listContract.getStatus());
+        holder.textViewUser2ID.setText(listContract.getUser2ID());
         holder.textViewEndDate.setText(listContract.getEndDate());
-        holder.textViewStatus.setText(listContract.getStatus());
+        holder.textViewContractStatus.setText(listContract.getContractStatus());
         holder.textViewEndDate2.setText(listContract.getEndDate2());
-        holder.textViewFeePerFreq.setText(listContract.getFeePerFreq());
+        holder.textViewAmount.setText(listContract.getAmount());
         holder.textViewFrequency.setText(listContract.getFrequency());
         holder.textViewStartDate.setText(listContract.getStartDate());
-        holder.textViewPayingOn.setText(listContract.getPayingOn());
 
 
         final boolean isExpanded = position==mExpandedPosition;
-        holder.textViewEndDate.setVisibility(isExpanded?View.GONE:View.VISIBLE);
-        holder.textViewEndDate2.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.textViewFeePerFreq.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.textViewFrequency.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.textViewPerSign.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.textViewMoreBtn.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.textViewStartDate.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.textViewDashText.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.textViewNumber.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.textViewName.setVisibility(isExpanded?View.VISIBLE:View.GONE);
         holder.itemView.setActivated(isExpanded);
 
         if (isExpanded)
@@ -89,25 +76,24 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewName, textViewNumber, textViewDescription, textViewEndDate, textViewPayingOn, textViewEndDate2, textViewFeePerFreq, textViewFrequency, textViewPerSign, textViewMoreBtn, textViewStatus, textViewStartDate, textViewDashText, textViewPayingOnText;
+        //TextView textViewName, textViewNumber, textViewDescription, textViewEndDate, textViewPayingOn, textViewEndDate2, textViewFeePerFreq, textViewFrequency, textViewPerSign, textViewMoreBtn, textViewStatus, textViewStartDate, textViewDashText, textViewPayingOnText;
+
+        TextView textViewDashText, textViewMoreBtn, textViewFrequency, textViewContractID, textViewContractStatus, textViewDescription, textViewAmount, textViewStartDate, textViewEndDate, textViewEndDate2, textViewUser2ID;
 
         public ViewHolder(View itemView){
             super(itemView);
 
-            textViewName = itemView.findViewById(R.id.receiverName);
-            textViewNumber = itemView.findViewById(R.id.transactTimestamp);
+            textViewContractStatus = itemView.findViewById(R.id.status);
             textViewDescription = itemView.findViewById(R.id.contractName);
             textViewEndDate = itemView.findViewById(R.id.endDate);
             textViewEndDate2 = itemView.findViewById(R.id.endDate2);
-            textViewFeePerFreq = itemView.findViewById(R.id.amount);
+            textViewAmount = itemView.findViewById(R.id.amount);
             textViewFrequency = itemView.findViewById(R.id.frequency);
-            textViewPerSign = itemView.findViewById(R.id.perSign);
             textViewMoreBtn = itemView.findViewById(R.id.moreBtn);
-            textViewStatus = itemView.findViewById(R.id.status);
+            //textViewContractID = itemView.findViewById(R.id.);
             textViewStartDate = itemView.findViewById(R.id.startDate);
             textViewDashText = itemView.findViewById(R.id.dashText);
-            textViewPayingOn = itemView.findViewById(R.id.payingOn);
-            textViewPayingOnText = itemView.findViewById(R.id.payingOnText);
+            textViewUser2ID = itemView.findViewById(R.id.user2ID);
         }
     }
 }

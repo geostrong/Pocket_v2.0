@@ -35,8 +35,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class TransactionLogsActivity extends AppCompatActivity implements TransactionLogsAdapter.TransactAdapterListener{
@@ -75,6 +78,114 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         if (extras != null) {
             userId = extras.getString("userId");
         }
+
+        StickyHeaderTransaction sectionItemDecoration =
+                new StickyHeaderTransaction(getResources().getDimensionPixelSize(R.dimen.recycler_section_header_height),
+                        true,
+                        new StickyHeaderTransaction.SectionCallback() {
+                            @Override
+                            public boolean isSection(int position) {
+                                String start = listTransactions.get(position)
+                                        .getTimestampToString().substring(0, 10);
+                                System.out.println();
+                                System.out.println("position: " + position);
+                                System.out.println("start: " + start);
+                                if(position -1 >= 0) {
+                                    System.out.println("pos-1: " + listTransactions.get(position - 1)
+                                            .getTimestampToString().substring(0, 10));
+                                }
+                                if (position-1 == -1) {
+                                    System.out.println("Came");
+
+                                    return position == 0;
+                                }
+
+                                if(listTransactions.get(position).getTitle().equals(listTransactions.get(position - 1).getTitle())){
+                                    System.out.println("Came2");
+                                    return false;
+                                }else{
+                                    System.out.println("Came3");
+                                    return true;
+                                }
+                                //return position == 0 || !start.equals(listTransactions.get(position - 1)
+                                  //      .getTimestampToString().substring(0, 10));
+                            }
+
+                            @Override
+                            public CharSequence getSectionHeader(int position) {
+                                int monthNum = 0;
+                                String[] when = {"Today", "Yesterday", "2 Days Ago", "This Week", "Last 30 Days", "Past Year", "More Than a Year Ago"};
+                                SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:a");
+                                SimpleDateFormat dateOnly = new SimpleDateFormat("yyyy-MM-dd");
+
+                                Date currentDay = null;
+                                try {
+                                    currentDay = dateOnly.parse(dateOnly.format(new Date()));
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+
+                                String temp = "";
+                                CharSequence title = listTransactions.get(position)
+                                        .getTimestampToString();
+                                title = title.subSequence(0,10);
+                                temp = title.toString();
+                                try {
+                                    Date date = (Date) dateOnly.parse(temp);
+                                    if (date.equals(currentDay)) {
+                                        monthNum = 0;
+                                        title = when[monthNum];
+                                        listTransactions.get(position).setTitle(when[monthNum]);
+                                    }
+                                    else {
+                                        long difference = currentDay.getTime() - date.getTime();
+                                        difference = difference/1000;
+                                        difference = difference/60;
+                                        difference = difference/60;
+                                        difference = difference/24;
+                                        // System.out.println(difference);
+                                        if (difference == 1) {
+                                            monthNum = 1;
+                                            title = when[monthNum];
+                                            listTransactions.get(position).setTitle(when[monthNum]);
+                                        }
+                                        else if (difference == 2) {
+                                            monthNum = 2;
+                                            title = when[monthNum];
+                                            listTransactions.get(position).setTitle(when[monthNum]);
+                                        }
+                                        else if (difference > 2 && difference < 6) {
+                                            monthNum = 3;
+                                            title = when[monthNum];
+                                            listTransactions.get(position).setTitle(when[monthNum]);
+                                        }
+                                        else if (difference > 5 && difference <= 30) {
+                                            monthNum = 4;
+                                            title = when[monthNum];
+                                            listTransactions.get(position).setTitle(when[monthNum]);
+                                        }
+                                        else if (difference > 30 && difference <= 365){
+                                            monthNum = 5;
+                                            title = when[monthNum];
+                                            listTransactions.get(position).setTitle(when[monthNum]);
+                                        }
+                                        else{
+                                            monthNum = 6;
+                                            title = when[monthNum];
+                                            listTransactions.get(position).setTitle(when[monthNum]);
+                                        }
+                                        System.out.println("MonthNum: " + monthNum + " | Difference: " + difference);
+                                        System.out.println("The title is: " + title);
+                                    }
+                                } catch (ParseException e) {
+                                    e.printStackTrace();
+                                }
+                                return listTransactions.get(position).getTitle();
+
+                            }
+                        });
+
+        transactionListView.addItemDecoration(sectionItemDecoration);
 
         createAdapterView();
         getTransactions();

@@ -44,6 +44,10 @@ public class ListContract {
         this.endDate = endDate;
     }
 
+    public String getContractID() {
+        return contractID;
+    }
+
     public String getContractStatus() { return contractStatus; }
     public String getUser1ID() { return user1ID; }
     public String getUser2ID() { return user2ID; }

@@ -17,6 +17,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -98,11 +99,11 @@ public class ContractActivity extends AppCompatActivity {
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
-                            //try {
+                            try {
                                 System.out.println("Cameeeeeeeeeee");
-                                //String result = response.getString("result");
-                                //System.out.println("Results: " + result);
-                               /* if(result.equalsIgnoreCase("Success")){
+                                String result = response.getString("result");
+                                System.out.println("Results: " + result);
+                               if(result.equalsIgnoreCase("Success")){
                                     JSONArray contractsArray = response.getJSONArray("contracts");
                                     for(int i = 0; i < contractsArray.length(); i++){
                                         JSONObject tempContract = contractsArray.getJSONObject(i);
@@ -120,8 +121,8 @@ public class ContractActivity extends AppCompatActivity {
                             }catch(JSONException e){
                                 System.out.println("Error: " + e);
                             }
-                            //createAdapterView();
-                            adapter.notifyDataSetChanged();*/
+                            createAdapterView();
+                            adapter.notifyDataSetChanged();
                         }
                     }, new Response.ErrorListener() {
                 @Override
