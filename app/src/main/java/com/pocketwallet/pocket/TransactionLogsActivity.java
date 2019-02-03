@@ -87,6 +87,12 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                             public boolean isSection(int position) {
                                 String start = listTransactions.get(position)
                                         .getTimestampToString().substring(0, 10);
+                                String prev = "0";
+
+                                if (position != 0 ) {
+                                    prev = listTransactions.get(position - 1)
+                                            .getTimestampToString().substring(0, 10);
+                                }
 
                                 System.out.println();
                                 System.out.println("position: " + position);
@@ -113,8 +119,12 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                                 }
                                 */
 
-                                return position == 0 || !start.equals(listTransactions.get(position - 1)
-                                        .getTimestampToString().substring(0, 10));
+                                System.out.println("This pos: " + start + " Previous pos: " + prev);
+                                if (!start.equalsIgnoreCase(prev)) {
+                                    return true;
+                                }
+                                //return position == 0 || !start.equals(listTransactions.get(position - 1).getTimestampToString().substring(0, 10));
+                                return position == 0;
                             }
 
                             @Override
@@ -151,21 +161,21 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                                         difference = difference/24;
                                         // System.out.println(difference);
                                         if (difference == 1) {
-                                            monthNum = 1;
+                                            monthNum = 1; //Yesterday
                                             title = when[monthNum];
                                             listTransactions.get(position).setTitle(when[monthNum]);
                                         }
                                         else if (difference == 2) {
-                                            monthNum = 2;
+                                            monthNum = 2; //2 days ago
                                             title = when[monthNum];
                                             listTransactions.get(position).setTitle(when[monthNum]);
                                         }
-                                        else if (difference > 2 && difference < 6) {
-                                            monthNum = 3;
+                                        else if (difference > 2 && difference <= 7) {
+                                            monthNum = 3; // a week ago
                                             title = when[monthNum];
                                             listTransactions.get(position).setTitle(when[monthNum]);
                                         }
-                                        else if (difference > 5 && difference <= 30) {
+                                        else if (difference > 7 && difference <= 30) {
                                             monthNum = 4;
                                             title = when[monthNum];
                                             listTransactions.get(position).setTitle(when[monthNum]);
@@ -180,8 +190,8 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                                             title = when[monthNum];
                                             listTransactions.get(position).setTitle(when[monthNum]);
                                         }
-                                        System.out.println("MonthNum: " + monthNum + " | Difference: " + difference);
-                                        System.out.println("The title is: " + title);
+                                        System.out.println("H: MonthNum: " + monthNum + " | Difference: " + difference);
+                                        System.out.println("H:The title is: " + title);
                                     }
                                 } catch (ParseException e) {
                                     e.printStackTrace();
