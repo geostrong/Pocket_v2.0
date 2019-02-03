@@ -60,15 +60,12 @@ public class StickyHeaderTransaction extends RecyclerView.ItemDecoration {
         for (int i = 0; i < parent.getChildCount(); i++) {
             View child = parent.getChildAt(i);
             final int position = parent.getChildAdapterPosition(child);
-
             CharSequence title = sectionCallback.getSectionHeader(position);
 
             header.setText(title);
            // title = when[monthNum];
             if (!previousHeader.equals(title) /*|| sectionCallback.isSection(position)*/) {
-                drawHeader(c,
-                        child,
-                        headerView);
+                drawHeader(c, child, headerView);
                 previousHeader = title;
                 System.out.println();
                 //System.out.println("Hello1");

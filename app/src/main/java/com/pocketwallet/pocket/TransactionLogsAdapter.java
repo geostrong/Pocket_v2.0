@@ -51,23 +51,6 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
             holder.textViewTransactAmount.setText("+$" + t.getAmount());
             holder.textViewTimestamp.setText(t.getTimestampToString());
         }
-
-        final boolean isExpanded = position==mExpandedPosition;
-
-        holder.textViewMoreBtn.setVisibility(isExpanded?View.VISIBLE:View.GONE);
-        holder.itemView.setActivated(isExpanded);
-
-        if (isExpanded)
-            previousExpandedPosition = position;
-
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mExpandedPosition = isExpanded ? -1:position;
-                notifyItemChanged(previousExpandedPosition);
-                notifyItemChanged(position);
-            }
-        });
     }
 
     @Override
@@ -81,7 +64,6 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
             @Override
             protected FilterResults performFiltering(CharSequence charSequence) {
                 String charString = charSequence.toString();
-                System.out.println("F) Filtered string: + " + charSequence.toString());
                 if (charString.isEmpty()) {
                     transactionListFiltered = listTransactions;
                 } else {
@@ -95,8 +77,6 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
                             filteredList.add(t);
                         }
                     }
-
-                    System.out.println("F) Filtered list size: + " + filteredList.size());
                     transactionListFiltered = filteredList;
                 }
                 FilterResults filterResults = new FilterResults();
@@ -117,7 +97,7 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textViewName, textViewNumber, textViewTransactAmount, textViewTransactID, textViewMoreBtn, textViewTimestamp;
+        TextView textViewName, textViewNumber, textViewTransactAmount, textViewTimestamp;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -125,7 +105,6 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
             textViewName = itemView.findViewById(R.id.receiverName);
             textViewNumber = itemView.findViewById(R.id.transactTimestamp);
             textViewTransactAmount = itemView.findViewById(R.id.transactAmount);
-            textViewMoreBtn = itemView.findViewById(R.id.moreButton);
             textViewTimestamp = itemView.findViewById(R.id.transactTimestamp);
         }
 

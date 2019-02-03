@@ -78,13 +78,4 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/moreButton"
-        style="@style/Widget.AppCompat.Button.Borderless.Colored"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:text="MORE"
-        android:textColor="@color/colorPrimaryDark" />
-
 </LinearLayout>
