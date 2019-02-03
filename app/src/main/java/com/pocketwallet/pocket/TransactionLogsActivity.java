@@ -87,13 +87,17 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                             public boolean isSection(int position) {
                                 String start = listTransactions.get(position)
                                         .getTimestampToString().substring(0, 10);
+
                                 System.out.println();
                                 System.out.println("position: " + position);
                                 System.out.println("start: " + start);
+
+                                /*
                                 if(position -1 >= 0) {
                                     System.out.println("pos-1: " + listTransactions.get(position - 1)
                                             .getTimestampToString().substring(0, 10));
                                 }
+
                                 if (position-1 == -1) {
                                     System.out.println("Came");
 
@@ -107,8 +111,10 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                                     System.out.println("Came3");
                                     return true;
                                 }
-                                //return position == 0 || !start.equals(listTransactions.get(position - 1)
-                                  //      .getTimestampToString().substring(0, 10));
+                                */
+
+                                return position == 0 || !start.equals(listTransactions.get(position - 1)
+                                        .getTimestampToString().substring(0, 10));
                             }
 
                             @Override
