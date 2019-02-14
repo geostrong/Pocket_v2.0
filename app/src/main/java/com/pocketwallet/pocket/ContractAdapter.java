@@ -2,6 +2,7 @@ package com.pocketwallet.pocket;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
 
     private List<ListContract> listContracts;
     private Context context;
+    private String userId;
 
     public ContractAdapter(List<ListContract> listContracts, Context context) {
         this.listContracts = listContracts;
@@ -35,13 +37,13 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
     public void onBindViewHolder (ViewHolder holder, final int position){
         ListContract listContract = listContracts.get(position);
 
+
         holder.textViewDescription.setText((listContract.getDescription()));
         holder.textViewUser2ID.setText(listContract.getUser2ID());
         holder.textViewEndDate.setText(listContract.getEndDate());
         holder.textViewContractStatus.setText(listContract.getContractStatus());
-        holder.textViewEndDate2.setText(listContract.getEndDate2());
-        holder.textViewAmount.setText(listContract.getAmount());
-        holder.textViewFrequency.setText(listContract.getFrequency());
+        //holder.textViewAmount.setText(listContract.getAmount());
+        //holder.textViewFrequency.setText(listContract.getFrequency());
         holder.textViewStartDate.setText(listContract.getStartDate());
 
 
@@ -64,7 +66,9 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(v.getContext(), ContractActivity_Details.class);
+                newIntent.putExtra("userId",userId);
                 v.getContext().startActivity(newIntent);
+                System.out.println("========================== User ID: " + userId + " =========================");
             }
         });
     }
@@ -86,7 +90,6 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             textViewContractStatus = itemView.findViewById(R.id.status);
             textViewDescription = itemView.findViewById(R.id.contractName);
             textViewEndDate = itemView.findViewById(R.id.endDate);
-            textViewEndDate2 = itemView.findViewById(R.id.endDate2);
             textViewAmount = itemView.findViewById(R.id.amount);
             textViewFrequency = itemView.findViewById(R.id.frequency);
             textViewMoreBtn = itemView.findViewById(R.id.moreBtn);

@@ -107,15 +107,22 @@ public class ContractActivity extends AppCompatActivity {
                                     JSONArray contractsArray = response.getJSONArray("contracts");
                                     for(int i = 0; i < contractsArray.length(); i++){
                                         JSONObject tempContract = contractsArray.getJSONObject(i);
-                                        if(tempContract.getString("from").equals("-")){
+
                                             ListContract contract = new ListContract(tempContract.getString("contractID"), tempContract.getString("contractStatus"),
                                                     tempContract.getString("user1_id"),tempContract.getString("user2_id"), tempContract.getString("user1_ack"),
                                                     tempContract.getString("user2_ack"),tempContract.getString("description"), tempContract.getString("amount"),
                                                     tempContract.getString("frequency"), tempContract.getString("penaltyAmount"),tempContract.getString("createdDate"),
-                                                    tempContract.getString("startDate"),tempContract.getString("endDate"));
+                                                    tempContract.getString("startDate"),tempContract.getString("endDate")/*, tempContract.getString("receiverName"),
+                                                    tempContract.getString("receiverPhoneNum"), tempContract.getString("payeeName"), tempContract.getString("payeePhoneNum")*/);
+                                            System.out.println("ContractID: " + contract.getContractID() + " | contractStatus: " + contract.getContractStatus()
+                                                                + " | user1_id: " + contract.getUser1ID() + " | user2_id: " + contract.getUser2ID() + " | user1_ack: " + contract.getUser1ACK()
+                                                                + " | user2_ack: " + contract.getUser2ACK() + " | description: " + contract.getDescription() + " | amount: " + contract.getAmount()
+                                                                + " | frequency: " + contract.getFrequency() + " | penalty_amount: " + contract.getPenaltyAmount() + " | createdDate: " + contract.getCreatedDate()
+                                                                + " | startDate: " + contract.getStartDate() + " | endDate: " + contract.getEndDate() + " | receiverName: " + contract.getReceiverName()
+                                                    + " | receiverPhoneNum: " + contract.getReceiverPhoneNum() + " | payeeName: " + contract.getPayeeName() + " | payeePhoneNum: " + contract.getPayeePhoneNum());
                                             listContracts.add(contract);
-                                        }
-                                        System.out.println("ContractID: " + tempContract.getString("contractID"));
+
+                                        //System.out.println("ContractID: " + tempContract.getString("contractID"));
                                     }
                                 }
                             }catch(JSONException e){

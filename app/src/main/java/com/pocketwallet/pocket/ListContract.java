@@ -11,10 +11,12 @@ public class ListContract {
     //private String startDate;
     private String payingOn;
 
-    private String contractID,contractStatus,user1ID,user2ID,user1ACK,user2ACK,
-                    description,amount,frequency,penaltyAmount,createdDate,startDate,endDate;
 
-    public ListContract(String nameInvolved, String numberInvolved, String description, String endDate, String payingOn, String endDate2, String feePerFreq, String frequency, String status, String startDate){
+    private String contractID,contractStatus,user1ID,user2ID,user1ACK,user2ACK,
+                    description,amount,frequency,penaltyAmount,createdDate,startDate,endDate,
+                    receiverPhoneNum,payeePhoneNum,receiverName,payeeName;
+
+    public ListContract(String nameInvolved, String numberInvolved, String description, String endDate, String payingOn, String feePerFreq, String frequency, String status, String startDate){
         this.nameInvolved = nameInvolved;
         this.numberInvolved = numberInvolved;
         this.description = description;
@@ -28,7 +30,7 @@ public class ListContract {
 
     public ListContract(String contractID, String contractStatus, String user1ID, String user2ID,String user1Ack, String user2Ack,
                         String description, String amount,String frequency, String penaltyAmount, String createdDate, String startDate,
-                        String endDate){
+                        String endDate/*, String receiverName, String receiverPhoneNum, String payeeName, String payeePhoneNum*/){
         this.contractID = contractID;
         this.contractStatus = contractStatus;
         this.user1ID = user1ID;
@@ -42,6 +44,10 @@ public class ListContract {
         this.createdDate = createdDate;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.payeeName = "TestName1";
+        this.receiverName = "TestName2";
+        this.payeePhoneNum = "12345678";
+        this.receiverPhoneNum = "87654321";
     }
 
     public String getContractID() {
@@ -86,5 +92,33 @@ public class ListContract {
     }
     public String getPayingOn(){
         return payingOn;
+    }
+    public String getReceiverPhoneNum() {
+        return receiverPhoneNum;
+    }
+    public String getPayeePhoneNum() {
+        return payeePhoneNum;
+    }
+    public String getReceiverName() {
+        return receiverName;
+    }
+    public String getPayeeName() {
+        return payeeName;
+    }
+
+    public void setReceiverName(String receiverName) {
+        this.receiverName = receiverName;
+    }
+    public void setPayeeName(String payeeName) {
+        this.payeeName = payeeName;
+    }
+    public void setEndDate(String endDate) {
+        this.endDate = endDate;
+    }
+    public void setReceiverPhoneNum(String receiverPhoneNum) {
+        this.receiverPhoneNum = receiverPhoneNum;
+    }
+    public void setPayeePhoneNum(String payeePhoneNum) {
+        this.payeePhoneNum = payeePhoneNum;
     }
 }
