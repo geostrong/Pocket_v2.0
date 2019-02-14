@@ -7,7 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.Spinner;
 
 public class TopUpActivity extends AppCompatActivity {
 
@@ -18,6 +20,12 @@ public class TopUpActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Top Up");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+
+
+        Spinner dropdown = findViewById(R.id.cardType);
+        String[] items = new String[]{"Visa", "MasterCard"};
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, items);
+        dropdown.setAdapter(adapter);
 
         Button confirmBtn = findViewById(R.id.topUpConfirmBtn);
         confirmBtn.setOnClickListener(new View.OnClickListener() {
