@@ -71,6 +71,18 @@ public class MeFragment extends Fragment {
             }
         });
 
+        Button loyaltyBtn = (Button) view.findViewById(R.id.loyaltyCardsBtn);
+        loyaltyBtn.setOnClickListener(new  View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent dynamicIntent = new Intent(getActivity(), LoyaltyActivity.class);
+                dynamicIntent.putExtra("userId",userId);
+                startActivity(dynamicIntent);
+            }
+        });
+
+
         phoneNumber = view.findViewById(R.id.phoneNumber);
         profileName = view.findViewById(R.id.profileName);
 

@@ -19,6 +19,7 @@ public class NotificationsAdapter extends RecyclerView.Adapter<NotificationsAdap
         this.notificationList = notificationList;
         this.context = context;
     }
+
     @NonNull
     @Override
     public ViewHolder2 onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {

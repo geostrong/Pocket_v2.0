@@ -72,7 +72,6 @@ public class ContractActivity_Create extends AppCompatActivity {
 
         phoneInvolvedView = findViewById(R.id.phoneInvolved);
         receiverNameView = findViewById(R.id.receiverName);
-        contractAmountView = findViewById(R.id.contractAmount);
         penaltyAmountView = findViewById(R.id.penaltyAmount);
         frequencyView = findViewById(R.id.frequencyText);
 
@@ -90,40 +89,7 @@ public class ContractActivity_Create extends AppCompatActivity {
                 penaltyAmount = penaltyAmountView.getText().toString();
                 createContract();
             }
-        });;
-
-        // Calendar dropdown
-        mDisplayDate = findViewById(R.id.tvDate);
-
-        mDisplayDate.setOnClickListener(new View.OnClickListener(){
-            @Override
-                public void onClick(View view){
-                Calendar cal = Calendar.getInstance();
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                int day = cal.get(Calendar.DAY_OF_MONTH);
-
-                DatePickerDialog dialog = new DatePickerDialog(
-                        ContractActivity_Create.this,
-                        android.R.style.Theme_Holo_Light_Dialog_MinWidth,
-                        mDateSetListener,
-                        year,month,day);
-                dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                dialog.show();
-            }
         });
-
-        mDateSetListener = new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                Log.d(TAG, "onDateSet: dd/mm/yy: " + dayOfMonth + "/" + month + "/" + year);
-                String monthWord = "";
-                monthWord = months[month];
-
-                String date = "Ends: " + dayOfMonth + " " + monthWord + " " + year;
-                mDisplayDate.setText(date);
-            }
-        };
 
         // Frequency
         Spinner contractFrequency = findViewById(R.id.frequency);

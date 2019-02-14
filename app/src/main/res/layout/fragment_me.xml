@@ -109,5 +109,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/logsBtn" />
 
+    <Button
+        android:id="@+id/loyaltyCardsBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTop="@drawable/ic_transactionhistory"
+        android:drawablePadding="8dp"
+        android:paddingTop="24dp"
+        android:text="Loyalty"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintEnd_toEndOf="@+id/topUpBtn"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/topUpBtn"
+        app:layout_constraintTop_toBottomOf="@+id/topUpBtn" />
+
+    <Button
+        android:id="@+id/dealBtn"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="#FFFFFF"
+        android:drawableTop="@drawable/ic_transactionhistory"
+        android:drawablePadding="8dp"
+        android:paddingTop="24dp"
+        android:text="Deals"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        app:layout_constraintDimensionRatio="h,1:1"
+        app:layout_constraintEnd_toEndOf="@+id/logsBtn"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/logsBtn"
+        app:layout_constraintTop_toBottomOf="@+id/logsBtn" />
+
 
 </android.support.constraint.ConstraintLayout>
