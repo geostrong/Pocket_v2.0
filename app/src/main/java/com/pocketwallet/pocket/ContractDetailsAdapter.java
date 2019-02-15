@@ -1,15 +1,14 @@
 package com.pocketwallet.pocket;
 
 import android.content.Context;
-import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class ContractDetailsAdapter extends RecyclerView.Adapter<ContractDetailsAdapter.ViewHolder> {
@@ -17,12 +16,22 @@ public class ContractDetailsAdapter extends RecyclerView.Adapter<ContractDetails
     int mExpandedPosition = -1;
     int previousExpandedPosition = -1;
 
-    private List<ListContract> listContracts;
+    private ArrayList<ListContract> listContracts;
     private Context context;
+    private Bundle extras;
+    private String userId;
 
-    public ContractDetailsAdapter(List<ListContract> listContracts, Context context) {
+    public ContractDetailsAdapter(ArrayList<ListContract> listContracts, Context context) {
         this.listContracts = listContracts;
         this.context = context;
+        /*
+        Intent intent = ((Activity) context).getIntent();
+        extras = intent.getExtras();
+        if (extras != null) {
+            userId = extras.getString("userId");
+            this.listContracts = (ArrayList<ListContract>) intent.getSerializableExtra(
+                    "listContracts");
+        }*/
     }
 
     @Override
@@ -34,7 +43,6 @@ public class ContractDetailsAdapter extends RecyclerView.Adapter<ContractDetails
     @Override
     public void onBindViewHolder (ViewHolder holder, final int position){
         ListContract listContract = listContracts.get(position);
-
         holder.textViewReceiverName.setText(listContract.getReceiverName());
         holder.textViewReceiverPhoneNum.setText(listContract.getReceiverPhoneNum());
         holder.textViewPayeeName.setText(listContract.getPayeeName());
@@ -56,7 +64,6 @@ public class ContractDetailsAdapter extends RecyclerView.Adapter<ContractDetails
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewReceiverName, textViewReceiverPhoneNum, textViewPayeeName, textViewPayeePhoneNum, textViewContractName, textViewContractStatus, textViewAmount, textViewStartDate, textViewEndDate, textViewPenaltyAmount, textViewDescription;
-
 
         public ViewHolder(View itemView){
             super(itemView);

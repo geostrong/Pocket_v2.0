@@ -1,6 +1,8 @@
 package com.pocketwallet.pocket;
 
-public class ListContract {
+import java.io.Serializable;
+
+public class ListContract implements Serializable {
     private String nameInvolved;
     private String numberInvolved;
     //private String description;
@@ -15,6 +17,8 @@ public class ListContract {
     private String contractID,contractStatus,user1ID,user2ID,user1ACK,user2ACK,
                     description,amount,frequency,penaltyAmount,createdDate,startDate,endDate,
                     receiverPhoneNum,payeePhoneNum,receiverName,payeeName;
+
+    private static final long serialVersionUID = 1L;
 
     public ListContract(String nameInvolved, String numberInvolved, String description, String endDate, String payingOn, String feePerFreq, String frequency, String status, String startDate){
         this.nameInvolved = nameInvolved;

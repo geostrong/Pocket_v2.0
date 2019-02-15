@@ -22,21 +22,25 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class ContractActivity extends AppCompatActivity {
 
-    String urlRetrieveContracts = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/contract";
+    String urlRetrieveContracts = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/";
 
     private RecyclerView contractListView;
     private RecyclerView.Adapter adapter;
 
-    private List<ListContract> listContracts;
+    private ArrayList<ListContract> listContracts;
     private FloatingActionButton createBtn;
 
     private Bundle extras;
     private String userId;
 
+    @Override
+    protected void onResume(){
+        getContracts();
+        super.onResume();
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,50 +68,33 @@ public class ContractActivity extends AppCompatActivity {
         contractListView.setLayoutManager(new LinearLayoutManager(this));
 
         listContracts = new ArrayList<>();
-        /*
-        for(int i=0; i<=0; i++){
-            ListContract listContract = new ListContract(
-                    "Harold" + i,
-                    "1234 5678",
-                    "HDB Rent",
-                    "10 Feb 2022",
-                    "10 Mar 2018",
-                    "10 Feb 2022 2",
-                    "$200",
-                    "Monthly",
-                    "Active",
-                    "10 Feb 18"
-            );
-
-            listContracts.add(listContract);
-        }*/
 
         createAdapterView();
-        getContracts();
+        //getContracts();
     }
 
     public void getContracts(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
-
+        listContracts.clear();
         try {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user_id", userId);
             System.out.println("User ID: " +jsonBody);
-            urlRetrieveContracts += "/" + userId;
+            if(!urlRetrieveContracts.contains("contract")) {
+                urlRetrieveContracts = urlRetrieveContracts + "/contract" + "/" + userId;
+            }
             System.out.println("urlRetrieverContracts: " + urlRetrieveContracts);
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlRetrieveContracts, jsonBody,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
-                                System.out.println("Cameeeeeeeeeee");
                                 String result = response.getString("result");
                                 System.out.println("Results: " + result);
                                if(result.equalsIgnoreCase("Success")){
                                     JSONArray contractsArray = response.getJSONArray("contracts");
                                     for(int i = 0; i < contractsArray.length(); i++){
                                         JSONObject tempContract = contractsArray.getJSONObject(i);
-
                                             ListContract contract = new ListContract(tempContract.getString("contractID"), tempContract.getString("contractStatus"),
                                                     tempContract.getString("user1_id"),tempContract.getString("user2_id"), tempContract.getString("user1_ack"),
                                                     tempContract.getString("user2_ack"),tempContract.getString("description"), tempContract.getString("amount"),
@@ -121,8 +108,6 @@ public class ContractActivity extends AppCompatActivity {
                                                                 + " | startDate: " + contract.getStartDate() + " | endDate: " + contract.getEndDate() + " | receiverName: " + contract.getReceiverName()
                                                     + " | receiverPhoneNum: " + contract.getReceiverPhoneNum() + " | payeeName: " + contract.getPayeeName() + " | payeePhoneNum: " + contract.getPayeePhoneNum());
                                             listContracts.add(contract);
-
-                                        //System.out.println("ContractID: " + tempContract.getString("contractID"));
                                     }
                                 }
                             }catch(JSONException e){
