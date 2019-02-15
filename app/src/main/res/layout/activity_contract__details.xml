@@ -52,7 +52,7 @@
                 app:layout_constraintGuide_begin="112dp" />
 
             <TextView
-                android:id="@+id/contractName"
+                android:id="@+id/contractNameCreate"
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
@@ -79,8 +79,8 @@
                 app:layout_constraintEnd_toStartOf="@+id/status"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="@+id/contractName"
-                app:layout_constraintTop_toBottomOf="@+id/contractName" />
+                app:layout_constraintStart_toStartOf="@+id/contractNameCreate"
+                app:layout_constraintTop_toBottomOf="@+id/contractNameCreate" />
 
             <TextView
                 android:id="@+id/status"
@@ -91,7 +91,7 @@
                 android:text="Active"
                 android:textColor="@color/colorGreen"
                 android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="@+id/contractName"
+                app:layout_constraintEnd_toEndOf="@+id/contractNameCreate"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/statusText"
                 app:layout_constraintTop_toTopOf="@+id/statusText" />
@@ -111,7 +111,7 @@
                 app:layout_constraintVertical_chainStyle="packed" />
 
             <TextView
-                android:id="@+id/receiverName"
+                android:id="@+id/contractName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="32dp"

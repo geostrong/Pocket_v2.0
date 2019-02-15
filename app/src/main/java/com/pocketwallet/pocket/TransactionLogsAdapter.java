@@ -102,7 +102,7 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         public ViewHolder(View itemView){
             super(itemView);
 
-            textViewName = itemView.findViewById(R.id.receiverName);
+            textViewName = itemView.findViewById(R.id.contractNameCreate);
             textViewNumber = itemView.findViewById(R.id.transactTimestamp);
             textViewTransactAmount = itemView.findViewById(R.id.transactAmount);
             textViewTimestamp = itemView.findViewById(R.id.transactTimestamp);

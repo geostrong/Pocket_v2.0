@@ -95,7 +95,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             super(itemView);
 
             textViewContractStatus = itemView.findViewById(R.id.status);
-            textViewDescription = itemView.findViewById(R.id.contractName);
+            textViewDescription = itemView.findViewById(R.id.contractNameCreate);
             textViewEndDate = itemView.findViewById(R.id.endDate);
             textViewAmount = itemView.findViewById(R.id.amount);
             textViewFrequency = itemView.findViewById(R.id.frequency);

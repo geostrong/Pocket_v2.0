@@ -36,17 +36,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="spread_inside">
 
         <EditText
-            android:id="@+id/receiverName"
+            android:id="@+id/contractNameCreate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
             android:ems="10"
-            android:hint="Client's Name"
+            android:hint="Contract Name"
             android:textCursorDrawable="@color/colorPrimaryDark"
-            android:textSize="16sp"
-            android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"/>
+            android:textSize="16sp" />
 
     </android.support.design.widget.TextInputLayout>
 
@@ -117,11 +118,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textInputLayout10">
 
         <EditText
-            android:id="@+id/penaltyAmount"
+            android:id="@+id/contractAmount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Penalty Amount"
+            android:hint="Amount (Every)"
             android:inputType="phone"
             android:textCursorDrawable="@color/colorPrimaryDark"
             android:textSize="16sp" />
@@ -194,5 +195,52 @@
 
     </android.support.design.widget.TextInputLayout>
 
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout20"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:boxStrokeColor="@color/colorPrimaryLight"
+        app:hintTextAppearance="@style/customEditText"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout12"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout12"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout13">
+
+        <EditText
+            android:id="@+id/penaltyAmount"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Penalty Amount"
+            android:inputType="phone"
+            android:textCursorDrawable="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/textInputLayout21"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:boxStrokeColor="@color/colorPrimaryLight"
+        app:hintTextAppearance="@style/customEditText"
+        app:layout_constraintEnd_toEndOf="@+id/textInputLayout12"
+        app:layout_constraintStart_toStartOf="@+id/textInputLayout12"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout20">
+
+        <EditText
+            android:id="@+id/descriptionContract"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Description"
+            android:inputType="phone"
+            android:textCursorDrawable="@color/colorPrimaryDark"
+            android:textSize="16sp" />
+
+    </android.support.design.widget.TextInputLayout>
 
 </android.support.constraint.ConstraintLayout>

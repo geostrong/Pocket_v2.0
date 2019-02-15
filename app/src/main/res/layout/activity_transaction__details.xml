@@ -80,7 +80,7 @@
                 app:layout_constraintTop_toTopOf="@+id/guideline10" />
 
             <TextView
-                android:id="@+id/receiverName"
+                android:id="@+id/contractNameCreate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
