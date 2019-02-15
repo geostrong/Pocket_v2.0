@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,7 +41,7 @@ public class LoginActivity extends AppCompatActivity {
     private String password;
     private boolean doubleBackToExitPressedOnce = false;
     private SharedPreferences logInPreferences;
-
+    private TextInputLayout phoneNumberInputLayout;
     //LOGIN API URL
     final String LOGIN_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/login";
     final String POSTFCM_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/fcmtoken";
@@ -67,8 +68,9 @@ public class LoginActivity extends AppCompatActivity {
         passwordInput = (EditText)findViewById(R.id.loginPassword);
         login = (Button)findViewById(R.id.loginButton2);
         signup = (TextView)findViewById(R.id.signupButton);
+        phoneNumberInputLayout = findViewById(R.id.textInputLayout7);
 
-        phonenumberInput.addTextChangedListener(loginTextWatcher);
+    phonenumberInput.addTextChangedListener(loginTextWatcher);
         passwordInput.addTextChangedListener(loginTextWatcher);
 
         login.setOnClickListener (new View.OnClickListener() {
@@ -140,7 +142,7 @@ public class LoginActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    onBackPressed();
+                    phoneNumberInputLayout.setError("Phone number or password is wrong!");
                 }
             }) {
                 @Override
