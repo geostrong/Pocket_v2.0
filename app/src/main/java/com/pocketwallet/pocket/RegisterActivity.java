@@ -98,7 +98,12 @@ public class RegisterActivity extends AppCompatActivity {
                         String tempResult = response.getString("result");
                         if(tempResult.equals("success")) {
                             result = "Success";
-                            showPopup();
+                            Toast toast = Toast.makeText(getApplicationContext(),
+                                    "Register Successfully!",
+                                    Toast.LENGTH_SHORT);
+                            toast.show();
+                            Intent newIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                            startActivity(newIntent);
                             finish();
                         }else if (tempResult.equals("failed")){
                             result = "Fail";

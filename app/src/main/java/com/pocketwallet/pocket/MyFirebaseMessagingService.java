@@ -65,9 +65,10 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
                     .setSound(defaultSoundUri)
                     .setVibrate(new long[]{1000,1000,1000})
                     .setContentTitle(title)
-                    .setContentText(message)
+                    //.setContentText(message)
                     .setSmallIcon(R.mipmap.ic_launcher)
-                    .setPriority(NotificationCompat.PRIORITY_MAX);
+                    .setPriority(NotificationCompat.PRIORITY_MAX)
+                    .setStyle(new NotificationCompat.BigTextStyle().bigText(message));
 
             NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
