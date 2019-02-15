@@ -89,6 +89,7 @@ public class LoginActivity_Logged extends AppCompatActivity {
         userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         String user_name = userPreferences.getString("user_name", "Name");
         TextView name = findViewById(R.id.signinName);
+        System.out.println(user_name);
         name.setText(user_name);
 
         KEY_NAME = userPreferences.getString("KEY_NAME", "DEFAULT");
@@ -189,7 +190,6 @@ public class LoginActivity_Logged extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
     //LAUNCH MAIN ACTIVITY
     public void launchMainActivity(String userId){

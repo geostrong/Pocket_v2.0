@@ -55,7 +55,9 @@ public class HomeFragment extends Fragment {
         if (extras != null) {
             userId = extras.getString("userId");
             //SET URL
-            GETBALANCE_URL += userId + "/balance";
+            if(!GETBALANCE_URL.contains("/balance")) {
+                GETBALANCE_URL = GETBALANCE_URL + userId + "/balance";
+            }
         }
 
         //<--Setup buttons-->
@@ -176,5 +178,4 @@ public class HomeFragment extends Fragment {
         });
         requestQueue.add(requestJsonObject);
     }
-
 }

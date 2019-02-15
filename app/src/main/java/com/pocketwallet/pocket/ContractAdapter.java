@@ -1,5 +1,6 @@
 package com.pocketwallet.pocket;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,8 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-
-import java.util.List;
+import java.util.ArrayList;
 
 
 public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHolder> {
@@ -18,25 +18,31 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
     int mExpandedPosition = -1;
     int previousExpandedPosition = -1;
 
-    private List<ListContract> listContracts;
+    private ArrayList <ListContract> listContracts;
     private Context context;
     private String userId;
+    Bundle extras;
 
-    public ContractAdapter(List<ListContract> listContracts, Context context) {
+    public ContractAdapter(ArrayList<ListContract> listContracts, Context context) {
         this.listContracts = listContracts;
         this.context = context;
+        Intent intent = ((Activity) context).getIntent();
+        extras = intent.getExtras();
+        if (extras != null) {
+            userId = extras.getString("userId");
+        }
     }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_contract_view,parent, false);
+
         return new ViewHolder(v);
     }
 
     @Override
     public void onBindViewHolder (ViewHolder holder, final int position){
         ListContract listContract = listContracts.get(position);
-
 
         holder.textViewDescription.setText((listContract.getDescription()));
         holder.textViewUser2ID.setText(listContract.getUser2ID());
@@ -45,7 +51,6 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
         //holder.textViewAmount.setText(listContract.getAmount());
         //holder.textViewFrequency.setText(listContract.getFrequency());
         holder.textViewStartDate.setText(listContract.getStartDate());
-
 
         final boolean isExpanded = position==mExpandedPosition;
         holder.itemView.setActivated(isExpanded);
@@ -67,6 +72,8 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             public void onClick(View v) {
                 Intent newIntent = new Intent(v.getContext(), ContractActivity_Details.class);
                 newIntent.putExtra("userId",userId);
+                newIntent.putExtra("listContracts",listContracts);
+                newIntent.putExtra("position",position);
                 v.getContext().startActivity(newIntent);
                 System.out.println("========================== User ID: " + userId + " =========================");
             }
