@@ -41,7 +41,7 @@ public class ResultActivity extends AppCompatActivity {
         fromTo = findViewById(R.id.fromTo);
         amountTitle = findViewById(R.id.amountTitle);
         transIdTitle = findViewById(R.id.transIdTitle);
-        involvedName = findViewById(R.id.contractName);
+        involvedName = findViewById(R.id.contractNameCreate);
         amountText = findViewById(R.id.amountInvolved);
         Button returnBtn = findViewById(R.id.returnButton);
         returnBtn.setOnClickListener(new View.OnClickListener() {

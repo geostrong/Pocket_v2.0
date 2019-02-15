@@ -71,7 +71,7 @@ public class ContractActivity_Create extends AppCompatActivity {
         }
 
         phoneInvolvedView = findViewById(R.id.phoneInvolved);
-        contractNameView = findViewById(R.id.contractName);
+        contractNameView = findViewById(R.id.contractNameCreate);
         penaltyAmountView = findViewById(R.id.penaltyAmount);
         frequencyView = findViewById(R.id.frequencyText);
         amountContract = findViewById(R.id.contractAmount);

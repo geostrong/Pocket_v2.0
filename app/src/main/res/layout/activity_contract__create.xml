@@ -40,7 +40,7 @@
         app:layout_constraintVertical_chainStyle="spread_inside">
 
         <EditText
-            android:id="@+id/contractName"
+            android:id="@+id/contractNameCreate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
