@@ -84,6 +84,7 @@ public class ContractActivity_Details extends AppCompatActivity {
         if(userId.equals(listContracts.get(position).getUser2ID())){
             listContracts.get(position).setPayeeName(name);
             listContracts.get(position).setPayeePhoneNum(phoneNumber);
+            listContracts.get(position).setReceiverPhoneNum(listContracts.get(position).getPhoneNumber());
             listContracts.get(position).setReceiverName(listContracts.get(position).getUser1ID());
             if(!listContracts.get(position).getContractStatus().equals(("0"))){
                 acceptButton.setVisibility(View.GONE);
@@ -92,6 +93,7 @@ public class ContractActivity_Details extends AppCompatActivity {
         }else{
             acceptButton.setVisibility(View.GONE);
             declineButton.setVisibility(View.GONE);
+            listContracts.get(position).setPayeePhoneNum(listContracts.get(position).getPhoneNumber());
             listContracts.get(position).setReceiverName(name);
             listContracts.get(position).setReceiverPhoneNum(phoneNumber);
             listContracts.get(position).setPayeeName(listContracts.get(position).getUser2ID());
@@ -130,8 +132,10 @@ public class ContractActivity_Details extends AppCompatActivity {
                         System.out.println("Results: " + result);
                         if (result.equals("success")) {
                             System.out.println("Acknowledge Contract Success!");
+                            finish();
                         } else {
                             System.out.println("Acknowledge Contract Failed");
+                            finish();
                         }
                     }catch (JSONException e) {
 
@@ -141,7 +145,7 @@ public class ContractActivity_Details extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.getLocalizedMessage();
-                    onBackPressed();
+                    finish();
                 }
             });
             requestQueue.add(jsonObject);
@@ -167,8 +171,10 @@ public class ContractActivity_Details extends AppCompatActivity {
                     System.out.println("Results: " + result);
                     if (result.equals("success")) {
                         System.out.println("Acknowledge Contract Success!");
+                        finish();
                     } else {
                         System.out.println("Acknowledge Contract Failed");
+                        finish();
                      }
                     }catch (JSONException e) {
 
@@ -178,7 +184,7 @@ public class ContractActivity_Details extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.getLocalizedMessage();
-                    onBackPressed();
+                    finish();
                 }
             });
             requestQueue.add(jsonObject);
@@ -209,7 +215,7 @@ public class ContractActivity_Details extends AppCompatActivity {
         textViewReceiverPhoneNum.setText(listContract.getReceiverPhoneNum());
         textViewPayeeName.setText(listContract.getPayeeName());
         textViewPayeePhoneNum.setText(listContract.getPayeePhoneNum());
-        //holder.textViewContractName.setText(listContract.getContractName());
+        textViewContractName.setText(listContract.getContractName());
         if(listContract.getContractStatus().equals("0")) {
             textViewContractStatus.setText("Pending");
         }else if(listContract.getContractStatus().equals("1")){
