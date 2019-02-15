@@ -16,7 +16,7 @@ public class ListContract implements Serializable {
 
     private String contractID,contractStatus,user1ID,user2ID,user1ACK,user2ACK,
                     description,amount,frequency,penaltyAmount,createdDate,startDate,endDate,
-                    receiverPhoneNum,payeePhoneNum,receiverName,payeeName;
+                    receiverPhoneNum,payeePhoneNum,receiverName,payeeName,contractName,phoneNumber;
 
     private static final long serialVersionUID = 1L;
 
@@ -34,7 +34,7 @@ public class ListContract implements Serializable {
 
     public ListContract(String contractID, String contractStatus, String user1ID, String user2ID,String user1Ack, String user2Ack,
                         String description, String amount,String frequency, String penaltyAmount, String createdDate, String startDate,
-                        String endDate/*, String receiverName, String receiverPhoneNum, String payeeName, String payeePhoneNum*/){
+                        String endDate,String contractName, String phoneNumber/*, String receiverName, String receiverPhoneNum, String payeeName, String payeePhoneNum*/){
         this.contractID = contractID;
         this.contractStatus = contractStatus;
         this.user1ID = user1ID;
@@ -48,10 +48,14 @@ public class ListContract implements Serializable {
         this.createdDate = createdDate;
         this.startDate = startDate;
         this.endDate = endDate;
+
         this.payeeName = "TestName1";
         this.receiverName = "TestName2";
         this.payeePhoneNum = "12345678";
         this.receiverPhoneNum = "87654321";
+
+        this.contractName = contractName;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getContractID() {
@@ -109,6 +113,8 @@ public class ListContract implements Serializable {
     public String getPayeeName() {
         return payeeName;
     }
+    public String getPhoneNumber(){return phoneNumber;}
+    public String getContractName(){return contractName;};
 
     public void setReceiverName(String receiverName) {
         this.receiverName = receiverName;
@@ -124,5 +130,11 @@ public class ListContract implements Serializable {
     }
     public void setPayeePhoneNum(String payeePhoneNum) {
         this.payeePhoneNum = payeePhoneNum;
+    }
+    public void setContractName(String contractName) {
+        this.contractName = contractName;
+    }
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
