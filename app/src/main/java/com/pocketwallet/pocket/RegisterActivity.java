@@ -72,8 +72,6 @@ public class RegisterActivity extends AppCompatActivity {
                 System.out.println("RegisterName: " + name);
                 System.out.println("RegisterPassword: " + password);
                 registerAccount();
-                //Once done exit back to login
-                //finish();
             }
         });
     }
@@ -97,11 +95,13 @@ public class RegisterActivity extends AppCompatActivity {
                         if(tempResult.equals("success")) {
                             result = "Success";
                             showPopup();
-                            //mTextView.setText("Transaction is successful!"
-                            //        + "\nTransaction Number:" + transactionNumber);
-                        }else{
+                            finish();
+                        }else if (tempResult.equals("failed")){
                             result = "Fail";
-                            showPopup();
+                            String error = response.getString("message");
+                            if (error.equalsIgnoreCase("phonenumber already in use")) {
+                                registerPhoneInput.setError("Phone number is already in use! Please enter another number");
+                            }
                         }
                     }catch(JSONException e){
 
@@ -113,6 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
                     int status = error.networkResponse.statusCode;
                     switch (status){
                         case 417:
+
                             result = "fail";
                             showPopup();
                             break;

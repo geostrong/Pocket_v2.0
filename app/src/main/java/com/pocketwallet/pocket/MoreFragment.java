@@ -13,8 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 public class MoreFragment extends Fragment {
+
+        private SharedPreferences userPreferences;
+        private boolean useFingerprint;
+        private SharedPreferences.Editor editor;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -23,6 +30,10 @@ public class MoreFragment extends Fragment {
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Settings");
         ((MainActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(4);
+
+        userPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        editor =  userPreferences.edit();
+        useFingerprint = userPreferences.getBoolean("useFingerprint", false);
 
         Button changepasswordBtn = (Button) view.findViewById(R.id.changePassword);
         changepasswordBtn.setOnClickListener(new  View.OnClickListener()
@@ -43,6 +54,22 @@ public class MoreFragment extends Fragment {
                 Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(loginIntent);
                 getActivity().finish();
+            }
+        });
+
+
+        Switch bioSwitch = (Switch) view.findViewById(R.id.biometricLogin);
+        bioSwitch.setChecked(useFingerprint);
+        bioSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    editor.putBoolean("useFingerprint", true);
+                    editor.commit();
+                } else {
+                    editor.putBoolean("useFingerprint", false);
+                    editor.commit();
+                }
             }
         });
 
