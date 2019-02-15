@@ -85,6 +85,7 @@ public class MoreFragment extends Fragment {
         editor.putBoolean("isLoggedIn", false);
         editor.putString("PhoneNumber", "Phone Number");
         editor.putString("user_name", "Name");
+        editor.putBoolean("useFingerprint", false);
         editor.commit();
     }
 }
