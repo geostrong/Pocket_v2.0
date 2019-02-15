@@ -152,7 +152,40 @@ public class ContractActivity_Details extends AppCompatActivity {
     }
 
     public void terminateContract(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        try {
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("user_id", userId);
+            jsonBody.put("contract_id",contractId);
+            System.out.println("Details: " + jsonBody);
+            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, TERMINATECONTRACT_URL, jsonBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    //try {
+                    System.out.println("Came");
+                    //String result = response.getString("result");
+                    //System.out.println("Results: " + result);
+                    //if (result.equals("success")) {
+                    //    System.out.println("Acknowledge Contract Success!");
+                    //} else {
+                    //    System.out.println("Acknowledge Contract Failed");
+                    // }
+                    //} //catch (JSONException e) {
 
+                    //}
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.getLocalizedMessage();
+                    onBackPressed();
+                }
+            });
+            requestQueue.add(jsonObject);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
     TextView textViewReceiverName, textViewReceiverPhoneNum, textViewPayeeName, textViewPayeePhoneNum,
