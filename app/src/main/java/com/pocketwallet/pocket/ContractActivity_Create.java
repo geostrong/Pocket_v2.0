@@ -126,7 +126,7 @@ public class ContractActivity_Create extends AppCompatActivity {
         startDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = dayOfMonth + "-" + ++month + "-" + year;
+                String date = year + "-" + ++month + "-" + dayOfMonth;
                 startDate.setText(date);
             }};
 
@@ -151,7 +151,7 @@ public class ContractActivity_Create extends AppCompatActivity {
         endDateListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                String date = dayOfMonth + "-" + ++month + "-" + year;
+                String date = year + "-" + ++month + "-" + dayOfMonth;
                 endDate.setText(date);
             }};
     }

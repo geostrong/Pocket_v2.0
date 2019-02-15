@@ -46,6 +46,7 @@
             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
             android:ems="10"
             android:hint="Contract Name"
+            android:inputType="text"
             android:textCursorDrawable="@color/colorPrimaryDark"
             android:textSize="16sp" />
 
@@ -98,7 +99,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Every"
-            android:inputType="phone"
+            android:inputType="number"
             android:textCursorDrawable="@color/colorPrimaryDark"
             android:textSize="16sp" />
 
@@ -123,7 +124,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Amount (Every)"
-            android:inputType="phone"
+            android:inputType="number"
             android:textCursorDrawable="@color/colorPrimaryDark"
             android:textSize="16sp" />
 
@@ -213,7 +214,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Penalty Amount"
-            android:inputType="phone"
+            android:inputType="number|phone"
             android:textCursorDrawable="@color/colorPrimaryDark"
             android:textSize="16sp" />
 
@@ -237,7 +238,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:hint="Description"
-            android:inputType="phone"
+            android:inputType="text"
             android:textCursorDrawable="@color/colorPrimaryDark"
             android:textSize="16sp" />
 
