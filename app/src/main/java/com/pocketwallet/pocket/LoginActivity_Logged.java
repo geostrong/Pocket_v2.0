@@ -2,6 +2,7 @@ package com.pocketwallet.pocket;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -50,9 +51,11 @@ public class LoginActivity_Logged extends AppCompatActivity {
 
     final String LOGIN_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/login";
     final String POSTFCM_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/fcmtoken";
+    final String DIALOG_FRAGMENT_TAG = "fingerprintDialogFragment";
 
     private SharedPreferences userPreferences;
     private boolean doubleBackToExitPressedOnce = false;
+    private boolean useFingerprint = false;
 
     private Button fingerprintButton;
     private Button loginButton2;
@@ -61,11 +64,14 @@ public class LoginActivity_Logged extends AppCompatActivity {
     String userId;
     String phoneNumber;
     String password;
+    String userName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_loggedin);
+
+        loadPreferences();
 
         fingerprintButton = findViewById(R.id.fingerprintButton);
         fingerprintButton.setOnClickListener (new View.OnClickListener() {
@@ -85,16 +91,21 @@ public class LoginActivity_Logged extends AppCompatActivity {
             }
         });
 
-        //Get user's name from shared preferences
-        userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String user_name = userPreferences.getString("user_name", "Name");
         TextView name = findViewById(R.id.signinName);
-        name.setText(user_name);
+        name.setText(userName);
 
-        KEY_NAME = userPreferences.getString("KEY_NAME", "DEFAULT");
-        phoneNumber = userPreferences.getString("PhoneNumber", "DEFAULT");
+        if (useFingerprint) {
+            RequestFingerprint();
+        }
     }
 
+    private void loadPreferences() {
+        userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        useFingerprint = userPreferences.getBoolean("useFingerprint", false);
+        KEY_NAME = userPreferences.getString("KEY_NAME", "DEFAULT");
+        phoneNumber = userPreferences.getString("PhoneNumber", "DEFAULT");
+        userName = userPreferences.getString("user_name", "Name");
+    }
     //POST LOGIN REQUEST
     private void login(String phoneNumber, String token, String mode,String password) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -214,6 +225,13 @@ public class LoginActivity_Logged extends AppCompatActivity {
         generateKey();
         initCipher();
 
+        //FINGERPRINT DIALOG
+        FingerprintAuthenticationDialogFragment fragment = new FingerprintAuthenticationDialogFragment();
+        fragment.setCryptoObject(new FingerprintManager.CryptoObject(cipher));
+        fragment.setStage(FingerprintAuthenticationDialogFragment.Stage.FINGERPRINT);
+        fragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+
+        /*
         final FingerprintManagerCompat fingerprintManagerCompat = FingerprintManagerCompat.from(this);
         if (!fingerprintManagerCompat.isHardwareDetected()) {
             System.out.println("Device does not have fingerprint scanner");
@@ -275,6 +293,12 @@ public class LoginActivity_Logged extends AppCompatActivity {
                         //biometricCallback.onAuthenticationFailed();
                     }
                 }, null);
+
+        */
+    }
+
+    public void onFingerprintCallback (){
+        login(phoneNumber,KEY_NAME,"1","-");;
     }
 
     private void generateKey() {
