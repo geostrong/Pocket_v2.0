@@ -81,7 +81,7 @@ public class ContractActivity extends AppCompatActivity {
             jsonBody.put("user_id", userId);
             System.out.println("User ID: " +jsonBody);
             if(!urlRetrieveContracts.contains("contract")) {
-                urlRetrieveContracts = urlRetrieveContracts + "/contract" + "/" + userId;
+                urlRetrieveContracts = urlRetrieveContracts + "contract" + "/" + userId;
             }
             System.out.println("urlRetrieverContracts: " + urlRetrieveContracts);
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlRetrieveContracts, jsonBody,
@@ -95,19 +95,21 @@ public class ContractActivity extends AppCompatActivity {
                                     JSONArray contractsArray = response.getJSONArray("contracts");
                                     for(int i = 0; i < contractsArray.length(); i++){
                                         JSONObject tempContract = contractsArray.getJSONObject(i);
+                                        /*
                                             ListContract contract = new ListContract(tempContract.getString("contractID"), tempContract.getString("contractStatus"),
                                                     tempContract.getString("user1_id"),tempContract.getString("user2_id"), tempContract.getString("user1_ack"),
                                                     tempContract.getString("user2_ack"),tempContract.getString("description"), tempContract.getString("amount"),
                                                     tempContract.getString("frequency"), tempContract.getString("penaltyAmount"),tempContract.getString("createdDate"),
                                                     tempContract.getString("startDate"),tempContract.getString("endDate"),tempContract.getString("contractName"),
-                                                    tempContract.getString("phoneNumber"));
+                                                    tempContract.getString("user1_phone"),tempContract.getString("user2_phone"));
                                             System.out.println("ContractID: " + contract.getContractID() + " | contractStatus: " + contract.getContractStatus()
                                                                 + " | user1_id: " + contract.getUser1ID() + " | user2_id: " + contract.getUser2ID() + " | user1_ack: " + contract.getUser1ACK()
                                                                 + " | user2_ack: " + contract.getUser2ACK() + " | description: " + contract.getDescription() + " | amount: " + contract.getAmount()
                                                                 + " | frequency: " + contract.getFrequency() + " | penalty_amount: " + contract.getPenaltyAmount() + " | createdDate: " + contract.getCreatedDate()
                                                                 + " | startDate: " + contract.getStartDate() + " | endDate: " + contract.getEndDate() + " | receiverName: " + contract.getReceiverName()
-                                                    + " | receiverPhoneNum: " + contract.getReceiverPhoneNum() + " | payeeName: " + contract.getPayeeName() + " | payeePhoneNum: " + contract.getPayeePhoneNum());
-                                            listContracts.add(contract);
+                                                    + " | user1PhoneNum: " + contract.getUser1PhoneNum() + " | payeeName: " + contract.getPayeeName() + " | user2PhoneNum: " + contract.getUser2PhoneNum());
+                                            */
+                                            //listContracts.add(contract);
                                     }
                                 }
                             }catch(JSONException e){

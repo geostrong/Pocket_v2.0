@@ -44,9 +44,9 @@ public class ContractDetailsAdapter extends RecyclerView.Adapter<ContractDetails
     public void onBindViewHolder (ViewHolder holder, final int position){
         ListContract listContract = listContracts.get(position);
         holder.textViewReceiverName.setText(listContract.getReceiverName());
-        holder.textViewReceiverPhoneNum.setText(listContract.getReceiverPhoneNum());
+        holder.textViewReceiverPhoneNum.setText(listContract.getUser1PhoneNum());
         holder.textViewPayeeName.setText(listContract.getPayeeName());
-        holder.textViewPayeePhoneNum.setText(listContract.getPayeePhoneNum());
+        holder.textViewPayeePhoneNum.setText(listContract.getUser2PhoneNum());
         //holder.textViewContractName.setText(listContract.getContractName());
         holder.textViewContractStatus.setText(listContract.getContractStatus());
         holder.textViewAmount.setText(listContract.getAmount());

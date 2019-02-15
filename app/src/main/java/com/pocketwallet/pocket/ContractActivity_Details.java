@@ -83,8 +83,6 @@ public class ContractActivity_Details extends AppCompatActivity {
 
         if(userId.equals(listContracts.get(position).getUser2ID())){
             listContracts.get(position).setPayeeName(name);
-            listContracts.get(position).setPayeePhoneNum(phoneNumber);
-            listContracts.get(position).setReceiverPhoneNum(listContracts.get(position).getPhoneNumber());
             listContracts.get(position).setReceiverName(listContracts.get(position).getUser1ID());
             if(!listContracts.get(position).getContractStatus().equals(("0"))){
                 acceptButton.setVisibility(View.GONE);
@@ -93,9 +91,7 @@ public class ContractActivity_Details extends AppCompatActivity {
         }else{
             acceptButton.setVisibility(View.GONE);
             declineButton.setVisibility(View.GONE);
-            listContracts.get(position).setPayeePhoneNum(listContracts.get(position).getPhoneNumber());
             listContracts.get(position).setReceiverName(name);
-            listContracts.get(position).setReceiverPhoneNum(phoneNumber);
             listContracts.get(position).setPayeeName(listContracts.get(position).getUser2ID());
         }
         contractId = listContracts.get(position).getContractID();
@@ -127,7 +123,6 @@ public class ContractActivity_Details extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        System.out.println("Came");
                         String result = response.getString("result");
                         System.out.println("Results: " + result);
                         if (result.equals("success")) {
@@ -166,7 +161,6 @@ public class ContractActivity_Details extends AppCompatActivity {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                    System.out.println("Came");
                     String result = response.getString("result");
                     System.out.println("Results: " + result);
                     if (result.equals("success")) {
@@ -212,9 +206,9 @@ public class ContractActivity_Details extends AppCompatActivity {
 
         ListContract listContract = listContracts.get(position);
         textViewReceiverName.setText(listContract.getReceiverName());
-        textViewReceiverPhoneNum.setText(listContract.getReceiverPhoneNum());
+        textViewReceiverPhoneNum.setText(listContract.getUser1PhoneNum());
         textViewPayeeName.setText(listContract.getPayeeName());
-        textViewPayeePhoneNum.setText(listContract.getPayeePhoneNum());
+        textViewPayeePhoneNum.setText(listContract.getUser2PhoneNum());
         textViewContractName.setText(listContract.getContractName());
         if(listContract.getContractStatus().equals("0")) {
             textViewContractStatus.setText("Pending");
