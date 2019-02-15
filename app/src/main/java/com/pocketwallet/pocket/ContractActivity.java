@@ -95,7 +95,7 @@ public class ContractActivity extends AppCompatActivity {
                                     JSONArray contractsArray = response.getJSONArray("contracts");
                                     for(int i = 0; i < contractsArray.length(); i++){
                                         JSONObject tempContract = contractsArray.getJSONObject(i);
-                                        /*
+
                                             ListContract contract = new ListContract(tempContract.getString("contractID"), tempContract.getString("contractStatus"),
                                                     tempContract.getString("user1_id"),tempContract.getString("user2_id"), tempContract.getString("user1_ack"),
                                                     tempContract.getString("user2_ack"),tempContract.getString("description"), tempContract.getString("amount"),
@@ -108,8 +108,8 @@ public class ContractActivity extends AppCompatActivity {
                                                                 + " | frequency: " + contract.getFrequency() + " | penalty_amount: " + contract.getPenaltyAmount() + " | createdDate: " + contract.getCreatedDate()
                                                                 + " | startDate: " + contract.getStartDate() + " | endDate: " + contract.getEndDate() + " | receiverName: " + contract.getReceiverName()
                                                     + " | user1PhoneNum: " + contract.getUser1PhoneNum() + " | payeeName: " + contract.getPayeeName() + " | user2PhoneNum: " + contract.getUser2PhoneNum());
-                                            */
-                                            //listContracts.add(contract);
+
+                                            listContracts.add(contract);
                                     }
                                 }
                             }catch(JSONException e){

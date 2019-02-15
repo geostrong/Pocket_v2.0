@@ -162,7 +162,7 @@ public class ContractActivity_Create extends AppCompatActivity {
         try {
             description = "NoDescription";
             JSONObject jsonBody = new JSONObject();
-            jsonBody.put("contractName", "testContractName");
+            jsonBody.put("contractName", contractName);
             jsonBody.put("user1_id", userId);
             jsonBody.put("user2_phone", phoneInvolved);
             jsonBody.put("description", description);
@@ -184,6 +184,7 @@ public class ContractActivity_Create extends AppCompatActivity {
                                 System.out.println("Results: " + result);
                                 if(result.equalsIgnoreCase("Success")){
                                     System.out.println(response.getString("contract_id"));
+                                    finish();
                                 }
                             }catch(JSONException e){
                                 System.out.println("Error: " + e);
@@ -196,6 +197,7 @@ public class ContractActivity_Create extends AppCompatActivity {
                     System.out.println("Error Message: " + error.getMessage());
                     System.out.println("Error Network Response Data: " + new String(error.networkResponse.data));
                     System.out.println("Error Network Response Status Code" + error.networkResponse.statusCode);
+                    finish();
                     //onBackPressed();
                 }
             });
