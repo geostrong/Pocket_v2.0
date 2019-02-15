@@ -84,6 +84,8 @@ public class ContractActivity_Details extends AppCompatActivity {
         if(userId.equals(listContracts.get(position).getUser2ID())){
             listContracts.get(position).setPayeeName(name);
             listContracts.get(position).setReceiverName(listContracts.get(position).getUser1ID());
+            System.out.println("TestName: " + name);
+            System.out.println("TestName2: " + listContracts.get(position).getUser1ID());
             if(!listContracts.get(position).getContractStatus().equals(("0"))){
                 acceptButton.setVisibility(View.GONE);
                 declineButton.setVisibility(View.GONE);
@@ -91,6 +93,7 @@ public class ContractActivity_Details extends AppCompatActivity {
         }else{
             acceptButton.setVisibility(View.GONE);
             declineButton.setVisibility(View.GONE);
+            System.out.println("TestName: " + name);
             listContracts.get(position).setReceiverName(name);
             listContracts.get(position).setPayeeName(listContracts.get(position).getUser2ID());
         }
@@ -192,11 +195,11 @@ public class ContractActivity_Details extends AppCompatActivity {
             textViewContractName, textViewContractStatus, textViewAmount, textViewStartDate, textViewEndDate,
             textViewPenaltyAmount, textViewDescription;
     public void GetViewItems(){
-        textViewReceiverName = findViewById(R.id.contractNameCreate);
+        textViewContractName = findViewById(R.id.contractNameCreate);
+        textViewReceiverName = findViewById(R.id.receiverName);
         textViewReceiverPhoneNum = findViewById(R.id.receiverPhoneNum);
         textViewPayeeName = findViewById(R.id.payeeName);
         textViewPayeePhoneNum = findViewById(R.id.payeePhoneNum);
-        textViewContractName = findViewById(R.id.contractNameCreate);
         textViewContractStatus = findViewById(R.id.status);
         textViewAmount = findViewById(R.id.amount);
         textViewStartDate = findViewById(R.id.startDate);
@@ -206,6 +209,8 @@ public class ContractActivity_Details extends AppCompatActivity {
 
         ListContract listContract = listContracts.get(position);
         textViewReceiverName.setText(listContract.getReceiverName());
+        System.out.println("The Receiver Name: " + listContract.getReceiverName());
+        System.out.println("TextViewName: " + textViewReceiverName.getText().toString());
         textViewReceiverPhoneNum.setText(listContract.getUser1PhoneNum());
         textViewPayeeName.setText(listContract.getPayeeName());
         textViewPayeePhoneNum.setText(listContract.getUser2PhoneNum());
