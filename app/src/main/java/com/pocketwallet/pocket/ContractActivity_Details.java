@@ -192,7 +192,7 @@ public class ContractActivity_Details extends AppCompatActivity {
             textViewContractName, textViewContractStatus, textViewAmount, textViewStartDate, textViewEndDate,
             textViewPenaltyAmount, textViewDescription;
     public void GetViewItems(){
-        textViewReceiverName = findViewById(R.id.receiverName);
+        textViewReceiverName = findViewById(R.id.contractName);
         textViewReceiverPhoneNum = findViewById(R.id.receiverPhoneNum);
         textViewPayeeName = findViewById(R.id.payeeName);
         textViewPayeePhoneNum = findViewById(R.id.payeePhoneNum);

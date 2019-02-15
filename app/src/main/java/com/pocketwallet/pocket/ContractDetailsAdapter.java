@@ -68,7 +68,7 @@ public class ContractDetailsAdapter extends RecyclerView.Adapter<ContractDetails
         public ViewHolder(View itemView){
             super(itemView);
 
-            textViewReceiverName = itemView.findViewById(R.id.receiverName);
+            textViewReceiverName = itemView.findViewById(R.id.contractName);
             textViewReceiverPhoneNum = itemView.findViewById(R.id.receiverPhoneNum);
             textViewPayeeName = itemView.findViewById(R.id.payeeName);
             textViewPayeePhoneNum = itemView.findViewById(R.id.payeePhoneNum);

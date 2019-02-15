@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -40,14 +39,15 @@ public class ContractActivity_Create extends AppCompatActivity {
     private String[] months = {"Jan", "Feb", "Mar", "Apr", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
     private Button requestContractButton;
-    private TextView receiverNameView;
+    private TextView contractNameView;
     private TextView frequencyView;
-    private TextView contractAmountView;
     private TextView phoneInvolvedView;
     private TextView penaltyAmountView;
+    private EditText descriptionView;
+    private EditText amountContract;
 
     private Bundle extras;
-    private String receiverName;
+    private String contractName;
     private String userId;
     private String phoneInvolved;
     private String description;
@@ -71,9 +71,11 @@ public class ContractActivity_Create extends AppCompatActivity {
         }
 
         phoneInvolvedView = findViewById(R.id.phoneInvolved);
-        receiverNameView = findViewById(R.id.receiverName);
+        contractNameView = findViewById(R.id.contractName);
         penaltyAmountView = findViewById(R.id.penaltyAmount);
         frequencyView = findViewById(R.id.frequencyText);
+        amountContract = findViewById(R.id.contractAmount);
+        descriptionView = findViewById(R.id.descriptionContract);
 
         //RequestContractButton
         requestContractButton = findViewById(R.id.RequestContract);
@@ -81,12 +83,12 @@ public class ContractActivity_Create extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 Spinner mySpinner = (Spinner) findViewById(R.id.frequency);
-                receiverName = receiverNameView.getText().toString();
+                contractName = contractNameView.getText().toString();
                 phoneInvolved = phoneInvolvedView.getText().toString();
-                //frequency = mySpinner.getSelectedItem().toString();
                 frequency = frequencyView.getText().toString();
-                amount = contractAmountView.getText().toString();
+                amount = amountContract.getText().toString();
                 penaltyAmount = penaltyAmountView.getText().toString();
+                description = descriptionView.getText().toString();
                 createContract();
             }
         });
