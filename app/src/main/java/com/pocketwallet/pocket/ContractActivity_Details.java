@@ -42,8 +42,8 @@ public class ContractActivity_Details extends AppCompatActivity {
 
     private SharedPreferences userPreferences;
 
-    String TERMINATECONTRACT_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/transactional/contract/terminate";
-    String ACKNOWLEDGE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/transactional/contract/ack";
+    String TERMINATECONTRACT_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/contract/terminate";
+    String ACKNOWLEDGE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/contract/ack";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,18 +124,18 @@ public class ContractActivity_Details extends AppCompatActivity {
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, ACKNOWLEDGE_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    //try {
+                    try {
                         System.out.println("Came");
-                        //String result = response.getString("result");
-                        //System.out.println("Results: " + result);
-                        //if (result.equals("success")) {
-                        //    System.out.println("Acknowledge Contract Success!");
-                        //} else {
-                        //    System.out.println("Acknowledge Contract Failed");
-                       // }
-                    //} //catch (JSONException e) {
+                        String result = response.getString("result");
+                        System.out.println("Results: " + result);
+                        if (result.equals("success")) {
+                            System.out.println("Acknowledge Contract Success!");
+                        } else {
+                            System.out.println("Acknowledge Contract Failed");
+                        }
+                    }catch (JSONException e) {
 
-                    //}
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -161,18 +161,18 @@ public class ContractActivity_Details extends AppCompatActivity {
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, TERMINATECONTRACT_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
-                    //try {
+                    try {
                     System.out.println("Came");
-                    //String result = response.getString("result");
-                    //System.out.println("Results: " + result);
-                    //if (result.equals("success")) {
-                    //    System.out.println("Acknowledge Contract Success!");
-                    //} else {
-                    //    System.out.println("Acknowledge Contract Failed");
-                    // }
-                    //} //catch (JSONException e) {
+                    String result = response.getString("result");
+                    System.out.println("Results: " + result);
+                    if (result.equals("success")) {
+                        System.out.println("Acknowledge Contract Success!");
+                    } else {
+                        System.out.println("Acknowledge Contract Failed");
+                     }
+                    }catch (JSONException e) {
 
-                    //}
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
