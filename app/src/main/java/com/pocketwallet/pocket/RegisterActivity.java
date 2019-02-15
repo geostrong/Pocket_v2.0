@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -33,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     EditText registerNameInput;
     EditText registerPasswordInput;
     EditText registerPhoneInput;
+    TextInputLayout registerPhoneInputLayout;
     private TextView login;
 
     Dialog popupBox;
@@ -58,6 +60,8 @@ public class RegisterActivity extends AppCompatActivity {
         registerNameInput = (EditText) findViewById(R.id.registerName);
         registerPasswordInput = (EditText) findViewById(R.id.registerPassword);
         registerPhoneInput = (EditText) findViewById(R.id.registerPhone);
+
+        registerPhoneInputLayout = findViewById(R.id.textInputLayout6);
 
         registerNameInput.addTextChangedListener(registerTextWatcher);
         registerPasswordInput.addTextChangedListener(registerTextWatcher);
@@ -98,10 +102,6 @@ public class RegisterActivity extends AppCompatActivity {
                             finish();
                         }else if (tempResult.equals("failed")){
                             result = "Fail";
-                            String error = response.getString("message");
-                            if (error.equalsIgnoreCase("phonenumber already in use")) {
-                                registerPhoneInput.setError("Phone number is already in use! Please enter another number");
-                            }
                         }
                     }catch(JSONException e){
 
@@ -113,9 +113,9 @@ public class RegisterActivity extends AppCompatActivity {
                     int status = error.networkResponse.statusCode;
                     switch (status){
                         case 417:
-
                             result = "fail";
-                            showPopup();
+                            registerPhoneInputLayout.setError("Phone number is already in use! Please enter another number");
+                            registerPasswordInput.getText().clear();
                             break;
                     }
                     //onBackPressed();
