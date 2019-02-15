@@ -140,4 +140,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.delete(TABLE_LOYALTY_CARDS, "id = ?", new String[] { String.valueOf(card.getId()) });
         db.close();
     }
+
+    public void cleanDB () {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(TABLE_NOTIFICATIONS, null,null);
+        db.delete(TABLE_LOYALTY_CARDS,null,null);
+    }
 }

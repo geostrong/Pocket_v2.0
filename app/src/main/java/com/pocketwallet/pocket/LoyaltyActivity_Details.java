@@ -17,6 +17,7 @@ public class LoyaltyActivity_Details extends AppCompatActivity {
     ImageView myLoyaltyQR;
     ImageView myLoyaltyBarcode;
     private String num;
+    private String name;
     private Bundle extras;
 
     @Override
@@ -24,14 +25,14 @@ public class LoyaltyActivity_Details extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loyalty__details);
 
-        getSupportActionBar().setTitle("Quick QR");
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
-
         extras = getIntent().getExtras();
         if (extras != null) {
             num = extras.getString("num");
+            name = extras.getString("name");
         }
+        getSupportActionBar().setTitle(name);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
         myLoyaltyQR = (ImageView) findViewById(R.id.myLoyaltyQR);
         myLoyaltyBarcode = (ImageView) findViewById(R.id.myLoyaltyBarcode);

@@ -36,11 +36,13 @@ public class LoyaltyAdapter extends RecyclerView.Adapter<LoyaltyAdapter.ViewHold
         viewHolder.textViewExpiry.setText("Until: " + card.getExpiry());
 
         final String num = card.getNum();
+        final String name = card.getCompanyName();
         viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(v.getContext(), LoyaltyActivity_Details.class);
                 newIntent.putExtra("num",num);
+                newIntent.putExtra("name", name);
                 v.getContext().startActivity(newIntent);
             }
         });

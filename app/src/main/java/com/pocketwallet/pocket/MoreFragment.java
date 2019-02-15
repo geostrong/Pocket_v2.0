@@ -1,9 +1,11 @@
 package com.pocketwallet.pocket;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ public class MoreFragment extends Fragment {
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Settings");
         ((MainActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(4);
+
         Button changepasswordBtn = (Button) view.findViewById(R.id.changePassword);
         changepasswordBtn.setOnClickListener(new  View.OnClickListener()
         {
@@ -31,6 +34,30 @@ public class MoreFragment extends Fragment {
             }
         });
 
+        Button logoutBtn = (Button) view.findViewById(R.id.logoutButton);
+        logoutBtn.setOnClickListener(new  View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                cleanData();
+                Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+                startActivity(loginIntent);
+                getActivity().finish();
+            }
+        });
+
         return view;
+    }
+
+    private void cleanData () {
+        DatabaseHelper db = new DatabaseHelper(getActivity());
+        db.cleanDB();
+
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        SharedPreferences.Editor editor = userPreferences.edit();
+        editor.putBoolean("isLoggedIn", false);
+        editor.putString("PhoneNumber", "Phone Number");
+        editor.putString("user_name", "Name");
+        editor.commit();
     }
 }
