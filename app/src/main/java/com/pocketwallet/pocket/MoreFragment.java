@@ -20,6 +20,7 @@ public class MoreFragment extends Fragment {
 
         private SharedPreferences userPreferences;
         private boolean useFingerprint;
+        private boolean shakeToExit;
         private SharedPreferences.Editor editor;
 
     @Nullable
@@ -34,6 +35,7 @@ public class MoreFragment extends Fragment {
         userPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor =  userPreferences.edit();
         useFingerprint = userPreferences.getBoolean("useFingerprint", false);
+        shakeToExit = userPreferences.getBoolean("ShakeToExit",false);
 
         Button changepasswordBtn = (Button) view.findViewById(R.id.changePassword);
         changepasswordBtn.setOnClickListener(new  View.OnClickListener()
@@ -68,6 +70,20 @@ public class MoreFragment extends Fragment {
                     editor.commit();
                 } else {
                     editor.putBoolean("useFingerprint", false);
+                    editor.commit();
+                }
+            }
+        });
+        Switch shakeToExitSwitch = (Switch) view.findViewById(R.id.shakeToQuit);
+        shakeToExitSwitch.setChecked(shakeToExit);
+        shakeToExitSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    editor.putBoolean("ShakeToExit", true);
+                    editor.commit();
+                } else {
+                    editor.putBoolean("ShakeToExit", false);
                     editor.commit();
                 }
             }
