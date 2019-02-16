@@ -153,11 +153,11 @@
             android:layout_marginTop="32dp"
             android:text="Available Balance"
             android:textColor="@android:color/white"
-            app:layout_constraintStart_toStartOf="@+id/textView10"
+            app:layout_constraintStart_toStartOf="@+id/balanceText"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/balanceText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

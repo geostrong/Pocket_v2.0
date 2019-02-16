@@ -1,41 +1,25 @@
 package com.pocketwallet.pocket;
 
 import android.Manifest;
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
 import me.dm7.barcodescanner.zxing.ZXingScannerView;
 
@@ -128,8 +112,14 @@ public class ScanQRActivity extends AppCompatActivity{
                     vibrator.vibrate(1000);
                     scanned = true;
                     System.out.println("Result is: " + qrCodes.valueAt(0).displayValue);
-
-                    String resultText = qrCodes.valueAt(0).displayValue;
+                    String encryptedQR = qrCodes.valueAt(0).displayValue;
+                    try {
+                        encryptedQR = AESUtils.decrypt(encryptedQR);
+                        System.out.println("decrypted:" + encryptedQR);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    String resultText = encryptedQR;
                     String results[] = resultText.split("\\|");
                     String qrType = results[0];
                     //HANDLE STATIC /DYNAMIC HERE
@@ -137,6 +127,7 @@ public class ScanQRActivity extends AppCompatActivity{
                         //Dynamic
                         String targetUserId = results[1];
                         String amount = results[2];
+                        String targetName = results[3];
                         System.out.println("Dynamic QR, the amount is: " + amount);
                         System.out.println("The target userid is: + targetUserId");
                         Intent dynamicIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Dynamic.class);
@@ -145,17 +136,20 @@ public class ScanQRActivity extends AppCompatActivity{
                         dynamicIntent.putExtra("userId", userId);
                         dynamicIntent.putExtra("amount", amount);
                         dynamicIntent.putExtra("targetUserId", targetUserId);
+                        dynamicIntent.putExtra("targetName",targetName);
                         startActivity(dynamicIntent);
                         finish();
                     } else if (qrType.equals("Static")) {
                         //Static
                         String targetUserId = results[1];
+                        String targetName = results[2];
                         System.out.println("Static QR, target/merchant userID is: " + targetUserId);
                         Intent staticIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Static.class);
                         staticIntent.putExtra("paymentType", "Static");
                         staticIntent.putExtra("title", "transaction");
                         staticIntent.putExtra("userId", userId);
                         staticIntent.putExtra("targetUserId", targetUserId);
+                        staticIntent.putExtra("targetName",targetName);
                         startActivity(staticIntent);
                         finish();
                     } else {

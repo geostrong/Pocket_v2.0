@@ -74,8 +74,17 @@ public class QuickQrActivity extends AppCompatActivity {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
             //String toQR = userId + "|" + amount;
-            String toQR = "Static|" + userId;
+            SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            String toQR = "Static|" + userId + "|" + userPreferences.getString("user_name", "Name");
             System.out.println("TOQR: " + toQR);
+
+            try {
+                toQR = AESUtils.encrypt(toQR);
+               System.out.println("encrypted:" + toQR);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             BitMatrix bitMatrix = multiFormatWriter.encode(toQR, BarcodeFormat.QR_CODE, myQR.getWidth(), myQR.getHeight());
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);

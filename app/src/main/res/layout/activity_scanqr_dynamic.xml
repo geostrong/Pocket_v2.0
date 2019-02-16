@@ -104,12 +104,12 @@ tools:context=".ScanQRActivity_Static">
         android:id="@+id/totalAmount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAlignment="viewEnd"
-        android:layout_marginTop="300dp"
         android:layout_marginStart="275dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="300dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/amount"
+        android:textAlignment="viewEnd"
         android:textColor="#5e76fa"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -119,14 +119,14 @@ tools:context=".ScanQRActivity_Static">
         android:id="@+id/totalText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
         android:layout_marginStart="200dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginTop="300dp"
         android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
         android:text="Amount:"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/numbertext2"/>
+        app:layout_constraintTop_toBottomOf="@id/numbertext2" />
 
 </android.support.v7.widget.CardView>
 
@@ -162,11 +162,11 @@ tools:context=".ScanQRActivity_Static">
             android:layout_marginTop="32dp"
             android:text="Available Balance"
             android:textColor="@android:color/white"
-            app:layout_constraintStart_toStartOf="@+id/textView10"
+            app:layout_constraintStart_toStartOf="@+id/balanceText"
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/balanceText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"

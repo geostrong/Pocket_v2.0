@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -28,6 +29,7 @@ import java.util.Map;
 public class ScanQRActivity_Dynamic extends AppCompatActivity {
 
     private String userId;
+    private String targetName;
     private String amount;
     private String targetUserId;
     private String authCode;
@@ -36,8 +38,11 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
     private Bundle extras;
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/";
     private String urlPaymentQuickPay = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/quickpay";
+    private String GETBALANCE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/";
 
     TextView totalAmountText;
+    TextView balanceTxt;
+    TextView targetNameText;
 
     //Session Token
     private String sessionToken;
@@ -65,12 +70,22 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             userId = extras.getString("userId");
             amount = extras.getString("amount");
             targetUserId = extras.getString("targetUserId");
+            targetName = extras.getString("targetName");
+            //SET URL
+            if(!GETBALANCE_URL.contains("/balance")) {
+                GETBALANCE_URL = GETBALANCE_URL + userId + "/balance";
+            }
         }
+
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sessionToken = userPreferences.getString("sessionToken", "");
 
-        totalAmountText = (TextView) findViewById(R.id.amountText);
+        balanceTxt = (TextView) findViewById(R.id.balanceText);
+        totalAmountText = (TextView) findViewById(R.id.totalAmount);
         totalAmountText.setText("$:"+ amount);
+        targetNameText = (TextView) findViewById(R.id.involvedName2);
+        targetNameText.setText(targetName);
+        updateBalance();
     }
 
     public void processPayment(String merchantUserId, String amount){
@@ -147,5 +162,40 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    public void updateBalance(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest requestJsonObject = new JsonObjectRequest(Request.Method.GET, GETBALANCE_URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    final String balance = response.getString("balance");
+                    System.out.println(response.getString("balance"));
+                    balanceTxt.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            balanceTxt.setText("$"+balance);
+                        }
+                    });
+                }catch(JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("", "Error: " + error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                System.out.println("Header: " + headers.values());
+                return headers;
+            }
+        };
+        requestQueue.add(requestJsonObject);
     }
 }

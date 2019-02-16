@@ -1,10 +1,12 @@
 package com.pocketwallet.pocket;
 
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -28,6 +30,8 @@ public class RequestActivity_QR extends AppCompatActivity {
     Bundle extras;
     String userId;
 
+    SharedPreferences userPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +40,7 @@ public class RequestActivity_QR extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getString("userId");
         }
+        userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         setContentView(R.layout.activity_request_qr);
         getSupportActionBar().setTitle("Request QR");
@@ -54,9 +59,14 @@ public class RequestActivity_QR extends AppCompatActivity {
                 try {
                     System.out.println(amountInput.getText().toString());
                     String amount = amountInput.getText().toString();
-                    //String toQR = userId + "|" + amount;
-                    String toQR = "Dynamic|" + userId + "|" + amount;
+                    String toQR = "Dynamic|" + userId + "|" + amount + "|" + userPreferences.getString("user_name", "Name");;
                     System.out.println("TOQR: " + toQR);
+                    try {
+                        toQR = AESUtils.encrypt(toQR);
+                        System.out.println("encrypted:" + toQR);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     System.out.println("MY QR SIZ 2 -> Width = " + generatedQR.getWidth() + " |  Height = " +  generatedQR.getHeight());
                     BitMatrix bitMatrix = multiFormatWriter.encode(toQR, BarcodeFormat.QR_CODE,generatedQR.getWidth(),generatedQR.getHeight());
                     BarcodeEncoder barcodeEncoder = new BarcodeEncoder();

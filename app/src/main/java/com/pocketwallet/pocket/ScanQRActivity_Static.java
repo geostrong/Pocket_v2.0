@@ -8,6 +8,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,17 +31,20 @@ import java.util.Map;
 public class ScanQRActivity_Static extends AppCompatActivity {
     EditText amountInput;
     Button payBtn;
+    TextView balanceTxt;
+    TextView targetNameText;
 
     private String amount;
     private String userId;
     private String targetUserId;
+    private String targetName;
     private String paymentType;
     private String authCode;
     private Bundle extras;
 
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/";
     private String urlPaymentQuickPay = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/quickpay/";
-
+    private String GETBALANCE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/";
     //Session Token
     private String sessionToken;
 
@@ -49,7 +53,7 @@ public class ScanQRActivity_Static extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanqr_static);
 
-        amountInput = (EditText)findViewById(R.id.amountTxt);
+        amountInput = (EditText)findViewById(R.id.amountTransferStatic);
         amountInput.addTextChangedListener(loginTextWatcher);
         payBtn = (Button)findViewById(R.id.payButtonStatic);
         payBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,19 +75,28 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             userId = extras.getString("userId");
             amount = extras.getString("amount");
             targetUserId = extras.getString("targetUserId");
+            targetName = extras.getString("targetName");
             authCode = extras.getString("targetAuthCode");
             paymentType = extras.getString("paymentType");
+            //SET URL
+            if(!GETBALANCE_URL.contains("/balance")) {
+                GETBALANCE_URL = GETBALANCE_URL + userId + "/balance";
+            }
         }
 
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sessionToken = userPreferences.getString("sessionToken", "");
-
 
         if (paymentType.equalsIgnoreCase("QuickQR")){
             TextView payText = (TextView) findViewById(R.id.payText);
             payText.setText("");
         }
         amount = "";
+
+        balanceTxt = (TextView) findViewById(R.id.balanceText);
+        targetNameText = (TextView) findViewById(R.id.involvedName2);
+        targetNameText.setText(targetName);
+        updateBalance();
     }
     public void processPayment(String merchantUserId, String amount){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -150,7 +163,8 @@ public class ScanQRActivity_Static extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
                     return headers;
                 }
             };
@@ -236,9 +250,9 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             }){
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json; charset=utf-8");
+                    final Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
                     return headers;
                 }
             };
@@ -248,5 +262,39 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             System.out.println("Error: " + e);
             e.getMessage();
         }
+    }
+    public void updateBalance(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest requestJsonObject = new JsonObjectRequest(Request.Method.GET, GETBALANCE_URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    final String balance = response.getString("balance");
+                    System.out.println(response.getString("balance"));
+                    balanceTxt.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            balanceTxt.setText("$"+balance);
+                        }
+                    });
+                }catch(JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("", "Error: " + error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                System.out.println("Header: " + headers.values());
+                return headers;
+            }
+        };
+        requestQueue.add(requestJsonObject);
     }
 }
