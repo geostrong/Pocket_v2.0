@@ -52,7 +52,7 @@
     </string-array>
 
     <!--Strings for Card Type dropdown-->
-    <string-array name="cardType">
+    <string-array name="cardTypes">
         <item>Visa</item>
         <item>MasterCard</item>
     </string-array>

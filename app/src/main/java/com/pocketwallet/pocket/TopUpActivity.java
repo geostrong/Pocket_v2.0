@@ -48,7 +48,7 @@ public class TopUpActivity extends AppCompatActivity {
     private TextView cvvView;
     private TextView topUpAmountView;
 
-    private String urlTopUp = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/topup?"; //address need changing
+    private String urlTopUp = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/topup?"; //address needs changing
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +58,16 @@ public class TopUpActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
+
+        extras = getIntent().getExtras();
+        if (extras != null) {
+            userId = extras.getString("userId");
+        }
+
+        cardNumView = findViewById(R.id.cardNum);
+        cvvView = findViewById(R.id.cvv);
+        topUpAmountView = findViewById(R.id.topUpAmount);
+        expiryDate = findViewById(R.id.expiryDate);
 
         Button confirmBtn = findViewById(R.id.topUpConfirmBtn);
         confirmBtn.setOnClickListener(new View.OnClickListener() {
@@ -73,21 +83,17 @@ public class TopUpActivity extends AppCompatActivity {
                 cardNum = cardNumView.getText().toString();
                 cvv = cvvView.getText().toString();
                 topUpAmount = topUpAmountView.getText().toString();
-                //cardType = cardTypeView.getText().toString();                                         cant get this to parse visa/mastercard to requestTopUp();
+                //cardType = cardTypeView.getText().toString();                                         //cant get this to parse visa/mastercard to requestTopUp(); probably dont need to
                 requestTopUp();
             }
         });
 
-        extras = getIntent().getExtras();
-        if (extras != null) {
-            userId = extras.getString("userId");
-        }
-
         Spinner cardTypeView = findViewById(R.id.cardType);
-        cardNumView = findViewById(R.id.cardNum);
-        cvvView = findViewById(R.id.cvv);
-        topUpAmountView = findViewById(R.id.topUpAmount);
-        expiryDate = findViewById(R.id.expiryDate);
+
+        ArrayAdapter<String> cardTypeAdapter = new ArrayAdapter<>(TopUpActivity.this,
+                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.cardTypes));
+        cardTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        cardTypeView.setAdapter(cardTypeAdapter);
 
         final ImageView image = findViewById(R.id.cardImage);
 
@@ -139,11 +145,6 @@ public class TopUpActivity extends AppCompatActivity {
                 expiryDate.setText(date);
             }};
 
-        Spinner cardType = findViewById(R.id.cardType);
-        ArrayAdapter<String> cardTypeAdapter = new ArrayAdapter<>(TopUpActivity.this,
-                android.R.layout.simple_list_item_1, getResources().getStringArray(R.array.cardType));
-        cardTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        cardType.setAdapter(cardTypeAdapter);
 
     }
 
@@ -152,7 +153,7 @@ public class TopUpActivity extends AppCompatActivity {
 
         try {
             JSONObject jsonBody = new JSONObject();
-            jsonBody.put("cardTypePass", cardType);
+            jsonBody.put("cardType", cardType);
             jsonBody.put("cardNum", cardNum);
             jsonBody.put("cvv", cvv);
             jsonBody.put("expiryDate", expiryDate.getText().toString());
