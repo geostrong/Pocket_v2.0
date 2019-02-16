@@ -59,10 +59,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="0dp"
                 android:layout_marginEnd="8dp"
                 android:text="-"
-                android:textColor="#5e76fa"
+                android:textColor="@color/colorPrimaryDark"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/status"
@@ -73,37 +73,40 @@
             <TextView
                 android:id="@+id/endDate"
                 android:layout_width="wrap_content"
-                android:layout_height="22dp"
-                android:layout_marginTop="8dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:text="10/10/22"
-                android:textAlignment="textEnd"
+                android:textAlignment="textStart"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/status"
-                app:layout_constraintTop_toBottomOf="@+id/status" />
+                app:layout_constraintBottom_toBottomOf="@+id/startDate"
+                app:layout_constraintStart_toEndOf="@+id/dashText"
+                app:layout_constraintTop_toTopOf="@+id/startDate"
+                app:layout_constraintVertical_bias="0.0" />
 
             <TextView
                 android:id="@+id/startDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="4dp"
+                android:layout_marginTop="4dp"
                 android:text="10/10/18"
-                android:textAlignment="textEnd"
+                android:textAlignment="textStart"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/dashText"
-                app:layout_constraintTop_toBottomOf="@+id/status" />
+                app:layout_constraintStart_toStartOf="@+id/user2ID"
+                app:layout_constraintTop_toBottomOf="@+id/user2ID" />
 
             <TextView
                 android:id="@+id/dashText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
                 android:layout_marginTop="8dp"
-                android:layout_marginEnd="4dp"
                 android:text="-"
-                android:textAlignment="textEnd"
+                android:textAlignment="textStart"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toStartOf="@+id/endDate"
-                app:layout_constraintTop_toBottomOf="@+id/status" />
+                app:layout_constraintBottom_toBottomOf="@+id/startDate"
+                app:layout_constraintStart_toEndOf="@+id/startDate"
+                app:layout_constraintTop_toTopOf="@+id/startDate"
+                app:layout_constraintVertical_bias="1.0" />
 
         </android.support.constraint.ConstraintLayout>
     </android.support.v7.widget.CardView>
