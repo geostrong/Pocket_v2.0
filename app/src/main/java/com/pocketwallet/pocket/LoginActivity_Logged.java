@@ -1,7 +1,10 @@
 package com.pocketwallet.pocket;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,8 +12,6 @@ import android.preference.PreferenceManager;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
-import android.support.v4.os.CancellationSignal;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -66,6 +67,11 @@ public class LoginActivity_Logged extends AppCompatActivity {
     String password;
     String userName;
 
+    // Shake detection
+    private SensorManager mSensorManager;
+    private Sensor mAccelerometer;
+    private ShakeDetector mShakeDetector;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,6 +103,27 @@ public class LoginActivity_Logged extends AppCompatActivity {
         if (useFingerprint) {
             RequestFingerprint();
         }
+
+        // ShakeDetector initialization
+        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        mAccelerometer = mSensorManager
+                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        mShakeDetector = new ShakeDetector();
+        mShakeDetector.setOnShakeListener();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // Add the following line to register the Session Manager Listener onResume
+        mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
+    }
+
+    @Override
+    public void onPause() {
+        // Add the following line to unregister the Sensor Manager onPause
+        mSensorManager.unregisterListener(mShakeDetector);
+        super.onPause();
     }
 
     private void loadPreferences() {
@@ -106,6 +133,7 @@ public class LoginActivity_Logged extends AppCompatActivity {
         phoneNumber = userPreferences.getString("PhoneNumber", "DEFAULT");
         userName = userPreferences.getString("user_name", "Name");
     }
+
     //POST LOGIN REQUEST
     private void login(String phoneNumber, String token, String mode,String password) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -200,7 +228,6 @@ public class LoginActivity_Logged extends AppCompatActivity {
             e.printStackTrace();
         }
     }
-
 
     //LAUNCH MAIN ACTIVITY
     public void launchMainActivity(String userId){
