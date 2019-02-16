@@ -27,7 +27,7 @@
             android:ems="10"
             android:hint="Phone number"
             android:inputType="phone"
-            android:textCursorDrawable="@color/colorPrimaryDark"/>/>
+            android:textCursorDrawable="@color/colorPrimaryDark"/>
 
     </android.support.design.widget.TextInputLayout>
 
