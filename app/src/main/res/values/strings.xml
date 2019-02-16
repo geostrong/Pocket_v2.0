@@ -51,6 +51,12 @@
         <item>Year(s)</item>
     </string-array>
 
+    <!--Strings for Card Type dropdown-->
+    <string-array name="cardTypes">
+        <item>Visa</item>
+        <item>MasterCard</item>
+    </string-array>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_top_up">Top Up</string>
