@@ -84,6 +84,7 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".QuickQrActivity" />
         <activity android:name=".ScanQRActivity" />
+        <activity android:name=".ExitActivity" />
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"
@@ -107,6 +108,10 @@
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
+
+        <service
+            android:name=".RSSPullService"
+            android:exported="false"/>
     </application>
 
 </manifest>

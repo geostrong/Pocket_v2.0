@@ -1,6 +1,5 @@
 package com.pocketwallet.pocket;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.hardware.Sensor;
@@ -48,7 +47,7 @@ import javax.crypto.KeyGenerator;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SecretKey;
 
-public class LoginActivity_Logged extends AppCompatActivity {
+public class LoginActivity_Logged extends AppCompatActivity{
 
     final String LOGIN_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/login";
     final String POSTFCM_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/fcmtoken";
@@ -104,28 +103,9 @@ public class LoginActivity_Logged extends AppCompatActivity {
             RequestFingerprint();
         }
 
-        // ShakeDetector initialization
-        mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        mAccelerometer = mSensorManager
-                .getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        mShakeDetector = new ShakeDetector();
-        mShakeDetector.setOnShakeListener();
-    }
+        new RSSPullService(getApplicationContext());
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        // Add the following line to register the Session Manager Listener onResume
-        mSensorManager.registerListener(mShakeDetector, mAccelerometer,	SensorManager.SENSOR_DELAY_UI);
     }
-
-    @Override
-    public void onPause() {
-        // Add the following line to unregister the Sensor Manager onPause
-        mSensorManager.unregisterListener(mShakeDetector);
-        super.onPause();
-    }
-
     private void loadPreferences() {
         userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         useFingerprint = userPreferences.getBoolean("useFingerprint", false);

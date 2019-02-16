@@ -2,13 +2,16 @@
 
 package com.pocketwallet.pocket;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.preference.PreferenceManager;
 
-public class ShakeDetector implements SensorEventListener {
-
+public class ShakeDetector implements SensorEventListener  {
     /*
      * The gForce that is necessary to register as shake.
      * Must be greater than 1G (one earth gravity unit).
@@ -23,21 +26,31 @@ public class ShakeDetector implements SensorEventListener {
     private OnShakeListener mListener;
     private long mShakeTimestamp;
     private int mShakeCount;
+    private Context context;
+    private boolean shakeToExit;
 
-    public void setOnShakeListener() {
+    public void setOnShakeListener(Context context) {
         this.mListener = new OnShakeListener();
+        this.context = context;
     }
 
     class OnShakeListener {
         public void onShake(int count){
-            //System.out.println("Shaked");
-            System.exit(0);
+            SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+            shakeToExit  = userPreferences.getBoolean("ShakeToExit", false);
+            if(shakeToExit) {
+                Exit();
+            }else{
+                System.out.println("Shake to Exit is not active");
+            }
         };
     }
-
-    //public interface OnShakeListener {
-    //    public void onShake(int count){};
-    //}
+    public void Exit(){
+        Intent intent = new Intent(context, ExitActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        context.startActivity(intent);
+    }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
@@ -69,9 +82,7 @@ public class ShakeDetector implements SensorEventListener {
                 if (mShakeTimestamp + SHAKE_COUNT_RESET_TIME_MS < now) {
                     mShakeCount = 0;
                 }
-
-                System.out.println("gForce: " + gForce);
-
+                //System.out.println("gForce: " + gForce);
                 mShakeTimestamp = now;
                 mShakeCount++;
 
