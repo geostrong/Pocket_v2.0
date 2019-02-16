@@ -1,15 +1,7 @@
 package com.pocketwallet.pocket;
 
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.nfc.NdefMessage;
-import android.nfc.NfcAdapter;
-import android.nfc.tech.NfcA;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -48,6 +40,9 @@ public class  RequestFragment_NFC extends Fragment {
     private String authCode;
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/";
 
+    //Session Token
+    private String sessionToken;
+
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_request_fragment__nfc, container, false);
 
@@ -62,6 +57,9 @@ public class  RequestFragment_NFC extends Fragment {
         if (extras != null) {
             userId = extras.getString("userId");
         }
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        sessionToken = userPreferences.getString("sessionToken", "");
+
         return view;
     }
 
@@ -114,7 +112,8 @@ public class  RequestFragment_NFC extends Fragment {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
                     return headers;
                 }
             };

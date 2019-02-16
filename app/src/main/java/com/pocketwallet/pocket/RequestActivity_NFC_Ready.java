@@ -36,7 +36,7 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
     String amount;
     String authCode;
 
-    private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/";
+    private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/quickpay";
 
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
@@ -68,16 +68,13 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
         }
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
                 getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-        /* to go to request
-        Intent newIntent = new Intent(RequestActivity_NFC_Ready.this, ResultActivity.class);
-        startActivity(newIntent);
-        */
     }
 
     public void processNFC(String merchantId, String payeeUserId,String authCode){
         System.out.println("Processing NFC..." + payeeUserId + "," + authCode);
         this.userId = merchantId;
         this.payeeUserId = payeeUserId;
+        this.authCode = authCode;
         Payment();
     }
 
@@ -85,7 +82,7 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
         System.out.println("Sending Payment To Server...");
         System.out.println("Payee_id: " + payeeUserId);
         System.out.println("Merchant_id: " + userId);
-        //System.out.println("Auth_code: " + authCode);
+        System.out.println("Auth_code: " + authCode);
         System.out.println("Amount: " + amount);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         try {
@@ -93,7 +90,7 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
             jsonBody.put("payee_id", payeeUserId);
             jsonBody.put("merchant_id", userId);
             jsonBody.put("amount", amount);
-            //jsonBody.put("auth_code", authCode);
+            jsonBody.put("auth_code", authCode);
             System.out.println("TEST PRINTING: " + jsonBody);
             final String amount1 = amount;
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, urlPayment, jsonBody, new Response.Listener<JSONObject>() {
@@ -163,13 +160,26 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
     }
 
     public void processIntent(Intent intent) {
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         Parcelable[] rawMsgs = intent.getParcelableArrayExtra(
                 NfcAdapter.EXTRA_NDEF_MESSAGES);
         NdefMessage msg = (NdefMessage) rawMsgs[0];
 
-        String resultText = new String(msg.getRecords()[0].getPayload());
-        String results[] = resultText.split("\\|");
+        String encryptedText = new String(msg.getRecords()[0].getPayload());
+        try {
+            encryptedText = AESUtils.decrypt(encryptedText);
+            System.out.println("decrypted:" + encryptedText);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String results[] = encryptedText.split("\\|");
         String payeeUserId = results[0];
+        String authCode = results[1];
 
         // record 0 contains the MIME type, record 1 is the AAR, if present
         System.out.println("NFC MESSAGE RECEIVED: " + new String(msg.getRecords()[0].getPayload()));

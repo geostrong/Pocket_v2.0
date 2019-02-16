@@ -24,12 +24,16 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MainActivity extends AppCompatActivity
         implements NfcAdapter.CreateNdefMessageCallback,
@@ -83,6 +87,12 @@ public class MainActivity extends AppCompatActivity
     };
 
     @Override
+    protected void onResume(){
+        super.onResume();
+        //getAuthCode();
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -99,9 +109,11 @@ public class MainActivity extends AppCompatActivity
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
-            sessionToken = extras.getString("sessionToken");
-            sessionTokenExpiry = extras.getString("sessionTokenExpiry");
+            SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+            sessionToken = userPreferences.getString("sessionToken", "");
+            sessionTokenExpiry = userPreferences.getString("sessionTokenExpiry", "");
             UpdateSharedPreference("userId",userId);
+            System.out.println("Session Token: " + sessionToken);
         }
 
         GETAUTHCODE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/"+ userId + "/auth-code";
@@ -114,6 +126,7 @@ public class MainActivity extends AppCompatActivity
             nfcAdapter.setNdefPushMessageCallback(this, this);
             nfcAdapter.setOnNdefPushCompleteCallback(this, this);
         }
+
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
@@ -147,18 +160,41 @@ public class MainActivity extends AppCompatActivity
             public void onErrorResponse(VolleyError error) {
                 Log.i("", "Error: " + error.toString());
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                System.out.println("Header: " + headers.values());
+                return headers;
+            }
+        };;
         requestQueue.add(requestString);
     }
 
     //NFC
     @Override
     public NdefMessage createNdefMessage(NfcEvent nfcEvent) {
+
         getAuthCode();
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         String message = userId + "|" + authCode;
         System.out.println("The message is: " + message);
+
+        try {
+            message = AESUtils.encrypt(message);
+            System.out.println("encrypted:" + message);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("The encrypted message is: " + message);
         NdefRecord ndefRecord = NdefRecord.createMime("text/plain", message.getBytes());
         NdefMessage ndefMessage = new NdefMessage(ndefRecord);
+
         return ndefMessage;
     }
 
