@@ -48,6 +48,7 @@ public class ShakeDetector implements SensorEventListener  {
     public void Exit(){
         Intent intent = new Intent(context, ExitActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("EXIT", true);
         context.startActivity(intent);
     }
