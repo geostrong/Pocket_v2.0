@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -23,6 +24,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ContractActivity_Details extends AppCompatActivity {
 
@@ -45,6 +48,9 @@ public class ContractActivity_Details extends AppCompatActivity {
     String TERMINATECONTRACT_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/contract/terminate";
     String ACKNOWLEDGE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/contract/ack";
 
+    //Session Token
+    private String sessionToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +71,8 @@ public class ContractActivity_Details extends AppCompatActivity {
         userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         name = userPreferences.getString("user_name", "Name");
         phoneNumber = userPreferences.getString("PhoneNumber", "PhoneNumber");
+
+        sessionToken = userPreferences.getString("sessionToken", "");
 
         acceptButton = findViewById(R.id.acceptButton);
         declineButton = findViewById(R.id.declineButton);
@@ -145,7 +153,15 @@ public class ContractActivity_Details extends AppCompatActivity {
                     error.getLocalizedMessage();
                     finish();
                 }
-            });
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    final Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
+                    return headers;
+                }
+            };
             requestQueue.add(jsonObject);
 
         } catch (JSONException e) {
@@ -167,10 +183,10 @@ public class ContractActivity_Details extends AppCompatActivity {
                     String result = response.getString("result");
                     System.out.println("Results: " + result);
                     if (result.equals("success")) {
-                        System.out.println("Acknowledge Contract Success!");
+                        System.out.println("Terminate Contract Success!");
                         finish();
                     } else {
-                        System.out.println("Acknowledge Contract Failed");
+                        System.out.println("Terminate Contract Failed");
                         finish();
                      }
                     }catch (JSONException e) {
@@ -183,7 +199,15 @@ public class ContractActivity_Details extends AppCompatActivity {
                     error.getLocalizedMessage();
                     finish();
                 }
-            });
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    final Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
+                    return headers;
+                }
+            };;
             requestQueue.add(jsonObject);
 
         } catch (JSONException e) {

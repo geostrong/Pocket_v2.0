@@ -1,9 +1,11 @@
 package com.pocketwallet.pocket;
 
 import android.app.DatePickerDialog;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -13,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,6 +27,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ContractActivity_Create extends AppCompatActivity {
 
@@ -57,6 +62,9 @@ public class ContractActivity_Create extends AppCompatActivity {
 
     private String urlCreateContract = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/contract";
 
+    //Session Token
+    private String sessionToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +77,9 @@ public class ContractActivity_Create extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getString("userId");
         }
+
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sessionToken = userPreferences.getString("sessionToken", "");
 
         phoneInvolvedView = findViewById(R.id.phoneInvolved);
         contractNameView = findViewById(R.id.contractNameCreate);
@@ -200,7 +211,15 @@ public class ContractActivity_Create extends AppCompatActivity {
                     finish();
                     //onBackPressed();
                 }
-            });
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    final Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
+                    return headers;
+                }
+            };;
             requestQueue.add(jsonObjectRequest);
         } catch (JSONException e) {
             e.printStackTrace();

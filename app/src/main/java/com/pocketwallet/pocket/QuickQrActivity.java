@@ -4,15 +4,14 @@ import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -25,6 +24,9 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.journeyapps.barcodescanner.BarcodeEncoder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class QuickQrActivity extends AppCompatActivity {
 
     private String userId;
@@ -34,6 +36,9 @@ public class QuickQrActivity extends AppCompatActivity {
     private TextView authCodeText;
     private String GETAUTHCODE_URL;
     private String authCode;
+
+    //Session Token
+    private String sessionToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +53,10 @@ public class QuickQrActivity extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getString("userId");
         }
+
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sessionToken = userPreferences.getString("sessionToken", "");
+
         GETAUTHCODE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/"+ userId + "/auth-code";
 
         myQR = (ImageView) findViewById(R.id.myQR);
@@ -94,7 +103,15 @@ public class QuickQrActivity extends AppCompatActivity {
             public void onErrorResponse(VolleyError error) {
                 Log.i("", "Error: " + error.toString());
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                System.out.println("Header: " + headers.values());
+                return headers;
+            }
+        };;
         requestQueue.add(requestString);
     }
 

@@ -1,7 +1,9 @@
 package com.pocketwallet.pocket;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -36,6 +38,9 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
 
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/phone";
 
+    //Session Token
+    private String sessionToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +56,9 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
             targetPhoneNumber = extras.getString("targetPhoneNumber");
             name = extras.getString("targetName");
         }
+
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sessionToken = userPreferences.getString("sessionToken", "");
 
         phoneNumberText = findViewById(R.id.involvedNumber2);
         nameText = findViewById(R.id.involvedName2);
@@ -120,7 +128,8 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
                     return headers;
                 }
             };

@@ -71,6 +71,10 @@ public class LoginActivity_Logged extends AppCompatActivity{
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
 
+    //SessionToken
+    String sessionToken;
+    String sessionTokenExpiry;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -137,8 +141,13 @@ public class LoginActivity_Logged extends AppCompatActivity{
                         System.out.println("Response: " + response);
                         String result = response.getString("result");
                         String userId = response.getString("user_id");
+                        JSONObject testToken = response.getJSONObject("session_token");
+                        sessionToken = testToken.getString("token");
+                        sessionTokenExpiry = testToken.getString("expiry");
+
                         System.out.println("Results: " + result);
                         System.out.println("User: " + userId);
+                        System.out.println("Session Token is :" + sessionToken);
                         if(!userId.equals("failed")){
                             postFCMToken(userId);
                             launchMainActivity(userId);
@@ -153,7 +162,10 @@ public class LoginActivity_Logged extends AppCompatActivity{
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    onBackPressed();
+                    System.out.println(error.networkResponse.statusCode);
+                    if(error.networkResponse.statusCode == 500 || error.networkResponse.statusCode == 400){
+                        System.out.println("Wrong Password");
+                    }
                 }
             }) {
                 @Override
@@ -213,6 +225,8 @@ public class LoginActivity_Logged extends AppCompatActivity{
     public void launchMainActivity(String userId){
         Intent intent = new Intent(LoginActivity_Logged.this, MainActivity.class);
         intent.putExtra("userId",userId);
+        UpdateSharedPreference("sessionToken",sessionToken);
+        UpdateSharedPreference("sessionTokenExpiry",sessionTokenExpiry);
         startActivity(intent);
         finish();
     }
@@ -388,4 +402,11 @@ public class LoginActivity_Logged extends AppCompatActivity{
 
         }
     };
+
+    public void UpdateSharedPreference(String key, String value){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key,value);
+        editor.commit();
+    }
 }

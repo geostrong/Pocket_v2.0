@@ -56,6 +56,10 @@ public class MainActivity extends AppCompatActivity
     private Sensor mAccelerometer;
     private ShakeDetector mShakeDetector;
 
+    //Session Token
+    String sessionToken;
+    String sessionTokenExpiry;
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -95,6 +99,8 @@ public class MainActivity extends AppCompatActivity
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
+            sessionToken = extras.getString("sessionToken");
+            sessionTokenExpiry = extras.getString("sessionTokenExpiry");
             UpdateSharedPreference("userId",userId);
         }
 

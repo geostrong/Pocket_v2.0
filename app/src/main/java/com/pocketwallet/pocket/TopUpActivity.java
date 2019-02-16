@@ -1,12 +1,12 @@
 package com.pocketwallet.pocket;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.MenuItem;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,6 +29,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TopUpActivity extends AppCompatActivity {
 
@@ -50,6 +53,9 @@ public class TopUpActivity extends AppCompatActivity {
 
     private String urlTopUp = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/topup?"; //address needs changing
 
+    //Session Token
+    private String sessionToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +69,9 @@ public class TopUpActivity extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getString("userId");
         }
+
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sessionToken = userPreferences.getString("sessionToken", "");
 
         cardNumView = findViewById(R.id.cardNum);
         cvvView = findViewById(R.id.cvv);
@@ -161,7 +170,6 @@ public class TopUpActivity extends AppCompatActivity {
 
             System.out.println("JSON BODY: " +jsonBody);
 
-
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlTopUp, jsonBody,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -187,7 +195,15 @@ public class TopUpActivity extends AppCompatActivity {
                     finish();
                     //onBackPressed();
                 }
-            });
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    final Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
+                    return headers;
+                }
+            };;
             requestQueue.add(jsonObjectRequest);
         } catch (JSONException e) {
             e.printStackTrace();

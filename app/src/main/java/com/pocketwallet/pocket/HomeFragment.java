@@ -1,8 +1,10 @@
 package com.pocketwallet.pocket;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
@@ -15,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,6 +31,8 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.TimeZone;
 
 public class HomeFragment extends Fragment {
@@ -40,7 +45,9 @@ public class HomeFragment extends Fragment {
 
     private ConstraintLayout myPocketButton;
 
-    @Nullable
+    //Session Token
+    private String sessionToken;
+
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, null);
@@ -59,6 +66,8 @@ public class HomeFragment extends Fragment {
                 GETBALANCE_URL = GETBALANCE_URL + userId + "/balance";
             }
         }
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        sessionToken = userPreferences.getString("sessionToken", "");
 
         //<--Setup buttons-->
         Button quickQrBtn = view.findViewById(R.id.quickQRBtn);
@@ -175,7 +184,15 @@ public class HomeFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 Log.i("", "Error: " + error.toString());
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                System.out.println("Header: " + headers.values());
+                return headers;
+            }
+        };
         requestQueue.add(requestJsonObject);
     }
 }

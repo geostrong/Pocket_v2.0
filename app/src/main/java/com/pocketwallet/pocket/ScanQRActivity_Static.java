@@ -2,8 +2,10 @@ package com.pocketwallet.pocket;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -39,6 +41,9 @@ public class ScanQRActivity_Static extends AppCompatActivity {
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/";
     private String urlPaymentQuickPay = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/quickpay/";
 
+    //Session Token
+    private String sessionToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +74,11 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             authCode = extras.getString("targetAuthCode");
             paymentType = extras.getString("paymentType");
         }
+
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sessionToken = userPreferences.getString("sessionToken", "");
+
+
         if (paymentType.equalsIgnoreCase("QuickQR")){
             TextView payText = (TextView) findViewById(R.id.payText);
             payText.setText("");

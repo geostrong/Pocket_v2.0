@@ -1,15 +1,18 @@
 package com.pocketwallet.pocket;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,6 +25,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ContractActivity extends AppCompatActivity {
 
@@ -36,11 +41,15 @@ public class ContractActivity extends AppCompatActivity {
     private Bundle extras;
     private String userId;
 
+    //Session Token
+    private String sessionToken;
+
     @Override
     protected void onResume(){
         getContracts();
         super.onResume();
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +62,9 @@ public class ContractActivity extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getString("userId");
         }
+        //Session Token
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sessionToken = userPreferences.getString("sessionToken", "");
 
         createBtn = findViewById(R.id.addBtn);
         createBtn.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +139,15 @@ public class ContractActivity extends AppCompatActivity {
                     System.out.println("Error Network Response Status Code" + error.networkResponse.statusCode);
                     //onBackPressed();
                 }
-            });
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    final Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
+                    return headers;
+                }
+            };;
             requestQueue.add(jsonObjectRequest);
         } catch (JSONException e) {
             e.printStackTrace();

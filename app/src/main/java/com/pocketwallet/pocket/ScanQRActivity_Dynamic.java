@@ -3,7 +3,9 @@ package com.pocketwallet.pocket;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -37,6 +39,9 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
 
     TextView totalAmountText;
 
+    //Session Token
+    private String sessionToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +66,8 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             amount = extras.getString("amount");
             targetUserId = extras.getString("targetUserId");
         }
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sessionToken = userPreferences.getString("sessionToken", "");
 
         totalAmountText = (TextView) findViewById(R.id.amountText);
         totalAmountText.setText("$:"+ amount);
@@ -131,7 +138,8 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
                     return headers;
                 }
             };

@@ -2,9 +2,11 @@ package com.pocketwallet.pocket;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -15,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -40,7 +43,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class TransactionLogsActivity extends AppCompatActivity implements TransactionLogsAdapter.TransactAdapterListener{
 
@@ -57,6 +62,9 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
     Bundle extras;
 
     private final String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+    //Session Token
+    private String sessionToken;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +86,9 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         if (extras != null) {
             userId = extras.getString("userId");
         }
+
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sessionToken = userPreferences.getString("sessionToken", "");
 
         StickyHeaderTransaction sectionItemDecoration =
                 new StickyHeaderTransaction(getResources().getDimensionPixelSize(R.dimen.recycler_section_header_height),
@@ -217,7 +228,15 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                     System.out.println("Error Network Response Status Code" + error.networkResponse.statusCode);
                     //onBackPressed();
                 }
-            });
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    final Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
+                    return headers;
+                }
+            };;
             requestQueue.add(jsonObjectRequest);
         } catch (JSONException e) {
             e.printStackTrace();

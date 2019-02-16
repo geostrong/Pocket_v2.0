@@ -6,11 +6,10 @@ import android.content.SharedPreferences;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
+import android.os.Bundle;
 import android.os.Parcelable;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -41,6 +40,10 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
 
     private NfcAdapter nfcAdapter;
     private PendingIntent pendingIntent;
+
+    //Session Token
+    private String sessionToken;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,6 +56,8 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
             UpdateSharedPreference("userId",userId);
             UpdateSharedPreference("amount",amount);
         }
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        sessionToken = userPreferences.getString("sessionToken", "");
 
         nfcReadyAmountText = (TextView)findViewById(R.id.nfcReadyAmountText);
         nfcReadyAmountText.setText("$"+amount);
@@ -68,12 +73,14 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
         startActivity(newIntent);
         */
     }
+
     public void processNFC(String merchantId, String payeeUserId,String authCode){
         System.out.println("Processing NFC..." + payeeUserId + "," + authCode);
         this.userId = merchantId;
         this.payeeUserId = payeeUserId;
         Payment();
     }
+
     private void Payment() {
         System.out.println("Sending Payment To Server...");
         System.out.println("Payee_id: " + payeeUserId);
@@ -119,9 +126,9 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
             }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
-                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
-                    HashMap<String, String> headers = new HashMap<String, String>();
-                    headers.put("Content-Type", "application/json; charset=utf-8");
+                    final Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
                     return headers;
                 }
             };
