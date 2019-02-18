@@ -247,7 +247,12 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
+            //super.onBackPressed();
+            Intent intent = new Intent(this, ExitActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("EXIT", true);
+            this.startActivity(intent);
             return;
         }
 

@@ -143,12 +143,12 @@ public class LoginActivity_Logged extends AppCompatActivity{
                         String userId = response.getString("user_id");
                         JSONObject testToken = response.getJSONObject("session_token");
                         sessionToken = testToken.getString("token");
-                        sessionTokenExpiry = testToken.getString("expiry");
+                        //sessionToken = response.getString("session_token");
 
                         System.out.println("Results: " + result);
                         System.out.println("User: " + userId);
                         System.out.println("Session Token is :" + sessionToken);
-                        if(!userId.equals("failed")){
+                        if(!result.equals("failed")){
                             postFCMToken(userId);
                             launchMainActivity(userId);
                         }else{
@@ -167,14 +167,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
                         System.out.println("Wrong Password");
                     }
                 }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    final Map<String, String> headers = new HashMap<>();
-                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
-                    return headers;
-                }
-            };
+            });
             requestQueue.add(jsonObject);
 
         } catch (JSONException e) {
@@ -226,7 +219,8 @@ public class LoginActivity_Logged extends AppCompatActivity{
         Intent intent = new Intent(LoginActivity_Logged.this, MainActivity.class);
         intent.putExtra("userId",userId);
         UpdateSharedPreference("sessionToken",sessionToken);
-        UpdateSharedPreference("sessionTokenExpiry",sessionTokenExpiry);
+        //UpdateSharedPreference("sessionTokenExpiry",sessionTokenExpiry);
+        System.out.println("Came Here");
         startActivity(intent);
         finish();
     }

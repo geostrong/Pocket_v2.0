@@ -52,6 +52,10 @@ public class LoginActivity extends AppCompatActivity {
     //----------
     private String name;
 
+    //SessionToken
+    String sessionToken;
+    String sessionTokenExpiry;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,14 +125,20 @@ public class LoginActivity extends AppCompatActivity {
                         String result = response.getString("result");
                         String userId = response.getString("user_id");
                         name = response.getString("name");
+                        JSONObject testToken = response.getJSONObject("session_token");
+                        sessionToken = testToken.getString("token");
+                        sessionTokenExpiry = testToken.getString("expiry");
                         System.out.println("Results: " + result);
                         System.out.println("User: " + userId);
+                        System.out.println("Session Token is :" + sessionToken);
+
                         if(!userId.equals("failed")){
                             updateToken();
                             postFCMToken(userId);
-                            GETDETAILS_URL += userId;
-                            getUserDetails(userId);
-                            //launchMainActivity(userId);
+                            //GETDETAILS_URL += userId;
+
+                            name = response.getString("name");
+                            launchMainActivity(userId,name);
                         }else{
                             System.out.println("===================Failed to Login===================");
                         }
@@ -144,14 +154,7 @@ public class LoginActivity extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     phoneNumberInputLayout.setError("Phone number or password is wrong!");
                 }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    final Map<String, String> headers = new HashMap<>();
-                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
-                    return headers;
-                }
-            };
+            });
 
             requestQueue.add(jsonObject);
 
@@ -273,6 +276,8 @@ public class LoginActivity extends AppCompatActivity {
         editor.putBoolean("isLoggedIn", true);
         editor.putString("PhoneNumber", phoneNumber);
         editor.putString("user_name",name);
+        UpdateSharedPreference("sessionToken",sessionToken);
+        UpdateSharedPreference("sessionTokenExpiry",sessionTokenExpiry);
         editor.commit();
 
         System.out.println("Phone Number login = " + logInPreferences.getString("PhoneNumber", "DEFAULT"));
@@ -315,4 +320,10 @@ public class LoginActivity extends AppCompatActivity {
         launchMainActivity(userId,"TestUser2");
     }
     //----------
+    public void UpdateSharedPreference(String key, String value){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString(key,value);
+        editor.commit();
+    }
 }
