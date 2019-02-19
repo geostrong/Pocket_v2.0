@@ -1,5 +1,7 @@
 package com.pocketwallet.pocket;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -9,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,20 +63,62 @@ public class MoreFragment extends Fragment {
         });
 
 
-        Switch bioSwitch = (Switch) view.findViewById(R.id.biometricLogin);
+        final Switch bioSwitch = (Switch) view.findViewById(R.id.biometricLogin);
         bioSwitch.setChecked(useFingerprint);
         bioSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 if (isChecked) {
-                    editor.putBoolean("useFingerprint", true);
-                    editor.commit();
+
+                    FingerprintManagerCompat fingerprintManagerCompat = FingerprintManagerCompat.from(getContext());
+                    if (!fingerprintManagerCompat.isHardwareDetected()) {
+                        System.out.println("Device does not have fingerprint scanner");
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Fingerprint scanner not found")
+                                .setMessage("Device do not have a fingerprint scanner")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                        bioSwitch.setChecked(false);
+                    } else {
+                        if (!fingerprintManagerCompat.hasEnrolledFingerprints()) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                            builder.setTitle("Fingerprint not found")
+                                    .setMessage("No fingerprint registered in device. Please setup fingerprint in your device first")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                                dialog.cancel();
+                                        }
+                                    });
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                            // User hasn't enrolled any fingerprints to authenticate with
+                            System.out.println("Devices does not have enrolled fingerprints");
+                            bioSwitch.setChecked(false);
+                        } else {
+                            editor.putBoolean("useFingerprint", true);
+                            editor.commit();
+                        }
+                    }
+
+
                 } else {
                     editor.putBoolean("useFingerprint", false);
                     editor.commit();
                 }
             }
         });
+
         Switch shakeToExitSwitch = (Switch) view.findViewById(R.id.shakeToQuit);
         shakeToExitSwitch.setChecked(shakeToExit);
         shakeToExitSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

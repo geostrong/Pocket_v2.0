@@ -1,9 +1,14 @@
 package com.pocketwallet.pocket;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -13,16 +18,21 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 public class MeFragment extends Fragment {
     private String userId;
     private SharedPreferences userPreferences;
     private TextView phoneNumber;
     private TextView profileName;
-
+    private ImageView profileImage;
 
     @Nullable
     @Override
@@ -38,6 +48,16 @@ public class MeFragment extends Fragment {
         if (extras != null) {
             userId = extras.getString("userId");
         }
+
+        profileImage = (ImageView) view.findViewById(R.id.profile_image);
+        profileImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK);
+                intent.setType("image/*");
+                startActivityForResult(intent, 10);
+            }
+        });
 
         Button contractBtn = view.findViewById(R.id.contractBtn);
         contractBtn.setOnClickListener(new View.OnClickListener() {
@@ -91,5 +111,13 @@ public class MeFragment extends Fragment {
         profileName.setText(userPreferences.getString("user_name", "Name"));
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == 10 && resultCode == Activity.RESULT_OK) {
+
+        }
     }
 }

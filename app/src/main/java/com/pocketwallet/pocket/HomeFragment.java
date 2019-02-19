@@ -113,6 +113,8 @@ public class HomeFragment extends Fragment {
                 startActivity(newIntent);
             }
         });
+
+        /*
         Button testBtn = view.findViewById(R.id.testBtn);
         testBtn.setOnClickListener(new  View.OnClickListener()
         {
@@ -122,7 +124,7 @@ public class HomeFragment extends Fragment {
                 newIntent.putExtra("userId",userId);
                 startActivity(newIntent);
             }
-        });
+        });*/
 
         myPocketButton = view.findViewById(R.id.myPocketButton);
         myPocketButton.setOnClickListener(new View.OnClickListener() {

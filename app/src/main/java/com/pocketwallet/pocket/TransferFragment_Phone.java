@@ -49,7 +49,7 @@ public class TransferFragment_Phone extends Fragment {
         messageInput = view.findViewById(R.id.customMessage);
 
         phoneNumberInput.addTextChangedListener(textWatcher);
-        messageInput.addTextChangedListener(textWatcher);
+        amountInput.addTextChangedListener(textWatcher);
 
         continueButton = view.findViewById(R.id.continueBtn);
 
@@ -140,6 +140,7 @@ public class TransferFragment_Phone extends Fragment {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             phoneNumber = phoneNumberInput.getText().toString().trim();
             amount = amountInput.getText().toString().trim();
+
             continueButton.setEnabled(!phoneNumber.isEmpty() && !amount.isEmpty());
         }
         @Override

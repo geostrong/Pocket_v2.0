@@ -11,6 +11,7 @@ import android.preference.PreferenceManager;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -60,7 +61,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
     private Button fingerprintButton;
     private Button loginButton2;
     private TextView passwordInput;
-
+    private TextInputLayout passwordInputLayout;
     String userId;
     String phoneNumber;
     String password;
@@ -81,7 +82,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
         setContentView(R.layout.activity_login_loggedin);
 
         loadPreferences();
-
+        passwordInputLayout = findViewById(R.id.textInputLayout3);
         fingerprintButton = findViewById(R.id.fingerprintButton);
         fingerprintButton.setOnClickListener (new View.OnClickListener() {
             public void onClick(View view){
@@ -164,7 +165,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
                 public void onErrorResponse(VolleyError error) {
                     System.out.println(error.networkResponse.statusCode);
                     if(error.networkResponse.statusCode == 500 || error.networkResponse.statusCode == 400){
-                        System.out.println("Wrong Password");
+                        passwordInputLayout.setError("Wrong password! Please ensure you enter the correct password");
                     }
                 }
             });
