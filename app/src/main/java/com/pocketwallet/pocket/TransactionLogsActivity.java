@@ -62,6 +62,20 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
     Bundle extras;
 
     private final String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+    float janTotal = 0;
+    float febTotal = 0;
+    float marTotal = 0;
+    float aprTotal = 0;
+    float mayTotal = 0;
+    float junTotal = 0;
+    float julTotal = 0;
+    float augTotal = 0;
+    float sepTotal = 0;
+    float octTotal = 0;
+    float novTotal = 0;
+    float decTotal = 0;
+    float tempAmount = 0;
+    int latestMonth = 100;
 
     //Session Token
     private String sessionToken;
@@ -117,7 +131,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
 
         createAdapterView();
         getTransactions();
-        processGraph();
 
     }
 
@@ -136,7 +149,101 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         }
 
         for (Transaction t : listTransactions) {
-            String temp = t.getTimestampToString().substring(0,10).toString();
+            String temp = t.getTimestampToString().substring(0,10);
+            String tempMonthAmount = t.getAmount();
+            tempAmount = Float.parseFloat(tempMonthAmount);
+            int monthFirst = temp.charAt(5) - '0';
+            int monthSec = temp.charAt(6) - '0';
+            if (!t.getisIncoming())
+                if (monthFirst == 0){
+                    if (monthSec == 1){
+                        if (latestMonth == 100){
+                            latestMonth = 0;
+                        }
+                        janTotal = janTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else  if (monthSec == 2){
+                        if (latestMonth == 100){
+                            latestMonth = 1;
+                        }
+                        febTotal = febTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 3){
+                        if (latestMonth == 100){
+                            latestMonth = 2;
+                        }
+                        marTotal = marTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else  if (monthSec == 4){
+                        if (latestMonth == 100){
+                            latestMonth = 3;
+                        }
+                        aprTotal = aprTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 5){
+                        if (latestMonth == 100){
+                            latestMonth = 4;
+                        }
+                        mayTotal = mayTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else  if (monthSec == 6){
+                        if (latestMonth == 100){
+                            latestMonth = 5;
+                        }
+                        junTotal = junTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 7){
+                        if (latestMonth == 100){
+                            latestMonth = 6;
+                        }
+                        junTotal = julTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 8){
+                        if (latestMonth == 100){
+                            latestMonth = 7;
+                        }
+                        augTotal = augTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 9){
+                        if (latestMonth == 100){
+                            latestMonth = 8;
+                        }
+                        sepTotal = sepTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                }
+                else if (monthFirst == 1){
+                    if (monthSec == 0){
+                        if (latestMonth == 100){
+                            latestMonth = 9;
+                        }
+                        octTotal = octTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 1){
+                        if (latestMonth == 100){
+                            latestMonth = 10;
+                        }
+                        novTotal =  novTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 2){
+                        if (latestMonth == 100){
+                            latestMonth = 11;
+                        }
+                        decTotal = decTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                }
+            processGraph();
 
             try {
                 Date date = (Date) dateOnly.parse(temp);
@@ -202,12 +309,14 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                                    Transaction transaction = new Transaction(tempTransaction.getString("transactionID"), tempTransaction.getString("type"),
                                                                              tempTransaction.getString("from"),tempTransaction.getString("to"), tempTransaction.getString("amount"),
                                                                                 tempTransaction.getString("timestamp"), false);
-                                    listTransactions.add(transaction);
+
+                                   listTransactions.add(transaction);
                                 }else{
 
                                     Transaction transaction = new Transaction(tempTransaction.getString("transactionID"), tempTransaction.getString("type"),
                                             tempTransaction.getString("from"),tempTransaction.getString("to"), tempTransaction.getString("amount"),
                                             tempTransaction.getString("timestamp"), true);
+
                                     listTransactions.add(transaction);
                                 }
                             }
@@ -290,23 +399,86 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
 
     public void processGraph() {
 
+        Float[] latestMonthY = {janTotal,febTotal,marTotal,aprTotal,mayTotal,junTotal,julTotal,augTotal,sepTotal,octTotal,novTotal,decTotal};
+
         //Graphs
         LineChart chart = (LineChart) findViewById(R.id.chart);
         List<Entry> entries = new ArrayList<Entry>();
 
+        System.out.println(janTotal + "HHHHHHHHHHHHHHHH");
+        System.out.println(febTotal + "HHHHHHHHHHHHHHHH");
         //Add data x and y data here
-        entries.add(new Entry(0, 4));
-        entries.add(new Entry(1, 1));
-        entries.add(new Entry(2, 2));
-        entries.add(new Entry(3, 4));
-        entries.add(new Entry(4, 4));
-        entries.add(new Entry(5, 1));
-        entries.add(new Entry(6, 2));
-        entries.add(new Entry(7, 4));
-        entries.add(new Entry(8, 1));
-        entries.add(new Entry(9, 2));
-        entries.add(new Entry(10, 4));
-        entries.add(new Entry(11, 3));
+   /*     int i = 100;
+        switch (latestMonth) {
+            case 11:    entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 11;
+                        }
+            case 10:    entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 10;
+                        }
+            case 9:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 9;
+                        }
+            case 8:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 8;
+                        }
+            case 7:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 7;
+                        }
+            case 6:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 6;
+                        }
+            case 5:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 5;
+                        }
+            case 4:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 4;
+                        }
+            case 3:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 3;
+                        }
+            case 2:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 2;
+                        }
+            case 1:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 1;
+                        }
+            case 0:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
+                        if (i == 100) {
+                            i = 0;
+                        }
+                        break;
+            case 100:   System.out.println("There's no data!");
+                        break;
+        }
+
+        for (int j=11;i<j-i;j--)
+        {
+            //entries.add(new Entry(j, latestMonthY[j]));
+        } */
+        entries.add(new Entry(0, janTotal));
+        entries.add(new Entry(1, febTotal));
+        entries.add(new Entry(2, marTotal));
+        entries.add(new Entry(3, aprTotal));
+        entries.add(new Entry(4, mayTotal));
+        entries.add(new Entry(5, junTotal));
+        entries.add(new Entry(6, julTotal));
+        entries.add(new Entry(7, augTotal));
+        entries.add(new Entry(8, sepTotal));
+        entries.add(new Entry(9, octTotal));
+        entries.add(new Entry(10, novTotal));
+        entries.add(new Entry(11, decTotal));
 
         LineDataSet dataSet = new LineDataSet(entries, "Transactions");
 
