@@ -8,13 +8,11 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -24,13 +22,6 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashMap;
-import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText phonenumberInput;
@@ -103,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-
+        new RSSPullService(getApplicationContext());
     }
 
     //POST LOGIN REQUEST
@@ -163,19 +154,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
     String KEY_NAME;
-
+    
     private void updateToken(){
         KEY_NAME = phoneNumber + "|" + password;
-        MessageDigest md = null;
-        try {
-            md = MessageDigest.getInstance( "SHA-256" );
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-        // Change this to UTF-16 if needed
-        md.update(KEY_NAME.getBytes( StandardCharsets.UTF_8 ) );
-        byte[] digest = md.digest();
-        KEY_NAME = String.format( "%064x", new BigInteger( 1, digest ));
+        KEY_NAME = SHA256.hashSHA256(KEY_NAME);
         System.out.println("KEY_NAME: " + KEY_NAME);
 
         logInPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -183,6 +165,7 @@ public class LoginActivity extends AppCompatActivity {
         editor.putString("KEY_NAME", KEY_NAME);
         editor.commit();
     }
+
 
     //POST FCMTOKEN
     private void postFCMToken(String userId) {
@@ -235,7 +218,7 @@ public class LoginActivity extends AppCompatActivity {
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             phoneNumber = phonenumberInput.getText().toString().trim();
             password = passwordInput.getText().toString().trim();
-
+            password = SHA256.hashSHA256(password);
             login.setEnabled(!phoneNumber.isEmpty() && !password.isEmpty());
         }
 
@@ -244,28 +227,6 @@ public class LoginActivity extends AppCompatActivity {
 
         }
     };
-
-    //GetUserDetails
-    public void getUserDetails(final String userId){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-        JsonObjectRequest requestJsonObject = new JsonObjectRequest(Request.Method.GET, GETDETAILS_URL, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try{
-                    name = response.getString("name");
-                    launchMainActivity(userId,name);
-                }catch(JSONException e){
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.i("", "Error: " + error.toString());
-            }
-        });
-        requestQueue.add(requestJsonObject);
-    }
 
     //LAUNCH MAIN ACTIVITY
     public void launchMainActivity(String userId,String name){
@@ -288,26 +249,6 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
     }
-    /*
-    @Override
-    public void onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
-            super.onBackPressed();
-            return;
-        }
-
-        this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, "Press BACK again to exit", Toast.LENGTH_SHORT).show();
-
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                doubleBackToExitPressedOnce=false;
-            }
-        }, 2000);
-    }
-    */
 
     //---TEST---
     private void LoginTestUser1(){

@@ -4,9 +4,9 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -24,7 +24,6 @@ import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 public class RegisterActivity extends AppCompatActivity {
     private String name;
@@ -75,6 +74,7 @@ public class RegisterActivity extends AppCompatActivity {
                 System.out.println("RegisterPhone: " + phoneNumber);
                 System.out.println("RegisterName: " + name);
                 System.out.println("RegisterPassword: " + password);
+                password = SHA256.hashSHA256(password);
                 registerAccount();
             }
         });

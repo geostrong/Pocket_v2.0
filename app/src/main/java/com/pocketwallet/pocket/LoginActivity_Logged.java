@@ -2,8 +2,6 @@ package com.pocketwallet.pocket;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,7 +18,6 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -40,8 +37,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -66,11 +61,6 @@ public class LoginActivity_Logged extends AppCompatActivity{
     String phoneNumber;
     String password;
     String userName;
-
-    // Shake detection
-    private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private ShakeDetector mShakeDetector;
 
     //SessionToken
     String sessionToken;
@@ -97,6 +87,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
         loginButton2.setOnClickListener (new View.OnClickListener() {
             public void onClick(View view){
                 password = passwordInput.getText().toString();
+                password = SHA256.hashSHA256(password);
                 login(phoneNumber,"-","0",password);
             }
         });
@@ -314,6 +305,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
     }
 
     public void onFingerprintCallback (){
+        System.out.println("KEY_NAME: " + KEY_NAME);
         login(phoneNumber,KEY_NAME,"1","-");;
     }
 
