@@ -1,6 +1,7 @@
 package com.pocketwallet.pocket;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -51,7 +52,7 @@ public class TopUpActivity extends AppCompatActivity {
     private TextView cvvView;
     private TextView topUpAmountView;
 
-    private String urlTopUp = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/topup?"; //address needs changing
+    private String urlTopUp = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/topup"; //address needs changing
 
     //Session Token
     private String sessionToken;
@@ -162,11 +163,12 @@ public class TopUpActivity extends AppCompatActivity {
 
         try {
             JSONObject jsonBody = new JSONObject();
-            jsonBody.put("cardType", cardType);
-            jsonBody.put("cardNum", cardNum);
-            jsonBody.put("cvv", cvv);
-            jsonBody.put("expiryDate", expiryDate.getText().toString());
-            jsonBody.put("topUpAmount", topUpAmount);
+            //jsonBody.put("cardType", cardType);
+            //jsonBody.put("cardNum", cardNum);
+            //jsonBody.put("cvv", cvv);
+            //jsonBody.put("expiryDate", expiryDate.getText().toString());
+            jsonBody.put("user_id",userId);
+            jsonBody.put("amount", topUpAmount);
 
             System.out.println("JSON BODY: " +jsonBody);
 
@@ -178,7 +180,12 @@ public class TopUpActivity extends AppCompatActivity {
                                 String result = response.getString("result");
                                 System.out.println("Results: " + result);
                                 if(result.equalsIgnoreCase("Success")){
-                                    System.out.println(response.getString("cardType"));
+                                    //System.out.println(response.getString("cardType"));
+                                    Intent intent = new Intent(TopUpActivity.this, ResultActivity.class);
+                                    Bundle b = new Bundle();
+                                    b.putString("title", "Top Up");
+                                    intent.putExtras(b);
+                                    startActivity(intent);
                                     finish();
                                 }
                             }catch(JSONException e){

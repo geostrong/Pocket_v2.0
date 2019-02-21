@@ -62,12 +62,6 @@ public class QuickQrActivity extends AppCompatActivity {
         myQR = (ImageView) findViewById(R.id.myQR);
         authCodeText = (TextView) findViewById(R.id.authCodeText);
         getAuthCode();
-        myQR.post(new Runnable() {
-            @Override
-            public void run() {
-                generateMyQR();
-            }
-        });
     }
 
     public void generateMyQR() {
@@ -75,7 +69,8 @@ public class QuickQrActivity extends AppCompatActivity {
         try {
             //String toQR = userId + "|" + amount;
             SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            String toQR = "Static|" + userId + "|" + userPreferences.getString("user_name", "Name");
+            //String toQR = "QuickQR|" + userId + "|" + userPreferences.getString("user_name", "Name");
+            String toQR = "QuickQR|" + userId + "|" + authCode;
             System.out.println("TOQR: " + toQR);
 
             try {
@@ -105,7 +100,13 @@ public class QuickQrActivity extends AppCompatActivity {
                 authCode = (String) authCode.subSequence(14,authCode.length()-2);
                 System.out.println("AuthCode is: " + authCode);
                 UpdateSharedPreference("authCode",authCode);
-
+                authCodeText.setText(authCode);
+                myQR.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        generateMyQR();
+                    }
+                });
             }
         }, new Response.ErrorListener() {
             @Override

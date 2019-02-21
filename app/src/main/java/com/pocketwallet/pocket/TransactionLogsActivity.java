@@ -61,7 +61,19 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
 
     Bundle extras;
 
-    private final String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+    private final String[] months0 = {"Jan", "Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb" };
+    private final String[] months1 = {"Feb", "Jan", "Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar" };
+    private final String[] months2 = {"Mar", "Feb", "Jan", "Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr" };
+    private final String[] months3 = {"Apr", "Mar", "Feb", "Jan", "Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May" };
+    private final String[] months4 = {"May", "Apr", "Mar", "Feb", "Jan", "Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun" };
+    private final String[] months5 = {"Jun", "May", "Apr", "Mar", "Feb", "Jan", "Dec", "Nov", "Oct", "Sep", "Aug", "Jul" };
+    private final String[] months6 = {"Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan", "Dec", "Nov", "Oct", "Sep", "Aug" };
+    private final String[] months7 = {"Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan", "Dec", "Nov", "Oct", "Sep" };
+    private final String[] months8 = {"Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan", "Dec", "Nov", "Oct" };
+    private final String[] months9 = {"Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan", "Dec", "Nov" };
+    private final String[] months10 = {"Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan", "Dec" };
+    private final String[] months11 = {"Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan" };
+
     float janTotal = 0;
     float febTotal = 0;
     float marTotal = 0;
@@ -76,6 +88,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
     float decTotal = 0;
     float tempAmount = 0;
     int latestMonth = 100;
+    int i = 100;
 
     //Session Token
     private String sessionToken;
@@ -243,7 +256,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                         tempAmount = 0;
                     }
                 }
-            processGraph();
 
             try {
                 Date date = (Date) dateOnly.parse(temp);
@@ -277,6 +289,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                 e.printStackTrace();
             }
         }
+        processGraph();
     }
 
     public void getTransactions(){
@@ -408,7 +421,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         System.out.println(janTotal + "HHHHHHHHHHHHHHHH");
         System.out.println(febTotal + "HHHHHHHHHHHHHHHH");
         //Add data x and y data here
-   /*     int i = 100;
         switch (latestMonth) {
             case 11:    entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
                         if (i == 100) {
@@ -454,20 +466,24 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                         if (i == 100) {
                             i = 1;
                         }
+                        System.out.println("Case 1");
             case 0:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
                         if (i == 100) {
                             i = 0;
                         }
+                        System.out.println("Case 0");
                         break;
             case 100:   System.out.println("There's no data!");
                         break;
         }
 
-        for (int j=11;i<j-i;j--)
+        System.out.println(i + " is the current i");
+        for (int j=11;i<=j-i;j--)
         {
-            //entries.add(new Entry(j, latestMonthY[j]));
-        } */
-        entries.add(new Entry(0, janTotal));
+            System.out.println("hi" + j);
+            entries.add(new Entry(j, latestMonthY[j]));
+        }
+       /* entries.add(new Entry(0, janTotal));
         entries.add(new Entry(1, febTotal));
         entries.add(new Entry(2, marTotal));
         entries.add(new Entry(3, aprTotal));
@@ -478,14 +494,70 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         entries.add(new Entry(8, sepTotal));
         entries.add(new Entry(9, octTotal));
         entries.add(new Entry(10, novTotal));
-        entries.add(new Entry(11, decTotal));
+        entries.add(new Entry(11, decTotal));*/
 
         LineDataSet dataSet = new LineDataSet(entries, "Transactions");
 
         IAxisValueFormatter formatter = new IAxisValueFormatter() {
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
-                return months[(int) value];
+                if (i == 0){
+                    System.out.println("here");
+                    return months0[(int) value];
+                }else if (i == 1){
+                    return months1[(int) value];
+                }else if (i == 2){
+                    return months2[(int) value];
+                }else if (i == 3){
+                    return months3[(int) value];
+                }else if (i == 4){
+                    return months4[(int) value];
+                }else if (i == 5){
+                    return months5[(int) value];
+                }else if (i == 6){
+                    return months6[(int) value];
+                }else if (i == 7){
+                    return months7[(int) value];
+                }else if (i == 8){
+                    return months8[(int) value];
+                }else if (i == 9){
+                    return months9[(int) value];
+                }else if (i == 10){
+                    return months10[(int) value];
+                }else if (i == 11) {
+                    return months11[(int) value];
+                }
+                return (months2)[(int) value];
+
+
+               /* switch(i){
+                    case 0: return months0[(int) value];
+                        break;
+                    case 1: return months1[(int) value];
+                        break;
+                    case 2: return months2[(int) value];
+                        break;
+                    case 3: return months3[(int) value];
+                        break;
+                    case 4: return months4[(int) value];
+                        break;
+                    case 5: return months5[(int) value];
+                        break;
+                    case 6: return months6[(int) value];
+                        break;
+                    case 7: return months7[(int) value];
+                        break;
+                    case 8: return months8[(int) value];
+                        break;
+                    case 9: return months9[(int) value];
+                        break;
+                    case 10: return months10[(int) value];
+                        break;
+                    case 11: return months11[(int) value];
+                        break;
+                    default: return months11[(int) value];
+                }*/
+
             }
         };
 
@@ -521,7 +593,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         chart.invalidate();
         chart.setVisibleXRange(1,3);
         chart.animateY(2000, Easing.Linear);
-        chart.centerViewToAnimated(Calendar.getInstance().get(Calendar.MONDAY),0, YAxis.AxisDependency.LEFT,2000);
+        //chart.centerViewToAnimated(Calendar.getInstance().get(Calendar.MONDAY),0, YAxis.AxisDependency.LEFT,2000);
     }
 
     @Override

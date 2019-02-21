@@ -250,10 +250,10 @@ public class ContractActivity_Details extends AppCompatActivity {
         }else{
             textViewContractStatus.setText("Terminated");
         }
-        textViewAmount.setText(listContract.getAmount());
+        textViewAmount.setText("$" + listContract.getAmount());
         textViewStartDate.setText(listContract.getStartDate());
         textViewEndDate.setText(listContract.getEndDate());
-        textViewPenaltyAmount.setText(listContract.getPenaltyAmount());
+        textViewPenaltyAmount.setText("$" + listContract.getPenaltyAmount());
         textViewDescription.setText(listContract.getDescription());
     }
 }

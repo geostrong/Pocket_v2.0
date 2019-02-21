@@ -3,6 +3,8 @@ package com.pocketwallet.pocket;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -33,6 +35,7 @@ public class ScanQRActivity_Static extends AppCompatActivity {
     Button payBtn;
     TextView balanceTxt;
     TextView targetNameText;
+    TextView payText;
 
     private String amount;
     private String userId;
@@ -53,22 +56,9 @@ public class ScanQRActivity_Static extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanqr_static);
 
-        amountInput = (EditText)findViewById(R.id.amountTransferStatic);
-        amountInput.addTextChangedListener(loginTextWatcher);
-        payBtn = (Button)findViewById(R.id.payButtonStatic);
-        payBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Move to transaction result
-                //Intent newIntent = new Intent(ScanQRActivity_Static.this, ResultActivity.class);
-                //startActivity(newIntent);
-                if (paymentType.equalsIgnoreCase("Static")) {
-                    processPayment(targetUserId,amount);
-                }else{
-                    processPaymentQuickPay(targetUserId,authCode,amount);
-                }
-            }
-        });
+        getSupportActionBar().setTitle("Payment");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
         extras = getIntent().getExtras();
         if (extras != null) {
@@ -84,13 +74,30 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             }
         }
 
+        amountInput = (EditText)findViewById(R.id.amountTransferStatic);
+        amountInput.addTextChangedListener(loginTextWatcher);
+
+        payText = (TextView)findViewById(R.id.payText);
+        payBtn = (Button)findViewById(R.id.payButtonStatic);
+        payBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (paymentType.equalsIgnoreCase("Static")) {
+                    processPayment(targetUserId,amount);
+                }else{
+                    processPaymentQuickPay(targetUserId,authCode,amount);
+
+                }
+            }
+        });
+        System.out.print("The Payment Type is: "  + paymentType);
+        if (paymentType.equalsIgnoreCase("QuickQR")) {
+            payText.setText("You're Requesting");
+            payBtn.setText("REQUEST");
+        }
+
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sessionToken = userPreferences.getString("sessionToken", "");
-
-        if (paymentType.equalsIgnoreCase("QuickQR")){
-            TextView payText = (TextView) findViewById(R.id.payText);
-            payText.setText("");
-        }
         amount = "";
 
         balanceTxt = (TextView) findViewById(R.id.balanceText);

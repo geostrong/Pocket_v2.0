@@ -3,6 +3,8 @@ package com.pocketwallet.pocket;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
 import android.nfc.Tag;
@@ -49,6 +51,11 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_request__nfc__ready);
 
+        getSupportActionBar().setTitle("Request");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+
+
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
@@ -65,6 +72,9 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter == null){
             //No NFC
+            System.out.println("Device does not support NFC");
+            return;
+
         }
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
                 getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);

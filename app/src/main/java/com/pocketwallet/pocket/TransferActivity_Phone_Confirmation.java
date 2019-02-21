@@ -102,7 +102,6 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
                             newIntent.putExtra("amount", amount);
                             newIntent.putExtra("to", name+ "(" + targetPhoneNumber + ")");
                             startActivity(newIntent);
-
                             finish();
                         }else {
                             //Failed

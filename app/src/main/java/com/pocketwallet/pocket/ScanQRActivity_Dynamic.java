@@ -4,6 +4,8 @@ package com.pocketwallet.pocket;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
@@ -52,6 +54,11 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanqr_dynamic);
 
+        getSupportActionBar().setTitle("Payment");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+
+
         Button payBtn = (Button)findViewById(R.id.payButtonDynamic);
 
         payBtn.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +89,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
 
         balanceTxt = (TextView) findViewById(R.id.balanceText);
         totalAmountText = (TextView) findViewById(R.id.totalAmount);
-        totalAmountText.setText("$:"+ amount);
+        totalAmountText.setText("$"+ amount);
         targetNameText = (TextView) findViewById(R.id.involvedName2);
         targetNameText.setText(targetName);
         updateBalance();
