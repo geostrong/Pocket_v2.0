@@ -160,6 +160,7 @@ public class ScanQRActivity extends AppCompatActivity{
                         }
                         String targetUserId = results[1];
                         String targetAuthCode = results[2];
+                        String targetName = results[3];
                         System.out.println("Quick QR, payee userID is: " + targetUserId);
                         System.out.println("AuthCode is: " + targetAuthCode);
                         Intent staticIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Static.class);
@@ -168,6 +169,7 @@ public class ScanQRActivity extends AppCompatActivity{
                         staticIntent.putExtra("userId", userId);
                         staticIntent.putExtra("targetUserId", targetUserId);
                         staticIntent.putExtra("targetAuthCode", targetAuthCode);
+                        staticIntent.putExtra("targetName",targetName);
                         startActivity(staticIntent);
                         finish();
                     }

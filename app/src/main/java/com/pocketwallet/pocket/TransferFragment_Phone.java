@@ -1,9 +1,12 @@
 package com.pocketwallet.pocket;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -40,6 +43,9 @@ public class TransferFragment_Phone extends Fragment {
     Bundle extras;
     String userId;
 
+    //Session Token
+    private String sessionToken;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +58,6 @@ public class TransferFragment_Phone extends Fragment {
         amountInput.addTextChangedListener(textWatcher);
 
         continueButton = view.findViewById(R.id.continueBtn);
-
         continueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +70,8 @@ public class TransferFragment_Phone extends Fragment {
         if (extras != null) {
             userId = extras.getString("userId");
         }
-        System.out.println("UserID: " + userId);
+        SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this.getContext());
+        sessionToken = userPreferences.getString("sessionToken", "");
         return view;
     }
 
@@ -73,62 +79,70 @@ public class TransferFragment_Phone extends Fragment {
         //API CALL TO CHECK IF USER EXIST
         String url = GET_CHECKPHONENUMBER_URL + phoneNumber;
         RequestQueue requestQueue = Volley.newRequestQueue(this.getContext());
-        try {
-            JSONObject jsonBody = new JSONObject();
-            jsonBody.put("phoneNumber", phoneNumber);
-            System.out.println("phoneNumber: " + jsonBody);
+        JSONObject jsonBody = new JSONObject();
+        //jsonBody.put("phoneNumber", phoneNumber);
+        System.out.println("jsonBody: " + jsonBody);
+        System.out.println("Url: " + url);
 
-            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.GET, url, jsonBody, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    try {
-                        String result = response.getString("exist");
+        JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.GET, url, jsonBody, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    String result = response.getString("exist");
+                    System.out.println("Response: " + response);
+                    if(result.equals("true")){
                         String targetName = response.getString("name");
-                        System.out.println("Response: " + response);
-                        if(result.equals("true")){
-                            Intent intent = new Intent(getActivity(), TransferActivity_Phone_Confirmation.class);
-                            intent.putExtra("userId",userId);
-                            intent.putExtra("targetPhoneNumber",phoneNumber);
-                            intent.putExtra("sendAmount",amount);
-                            intent.putExtra("targetName", targetName);
-                            startActivity(intent);
-                        }else {
-                            //PROMPT THAT WALLET/USER NOT FOUND
-                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                            builder.setTitle("Wallet not found")
-                                    .setMessage("Pocket wallet associated with this phone number is not found. Please ensure you had entered the correct phone number")
-                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.cancel();
-                                        }
-                                    });
+                        Intent intent = new Intent(getActivity(), TransferActivity_Phone_Confirmation.class);
+                        intent.putExtra("userId",userId);
+                        intent.putExtra("targetPhoneNumber",phoneNumber);
+                        intent.putExtra("sendAmount",amount);
+                        intent.putExtra("targetName", targetName);
+                        //startActivity(intent);
+                        startActivityForResult(intent, 1);
+                    }else {
+                        //PROMPT THAT WALLET/USER NOT FOUND
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setTitle("Wallet not found")
+                                .setMessage("Pocket wallet associated with this phone number is not found. Please ensure you had entered the correct phone number")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
 
-                            AlertDialog dialog = builder.create();
-                            dialog.show();
-                        }
-                    }catch(JSONException e){
-
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
                     }
+                }catch(JSONException e){
+                    e.printStackTrace();
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    //getActivity().onBackPressed();
-                }
-            }) {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    final Map<String, String> headers = new HashMap<>();
-                    //headers.put("Authorization", "Basic " + "c2FnYXJAa2FydHBheS5jb206cnMwM2UxQUp5RnQzNkQ5NDBxbjNmUDgzNVE3STAyNzI=");//put your token here
-                    return headers;
-                }
-            };
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+                //getActivity().onBackPressed();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                System.out.println("Header: " + headers.values());
+                return headers;
+            }
+        };
+        requestQueue.add(jsonObject);
+    }
 
-            requestQueue.add(jsonObject);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            System.out.println("resultCode: " + resultCode);
+            if (resultCode == Activity.RESULT_OK) {
+                getActivity().finish();
+            }
         }
     }
 

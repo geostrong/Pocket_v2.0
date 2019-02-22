@@ -1,17 +1,17 @@
 package com.pocketwallet.pocket;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 public class RequestActivity_NFC extends AppCompatActivity {
     Button confirmButton;
@@ -46,11 +46,20 @@ public class RequestActivity_NFC extends AppCompatActivity {
                 Intent newIntent = new Intent(RequestActivity_NFC.this, RequestActivity_NFC_Ready.class);
                 newIntent.putExtra("userId",userId);
                 newIntent.putExtra("amount",amount);
-                startActivity(newIntent);
+                startActivityForResult(newIntent, 1);
+                //startActivity(newIntent);
             }
         });
-
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                finish();
+            }
+        }
+    }
+
 
     private TextWatcher textWatcher = new TextWatcher() {
         @Override

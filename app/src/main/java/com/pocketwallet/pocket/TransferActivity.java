@@ -2,15 +2,14 @@ package com.pocketwallet.pocket;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
 public class TransferActivity extends AppCompatActivity {
 
@@ -87,7 +86,6 @@ public class TransferActivity extends AppCompatActivity {
             return 2;
         }
     }
-
 
     @Override
     public boolean onSupportNavigateUp() {

@@ -1,10 +1,14 @@
 package com.pocketwallet.pocket;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -37,7 +41,11 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
     private String name;
 
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/phone";
+    private String GETBALANCE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/";
 
+    TextView balanceTxt;
+    String balance;
+    private static final int TopUpCode = 1;
     //Session Token
     private String sessionToken;
 
@@ -55,6 +63,10 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
             amount = extras.getString("sendAmount");
             targetPhoneNumber = extras.getString("targetPhoneNumber");
             name = extras.getString("targetName");
+            //SET URL
+            if(!GETBALANCE_URL.contains("/balance")) {
+                GETBALANCE_URL = GETBALANCE_URL + userId + "/balance";
+            }
         }
 
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -66,17 +78,52 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
 
         nameText.setText(name);
         phoneNumberText.setText(targetPhoneNumber);
-        amountText.setText(amount);
+        amountText.setText("$"+amount);
 
+        balanceTxt = findViewById(R.id.balanceText);
+        updateBalance();
         payButton = findViewById(R.id.payButtonPhone);
         payButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //PROCESS PAYMENT
-                processPayment();
+                if(Double.parseDouble(balance) < Double.parseDouble(amount)){
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    Intent intent = new Intent (getApplicationContext(), TopUpActivity.class);
+                                    intent.putExtra("userId",userId);
+                                    startActivityForResult(intent, TopUpCode);
+                                    break;
+                                case DialogInterface.BUTTON_NEGATIVE:
+
+                                    break;
+                            }
+                        }
+                    };
+                    AlertDialog.Builder builder = new AlertDialog.Builder(TransferActivity_Phone_Confirmation.this);
+                    builder.setMessage("Your wallet does not have enough balance to pay. Press 'Top Up' to go to the top up page.")
+                            .setPositiveButton("Top Up", dialogClickListener)
+                            .setNegativeButton("Cancel", dialogClickListener).show();
+                }else{
+                    //PROCESS PAYMENT
+                    processPayment();
+                }
             }
         });
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == TopUpCode) {
+            if (resultCode == Activity.RESULT_OK) {
+                System.out.println("Top Up Successful");
+                updateBalance();
+            }
+        }
+    }
+
     private void processPayment(){
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         try {
@@ -101,6 +148,7 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
                             newIntent.putExtra("transactionNumber",transactionNumber);
                             newIntent.putExtra("amount", amount);
                             newIntent.putExtra("to", name+ "(" + targetPhoneNumber + ")");
+                            setResult(Activity.RESULT_OK);
                             startActivity(newIntent);
                             finish();
                         }else {
@@ -138,5 +186,39 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+    public void updateBalance(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest requestJsonObject = new JsonObjectRequest(Request.Method.GET, GETBALANCE_URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    balance = response.getString("balance");
+                    System.out.println(response.getString("balance"));
+                    balanceTxt.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            balanceTxt.setText("$"+balance);
+                        }
+                    });
+                }catch(JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("", "Error: " + error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                System.out.println("Header: " + headers.values());
+                return headers;
+            }
+        };
+        requestQueue.add(requestJsonObject);
     }
 }

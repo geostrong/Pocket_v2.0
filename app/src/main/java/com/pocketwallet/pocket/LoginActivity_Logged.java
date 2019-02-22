@@ -2,6 +2,8 @@ package com.pocketwallet.pocket;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,8 +15,10 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Base64;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +61,8 @@ public class LoginActivity_Logged extends AppCompatActivity{
     private Button loginButton2;
     private TextView passwordInput;
     private TextInputLayout passwordInputLayout;
+    private ImageView profileImage;
+    Bitmap tempImage;
     String userId;
     String phoneNumber;
     String password;
@@ -95,6 +101,10 @@ public class LoginActivity_Logged extends AppCompatActivity{
         TextView name = findViewById(R.id.signinName);
         name.setText(userName);
 
+        profileImage = (ImageView) findViewById(R.id.profile_image);
+        if (tempImage != null) {
+            profileImage.setImageBitmap(tempImage);
+        }
         if (useFingerprint) {
             RequestFingerprint();
         }
@@ -108,6 +118,10 @@ public class LoginActivity_Logged extends AppCompatActivity{
         KEY_NAME = userPreferences.getString("KEY_NAME", "DEFAULT");
         phoneNumber = userPreferences.getString("PhoneNumber", "DEFAULT");
         userName = userPreferences.getString("user_name", "Name");
+        String tempImageString = userPreferences.getString("profileImage", null);
+        if(tempImageString != null) {
+            tempImage = decodeBase64(tempImageString);
+        }
     }
 
     //POST LOGIN REQUEST
@@ -389,6 +403,13 @@ public class LoginActivity_Logged extends AppCompatActivity{
 
         }
     };
+
+    // method for base64 to bitmap
+    public static Bitmap decodeBase64(String input) {
+        byte[] decodedByte = Base64.decode(input, 0);
+        return BitmapFactory
+                .decodeByteArray(decodedByte, 0, decodedByte.length);
+    }
 
     public void UpdateSharedPreference(String key, String value){
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);

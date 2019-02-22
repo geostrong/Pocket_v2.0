@@ -1,5 +1,6 @@
 package com.pocketwallet.pocket;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -8,6 +9,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -53,6 +55,9 @@ public class TopUpActivity extends AppCompatActivity {
     private TextView topUpAmountView;
 
     private String urlTopUp = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/topup"; //address needs changing
+    private String GETBALANCE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/";
+
+    TextView balanceTxt;
 
     //Session Token
     private String sessionToken;
@@ -69,6 +74,10 @@ public class TopUpActivity extends AppCompatActivity {
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
+            //SET URL
+            if(!GETBALANCE_URL.contains("/balance")) {
+                GETBALANCE_URL = GETBALANCE_URL + userId + "/balance";
+            }
         }
 
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -78,6 +87,8 @@ public class TopUpActivity extends AppCompatActivity {
         cvvView = findViewById(R.id.cvv);
         topUpAmountView = findViewById(R.id.topUpAmount);
         expiryDate = findViewById(R.id.expiryDate);
+        balanceTxt = findViewById(R.id.balanceText);
+        updateBalance();
 
         Button confirmBtn = findViewById(R.id.topUpConfirmBtn);
         confirmBtn.setOnClickListener(new View.OnClickListener() {
@@ -93,7 +104,7 @@ public class TopUpActivity extends AppCompatActivity {
                 cardNum = cardNumView.getText().toString();
                 cvv = cvvView.getText().toString();
                 topUpAmount = topUpAmountView.getText().toString();
-                //cardType = cardTypeView.getText().toString();                                         //cant get this to parse visa/mastercard to requestTopUp(); probably dont need to
+                //cardType = cardTypeView.getText().toString();     //cant get this to parse visa/mastercard to requestTopUp(); probably dont need to
                 requestTopUp();
             }
         });
@@ -185,6 +196,7 @@ public class TopUpActivity extends AppCompatActivity {
                                     Bundle b = new Bundle();
                                     b.putString("title", "Top Up");
                                     intent.putExtras(b);
+                                    setResult(Activity.RESULT_OK);
                                     startActivity(intent);
                                     finish();
                                 }
@@ -221,5 +233,41 @@ public class TopUpActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    public void updateBalance(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest requestJsonObject = new JsonObjectRequest(Request.Method.GET, GETBALANCE_URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    System.out.println("URL: " + GETBALANCE_URL);
+                    final String balance = response.getString("balance");
+                    System.out.println(response.getString("balance"));
+                    balanceTxt.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            balanceTxt.setText("$"+balance);
+                        }
+                    });
+                }catch(JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("", "Error: " + error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                System.out.println("Header: " + headers.values());
+                return headers;
+            }
+        };
+        requestQueue.add(requestJsonObject);
     }
 }

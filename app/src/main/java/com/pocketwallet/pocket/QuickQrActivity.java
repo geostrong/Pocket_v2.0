@@ -69,8 +69,7 @@ public class QuickQrActivity extends AppCompatActivity {
         try {
             //String toQR = userId + "|" + amount;
             SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            //String toQR = "QuickQR|" + userId + "|" + userPreferences.getString("user_name", "Name");
-            String toQR = "QuickQR|" + userId + "|" + authCode;
+            String toQR = "QuickQR|" + userId + "|" + authCode + "|" + userPreferences.getString("user_name", "Name");
             System.out.println("TOQR: " + toQR);
 
             try {

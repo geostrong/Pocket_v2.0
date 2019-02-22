@@ -1,5 +1,6 @@
 package com.pocketwallet.pocket;
 
+import android.app.Activity;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -74,7 +75,6 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
             //No NFC
             System.out.println("Device does not support NFC");
             return;
-
         }
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,
                 getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
@@ -118,6 +118,7 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
                             newIntent.putExtra("transactionNumber",transactionNumber);
                             newIntent.putExtra("amount", amount1);
                             System.out.println("Amount : " + amount1);
+                            setResult(Activity.RESULT_OK);
                             startActivity(newIntent);
                             finish();
                         }
@@ -128,7 +129,15 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    onBackPressed();
+                    if(error.networkResponse.statusCode == 400){
+                        Intent newIntent = new Intent(RequestActivity_NFC_Ready.this, ResultActivity.class);
+                        newIntent.putExtra("title","Transaction");
+                        newIntent.putExtra("results","failed");
+                        setResult(Activity.RESULT_OK);
+                        startActivity(newIntent);
+                        finish();
+                    }
+                    //onBackPressed();
                 }
             }) {
                 @Override

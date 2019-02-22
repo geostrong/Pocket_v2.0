@@ -90,6 +90,13 @@ public class ContractActivity_Details extends AppCompatActivity {
                 acknowledgeContract("0");
             }
         });
+        terminateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                terminateContract();
+            }
+        });
+
 
         if(userId.equals(listContracts.get(position).getUser2ID())){
             listContracts.get(position).setPayeeName(name);

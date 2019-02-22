@@ -1,12 +1,14 @@
 package com.pocketwallet.pocket;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -44,6 +46,8 @@ public class ScanQRActivity_Static extends AppCompatActivity {
     private String paymentType;
     private String authCode;
     private Bundle extras;
+    String balance;
+    private static final int TopUpCode = 1;
 
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/";
     private String urlPaymentQuickPay = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/quickpay/";
@@ -82,11 +86,33 @@ public class ScanQRActivity_Static extends AppCompatActivity {
         payBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (paymentType.equalsIgnoreCase("Static")) {
-                    processPayment(targetUserId,amount);
+                //Move to transaction result
+                if (paymentType.equalsIgnoreCase("Static")){
+                    if(Double.parseDouble(balance) < Double.parseDouble(amount)){
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        Intent intent = new Intent (getApplicationContext(), TopUpActivity.class);
+                                        intent.putExtra("userId",userId);
+                                        startActivityForResult(intent, TopUpCode);
+                                        break;
+                                    case DialogInterface.BUTTON_NEGATIVE:
+                                        break;
+                                }
+                            }
+                        };
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity_Static.this);
+                        builder.setMessage("Your wallet does not have enough balance to pay. Press 'Top Up' to go to the top up page.")
+                                .setPositiveButton("Top Up", dialogClickListener)
+                                .setNegativeButton("Cancel", dialogClickListener).show();
+                    }
+                    else{
+                        processPayment(targetUserId, amount);
+                    }
                 }else{
                     processPaymentQuickPay(targetUserId,authCode,amount);
-
                 }
             }
         });
@@ -277,7 +303,7 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try{
-                    final String balance = response.getString("balance");
+                    balance = response.getString("balance");
                     System.out.println(response.getString("balance"));
                     balanceTxt.post(new Runnable() {
                         @Override
@@ -304,5 +330,14 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             }
         };
         requestQueue.add(requestJsonObject);
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == TopUpCode) {
+            if (resultCode == Activity.RESULT_OK) {
+                System.out.println("Top Up Successful");
+                updateBalance();
+            }
+        }
     }
 }

@@ -2,8 +2,8 @@ package com.pocketwallet.pocket;
 
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -80,8 +80,10 @@ public class ResultActivity extends AppCompatActivity {
             if(result.equalsIgnoreCase("failed")){
                 resultTitleText = "Transaction failed";
                 fromTo.setVisibility(View.GONE);
+                sentTo = "Payee's account do not have sufficient balance to make payment";
                 amountTitle.setVisibility(View.GONE);
                 transIdTitle.setVisibility(View.GONE);
+                amountText.setVisibility(View.GONE);
             }
         } else if (toolbarTitle.equalsIgnoreCase("top up")) {
             resultTitleText = "Top up successful!";
@@ -89,7 +91,6 @@ public class ResultActivity extends AppCompatActivity {
             resultTitleText = "Password changed successful!";
         }
         resultTitle.setText(resultTitleText);
-
 
         //Change from/to here
         if (true){
