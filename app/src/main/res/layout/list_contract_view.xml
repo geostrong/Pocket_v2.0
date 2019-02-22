@@ -45,17 +45,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/user2ID"
-                android:layout_width="wrap_content"
-                android:layout_height="21dp"
-                android:text="User 2 name"
-                android:textAlignment="textEnd"
-                android:textSize="18sp"
-                app:layout_constraintStart_toStartOf="@+id/contractNameCreate"
-                app:layout_constraintTop_toBottomOf="@+id/contractNameCreate" />
-
-            <TextView
-                android:id="@+id/contractNameCreate"
+                android:id="@+id/contractName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -91,8 +81,8 @@
                 android:text="10/10/18"
                 android:textAlignment="textStart"
                 android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="@+id/user2ID"
-                app:layout_constraintTop_toBottomOf="@+id/user2ID" />
+                app:layout_constraintStart_toStartOf="@+id/contractName"
+                app:layout_constraintTop_toBottomOf="@+id/contractName" />
 
             <TextView
                 android:id="@+id/dashText"

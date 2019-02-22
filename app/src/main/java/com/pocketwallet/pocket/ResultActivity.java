@@ -77,6 +77,12 @@ public class ResultActivity extends AppCompatActivity {
         //Change result title here
         if (toolbarTitle.equalsIgnoreCase("transaction")) {
             resultTitleText = "Transaction successful!";
+            if(result.equalsIgnoreCase("failed")){
+                resultTitleText = "Transaction failed";
+                fromTo.setVisibility(View.GONE);
+                amountTitle.setVisibility(View.GONE);
+                transIdTitle.setVisibility(View.GONE);
+            }
         } else if (toolbarTitle.equalsIgnoreCase("top up")) {
             resultTitleText = "Top up successful!";
         } else if (toolbarTitle.equalsIgnoreCase("change password")) {

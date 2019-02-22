@@ -44,10 +44,19 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
     public void onBindViewHolder (ViewHolder holder, final int position){
         ListContract listContract = listContracts.get(position);
 
-        holder.textViewDescription.setText((listContract.getDescription()));
-        holder.textViewUser2ID.setText(listContract.getUser2ID());
+        holder.textViewContractName.setText((listContract.getContractName()));
         holder.textViewEndDate.setText(listContract.getEndDate());
-        holder.textViewContractStatus.setText(listContract.getContractStatus());
+        if(listContract.getContractStatus().equals("0")) {
+            holder.textViewContractStatus.setText("Pending");
+        }else if(listContract.getContractStatus().equals("1")){
+            holder.textViewContractStatus.setText("Accepted");
+        }else if(listContract.getContractStatus().equals("2")){
+            holder.textViewContractStatus.setText("Active");
+        }else if(listContract.getContractStatus().equals("3")){
+            holder.textViewContractStatus.setText("Declined");
+        }else{
+            holder.textViewContractStatus.setText("Terminated");
+        }
         //holder.textViewAmount.setText(listContract.getAmount());
         //holder.textViewFrequency.setText(listContract.getFrequency());
         holder.textViewStartDate.setText(listContract.getStartDate());
@@ -89,13 +98,13 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
 
         //TextView textViewName, textViewNumber, textViewDescription, textViewEndDate, textViewPayingOn, textViewEndDate2, textViewFeePerFreq, textViewFrequency, textViewPerSign, textViewMoreBtn, textViewStatus, textViewStartDate, textViewDashText, textViewPayingOnText;
 
-        TextView textViewDashText, textViewMoreBtn, textViewFrequency, textViewContractID, textViewContractStatus, textViewDescription, textViewAmount, textViewStartDate, textViewEndDate, textViewEndDate2, textViewUser2ID;
+        TextView textViewDashText, textViewMoreBtn, textViewFrequency, textViewContractName, textViewContractStatus, textViewDescription, textViewAmount, textViewStartDate, textViewEndDate, textViewEndDate2, textViewPayeeName;
 
         public ViewHolder(View itemView){
             super(itemView);
 
             textViewContractStatus = itemView.findViewById(R.id.status);
-            textViewDescription = itemView.findViewById(R.id.contractNameCreate);
+            textViewContractName = itemView.findViewById(R.id.contractName);
             textViewEndDate = itemView.findViewById(R.id.endDate);
             textViewAmount = itemView.findViewById(R.id.amount);
             textViewFrequency = itemView.findViewById(R.id.frequency);
@@ -103,7 +112,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
             //textViewContractID = itemView.findViewById(R.id.);
             textViewStartDate = itemView.findViewById(R.id.startDate);
             textViewDashText = itemView.findViewById(R.id.dashText);
-            textViewUser2ID = itemView.findViewById(R.id.user2ID);
+            textViewPayeeName = itemView.findViewById(R.id.payeeName);
         }
     }
 }

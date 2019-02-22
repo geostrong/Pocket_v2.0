@@ -42,6 +42,7 @@ public class ContractActivity_Details extends AppCompatActivity {
 
     Button acceptButton;
     Button declineButton;
+    Button terminateButton;
 
     private SharedPreferences userPreferences;
 
@@ -76,6 +77,7 @@ public class ContractActivity_Details extends AppCompatActivity {
 
         acceptButton = findViewById(R.id.acceptButton);
         declineButton = findViewById(R.id.declineButton);
+        terminateButton = findViewById(R.id.terminateButton);
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -97,6 +99,13 @@ public class ContractActivity_Details extends AppCompatActivity {
             if(!listContracts.get(position).getContractStatus().equals(("0"))){
                 acceptButton.setVisibility(View.GONE);
                 declineButton.setVisibility(View.GONE);
+            }
+            if(listContracts.get(position).getContractStatus().equals(("1"))){
+                terminateButton.setVisibility(View.VISIBLE);
+            }
+
+            if(listContracts.get(position).getContractStatus().equals(("2"))){
+                terminateButton.setVisibility(View.VISIBLE);
             }
         }else{
             acceptButton.setVisibility(View.GONE);

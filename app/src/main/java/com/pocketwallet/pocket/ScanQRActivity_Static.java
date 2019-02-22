@@ -234,13 +234,6 @@ public class ScanQRActivity_Static extends AppCompatActivity {
                                     System.out.println("Amount : " + amount1);
                                     startActivity(newIntent);
                                     finish();
-                                }else{
-                                    System.out.println("NOT Successful Payment!");
-                                    Intent newIntent = new Intent(ScanQRActivity_Static.this, ResultActivity.class);
-                                    newIntent.putExtra("title","Transaction");
-                                    newIntent.putExtra("results",result);
-                                    startActivity(newIntent);
-                                    finish();
                                 }
                             }
                         });
@@ -252,7 +245,15 @@ public class ScanQRActivity_Static extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.printStackTrace();
-                    onBackPressed();
+                    if(error.networkResponse.statusCode == 400){
+                        System.out.println("NOT Successful Payment!");
+                        Intent newIntent = new Intent(ScanQRActivity_Static.this, ResultActivity.class);
+                        newIntent.putExtra("title","Transaction");
+                        newIntent.putExtra("results","failed");
+                        startActivity(newIntent);
+                        finish();
+                    }
+                    //onBackPressed();
                 }
             }){
                 @Override
