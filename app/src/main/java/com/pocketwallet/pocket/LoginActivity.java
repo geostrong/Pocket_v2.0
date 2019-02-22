@@ -42,9 +42,6 @@ public class LoginActivity extends AppCompatActivity {
     final String LOGIN_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/login";
     final String POSTFCM_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/fcmtoken";
     String GETDETAILS_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/";
-    //---TEST---
-    private Button loginTest1;
-    private Button loginTest2;
     //----------
     private String name;
     private SharedPreferences userPreferences;
@@ -61,9 +58,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //---TEST BUTTONS---
-        loginTest1 = (Button)findViewById(R.id.loginTest1);
-        loginTest2 = (Button)findViewById(R.id.loginTest2);
         //----------
         userPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
         editor =  userPreferences.edit();
@@ -146,18 +140,6 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        loginTest1.setOnClickListener (new View.OnClickListener() {
-            public void onClick(View view){
-                LoginTestUser1();
-            }
-        });
-
-        loginTest2.setOnClickListener (new View.OnClickListener() {
-            public void onClick(View view){
-                LoginTestUser2();
             }
         });
 

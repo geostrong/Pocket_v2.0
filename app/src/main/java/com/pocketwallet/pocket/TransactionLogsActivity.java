@@ -469,17 +469,18 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         int k = i;
         int h = 0;
 
-       for (int j=0;j<12;j++)
-        {
-            if (h != 0) {
-                k--;
-                if (k == -1){
-                    k = 11;
+        if (latestMonth != 100){
+            for (int j = 0; j < 12; j++) {
+                if (h != 0) {
+                    k--;
+                    if (k == -1) {
+                        k = 11;
+                    }
                 }
+                h++;
+                System.out.println("Looped " + h + " times");
+                entries.add(new Entry(j, latestMonthY[k]));
             }
-            h++;
-            System.out.println("Looped " + h + " times");
-            entries.add(new Entry(j, latestMonthY[k]));
         }
  /*
         entries.add(new Entry(0, janTotal));
@@ -503,7 +504,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                 if (i == 0){
                     return months0[(int) value];
                 }else if (i == 1){
-                    System.out.println("here");
                     return months1[(int) value];
                 }else if (i == 2){
                     return months2[(int) value];
@@ -525,8 +525,9 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                     return months10[(int) value];
                 }else if (i == 11) {
                     return months11[(int) value];
+                }else{
+                    return months[(int) value];
                 }
-                return (months)[(int) value];
 
 
                /* switch(i){

@@ -250,14 +250,17 @@ public class ContractActivity_Details extends AppCompatActivity {
         textViewContractName.setText(listContract.getContractName());
         if(listContract.getContractStatus().equals("0")) {
             textViewContractStatus.setText("Pending");
+            textViewContractStatus.setTextColor(Color.parseColor("#e7b416"));
         }else if(listContract.getContractStatus().equals("1")){
             textViewContractStatus.setText("Accepted");
         }else if(listContract.getContractStatus().equals("2")){
             textViewContractStatus.setText("Active");
         }else if(listContract.getContractStatus().equals("3")){
             textViewContractStatus.setText("Declined");
+            textViewContractStatus.setTextColor(Color.parseColor("#FF0000"));
         }else{
             textViewContractStatus.setText("Terminated");
+            textViewContractStatus.setTextColor(Color.parseColor("#FF0000"));
         }
         textViewAmount.setText("$" + listContract.getAmount());
         textViewStartDate.setText(listContract.getStartDate());

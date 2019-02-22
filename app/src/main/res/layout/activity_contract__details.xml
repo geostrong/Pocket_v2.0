@@ -15,7 +15,7 @@
         android:background="@drawable/circle"
         android:elevation="16dp"
         android:padding="16dp"
-        android:src="@drawable/ic_round_home_24px"
+        android:src="@drawable/ic_round_assignment_24px"
         app:layout_constraintStart_toStartOf="@+id/cardView7"
         app:layout_constraintTop_toTopOf="parent" />
 
