@@ -61,6 +61,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
 
     Bundle extras;
 
+    private final String[] months = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
     private final String[] months0 = {"Jan", "Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb" };
     private final String[] months1 = {"Feb", "Jan", "Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar" };
     private final String[] months2 = {"Mar", "Feb", "Jan", "Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr" };
@@ -422,68 +423,66 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         System.out.println(febTotal + "HHHHHHHHHHHHHHHH");
         //Add data x and y data here
         switch (latestMonth) {
-            case 11:    entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 11:    if (i == 100) {
                             i = 11;
                         }
-            case 10:    entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 10:    if (i == 100) {
                             i = 10;
                         }
-            case 9:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 9:     if (i == 100) {
                             i = 9;
                         }
-            case 8:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 8:     if (i == 100) {
                             i = 8;
                         }
-            case 7:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 7:     if (i == 100) {
                             i = 7;
                         }
-            case 6:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 6:     if (i == 100) {
                             i = 6;
                         }
-            case 5:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 5:     if (i == 100) {
                             i = 5;
                         }
-            case 4:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 4:     if (i == 100) {
                             i = 4;
                         }
-            case 3:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 3:     if (i == 100) {
                             i = 3;
                         }
-            case 2:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 2:     if (i == 100) {
                             i = 2;
                         }
-            case 1:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 1:     if (i == 100) {
                             i = 1;
                         }
-                        System.out.println("Case 1");
-            case 0:     entries.add(new Entry(latestMonth, latestMonthY[latestMonth]));
-                        if (i == 100) {
+            case 0:     if (i == 100) {
                             i = 0;
                         }
-                        System.out.println("Case 0");
                         break;
             case 100:   System.out.println("There's no data!");
                         break;
         }
 
         System.out.println(i + " is the current i");
-        for (int j=11;i<=j-i;j--)
+
+        int k = i;
+        int h = 0;
+
+       for (int j=0;j<12;j++)
         {
-            System.out.println("hi" + j);
-            entries.add(new Entry(j, latestMonthY[j]));
+            if (h != 0) {
+                k--;
+                if (k == -1){
+                    k = 11;
+                }
+            }
+            h++;
+            System.out.println("Looped " + h + " times");
+            entries.add(new Entry(j, latestMonthY[k]));
         }
-       /* entries.add(new Entry(0, janTotal));
+ /*
+        entries.add(new Entry(0, janTotal));
         entries.add(new Entry(1, febTotal));
         entries.add(new Entry(2, marTotal));
         entries.add(new Entry(3, aprTotal));
@@ -502,9 +501,9 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
                 if (i == 0){
-                    System.out.println("here");
                     return months0[(int) value];
                 }else if (i == 1){
+                    System.out.println("here");
                     return months1[(int) value];
                 }else if (i == 2){
                     return months2[(int) value];
@@ -527,7 +526,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                 }else if (i == 11) {
                     return months11[(int) value];
                 }
-                return (months2)[(int) value];
+                return (months)[(int) value];
 
 
                /* switch(i){

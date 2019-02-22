@@ -1,16 +1,21 @@
 package com.pocketwallet.pocket;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -42,6 +47,9 @@ public class LoginActivity extends AppCompatActivity {
     private Button loginTest2;
     //----------
     private String name;
+    private SharedPreferences userPreferences;
+    private boolean useFingerprint;
+    private SharedPreferences.Editor editor;
 
     //SessionToken
     String sessionToken;
@@ -57,6 +65,9 @@ public class LoginActivity extends AppCompatActivity {
         loginTest1 = (Button)findViewById(R.id.loginTest1);
         loginTest2 = (Button)findViewById(R.id.loginTest2);
         //----------
+        userPreferences = PreferenceManager.getDefaultSharedPreferences(LoginActivity.this);
+        editor =  userPreferences.edit();
+        useFingerprint = userPreferences.getBoolean("useFingerprint", false);
 
         //SETUP BUTTONS AND EDITTEXT
         phonenumberInput = (EditText)findViewById(R.id.loginPhone);
@@ -64,6 +75,62 @@ public class LoginActivity extends AppCompatActivity {
         login = (Button)findViewById(R.id.loginButton2);
         signup = (TextView)findViewById(R.id.signupButton);
         phoneNumberInputLayout = findViewById(R.id.textInputLayout7);
+
+        final Switch bioSwitch = (Switch) findViewById(R.id.switch1);
+        bioSwitch.setChecked(useFingerprint);
+        bioSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+
+                    FingerprintManagerCompat fingerprintManagerCompat = FingerprintManagerCompat.from(LoginActivity.this);
+                    if (!fingerprintManagerCompat.isHardwareDetected()) {
+                        System.out.println("Device does not have fingerprint scanner");
+
+                        AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                        builder.setTitle("Fingerprint scanner not found")
+                                .setMessage("Device do not have a fingerprint scanner")
+                                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.cancel();
+                                    }
+                                });
+
+                        AlertDialog dialog = builder.create();
+                        dialog.show();
+
+                        bioSwitch.setChecked(false);
+                    } else {
+                        if (!fingerprintManagerCompat.hasEnrolledFingerprints()) {
+                            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
+                            builder.setTitle("Fingerprint not found")
+                                    .setMessage("No fingerprint registered in device. Please setup fingerprint in your device first")
+                                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.cancel();
+                                        }
+                                    });
+
+                            AlertDialog dialog = builder.create();
+                            dialog.show();
+                            // User hasn't enrolled any fingerprints to authenticate with
+                            System.out.println("Devices does not have enrolled fingerprints");
+                            bioSwitch.setChecked(false);
+                        } else {
+                            editor.putBoolean("useFingerprint", true);
+                            editor.commit();
+                        }
+                    }
+
+
+                } else {
+                    editor.putBoolean("useFingerprint", false);
+                    editor.commit();
+                }
+            }
+        });
 
     phonenumberInput.addTextChangedListener(loginTextWatcher);
         passwordInput.addTextChangedListener(loginTextWatcher);
