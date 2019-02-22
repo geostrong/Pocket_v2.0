@@ -80,7 +80,7 @@ public class ResultActivity extends AppCompatActivity {
             if(result.equalsIgnoreCase("failed")){
                 resultTitleText = "Transaction failed";
                 fromTo.setVisibility(View.GONE);
-                sentTo = "Payee's account do not have sufficient balance to make payment";
+                //sentTo = "Payee's account do not have sufficient balance to make payment";
                 amountTitle.setVisibility(View.GONE);
                 transIdTitle.setVisibility(View.GONE);
                 amountText.setVisibility(View.GONE);
