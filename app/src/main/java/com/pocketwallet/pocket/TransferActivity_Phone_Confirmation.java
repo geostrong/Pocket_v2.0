@@ -153,6 +153,12 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
                             finish();
                         }else {
                             //Failed
+                            System.out.println("NOT Successful Payment!");
+                            Intent newIntent = new Intent(TransferActivity_Phone_Confirmation.this, ResultActivity.class);
+                            newIntent.putExtra("title","Transaction");
+                            newIntent.putExtra("results","phonePaymentFailed");
+                            startActivity(newIntent);
+                            finish();
                         }
                     }catch(JSONException e){
 

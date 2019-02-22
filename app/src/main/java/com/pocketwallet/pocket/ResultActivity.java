@@ -84,6 +84,13 @@ public class ResultActivity extends AppCompatActivity {
                 amountTitle.setVisibility(View.GONE);
                 transIdTitle.setVisibility(View.GONE);
                 amountText.setVisibility(View.GONE);
+            }else if(result.equalsIgnoreCase("phonePaymentFailed")){
+                resultTitleText = "Transaction failed";
+                fromTo.setVisibility(View.GONE);
+                sentTo = "Your account do not have sufficient balance to make payment";
+                amountTitle.setVisibility(View.GONE);
+                transIdTitle.setVisibility(View.GONE);
+                amountText.setVisibility(View.GONE);
             }
         } else if (toolbarTitle.equalsIgnoreCase("top up")) {
             resultTitleText = "Top up successful!";
