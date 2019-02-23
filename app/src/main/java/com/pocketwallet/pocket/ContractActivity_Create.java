@@ -171,7 +171,7 @@ public class ContractActivity_Create extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
 
         try {
-            description = "NoDescription";
+            //description = "NoDescription";
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("contractName", contractName);
             jsonBody.put("user1_id", userId);

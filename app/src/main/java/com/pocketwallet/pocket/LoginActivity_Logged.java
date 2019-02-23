@@ -121,6 +121,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
         String tempImageString = userPreferences.getString("profileImage", null);
         if(tempImageString != null) {
             tempImage = decodeBase64(tempImageString);
+            System.out.println("test: " + tempImage.getAllocationByteCount());
         }
     }
 

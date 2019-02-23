@@ -57,6 +57,8 @@
         android:layout_marginTop="32dp"
         android:ems="10"
         android:hint="Message (Optional)"
+        android:imeOptions="actionDone"
+        android:inputType="textLongMessage"
         android:textCursorDrawable="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="@+id/numberRequest"
         app:layout_constraintHorizontal_bias="0.0"

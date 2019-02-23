@@ -114,18 +114,6 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        /*
-        Button testBtn = view.findViewById(R.id.testBtn);
-        testBtn.setOnClickListener(new  View.OnClickListener()
-        {
-            @Override
-            public void onClick(View v) {
-                Intent newIntent = new Intent(getActivity(), NotificationsActivity.class);
-                newIntent.putExtra("userId",userId);
-                startActivity(newIntent);
-            }
-        });*/
-
         myPocketButton = view.findViewById(R.id.myPocketButton);
         myPocketButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,5 +184,10 @@ public class HomeFragment extends Fragment {
             }
         };
         requestQueue.add(requestJsonObject);
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateBalance();
     }
 }
