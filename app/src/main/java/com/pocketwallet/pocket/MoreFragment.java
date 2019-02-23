@@ -148,6 +148,7 @@ public class MoreFragment extends Fragment {
         editor.putString("user_name", "Name");
         editor.putBoolean("useFingerprint", false);
         editor.putString("profileImage",null);
+        editor.putBoolean("ShakeToExit", false);
         editor.commit();
     }
 }
