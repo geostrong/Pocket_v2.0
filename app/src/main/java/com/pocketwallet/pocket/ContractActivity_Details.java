@@ -1,13 +1,17 @@
 package com.pocketwallet.pocket;
 
+import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -23,9 +27,13 @@ import com.android.volley.toolbox.Volley;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 public class ContractActivity_Details extends AppCompatActivity {
 
@@ -39,6 +47,10 @@ public class ContractActivity_Details extends AppCompatActivity {
     private String name,phoneNumber;
     private String contractId;
     private int position;
+    private String balance;
+    private String penaltyAmount;
+
+    private static final int TopUpCode = 1;
 
     Button acceptButton;
     Button declineButton;
@@ -48,6 +60,7 @@ public class ContractActivity_Details extends AppCompatActivity {
 
     String TERMINATECONTRACT_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/contract/terminate";
     String ACKNOWLEDGE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/contract/ack";
+    private String GETBALANCE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/";
 
     //Session Token
     private String sessionToken;
@@ -67,6 +80,11 @@ public class ContractActivity_Details extends AppCompatActivity {
             this.listContracts = (ArrayList<ListContract>) intent.getSerializableExtra(
                     "listContracts");
             position = extras.getInt("position");
+            //SET URL
+            if(!GETBALANCE_URL.contains("/balance")) {
+                GETBALANCE_URL = GETBALANCE_URL + userId + "/balance";
+            }
+
         }
         //Get user's name from shared preferences
         userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -93,7 +111,33 @@ public class ContractActivity_Details extends AppCompatActivity {
         terminateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                terminateContract();
+                try {
+                    if (Float.parseFloat(balance) < Float.parseFloat(penaltyAmount)) {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        Intent intent = new Intent(getApplicationContext(), TopUpActivity.class);
+                                        intent.putExtra("userId", userId);
+                                        startActivityForResult(intent, TopUpCode);
+                                        break;
+                                    case DialogInterface.BUTTON_NEGATIVE:
+
+                                        break;
+                                }
+                            }
+                        };
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ContractActivity_Details.this);
+                        builder.setMessage("Your wallet does not have enough balance to pay. Press 'Top Up' to go to the top up page.")
+                                .setPositiveButton("Top Up", dialogClickListener)
+                                .setNegativeButton("Cancel", dialogClickListener).show();
+                    } else {
+                        terminateContract();
+                    }
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -124,6 +168,7 @@ public class ContractActivity_Details extends AppCompatActivity {
         contractId = listContracts.get(position).getContractID();
 
         //createAdapterView();
+        updateBalance();
         GetViewItems();
     }
 
@@ -231,6 +276,35 @@ public class ContractActivity_Details extends AppCompatActivity {
         }
     }
 
+    public void updateBalance(){
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        JsonObjectRequest requestJsonObject = new JsonObjectRequest(Request.Method.GET, GETBALANCE_URL, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    balance = response.getString("balance");
+                    System.out.println(response.getString("balance"));
+                    }catch(JSONException e){
+                        e.printStackTrace();
+                    }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Log.i("", "Error: " + error.toString());
+            }
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                final Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                System.out.println("Header: " + headers.values());
+                return headers;
+            }
+        };
+        requestQueue.add(requestJsonObject);
+    }
+
     TextView textViewReceiverName, textViewReceiverPhoneNum, textViewPayeeName, textViewPayeePhoneNum,
             textViewContractName, textViewContractStatus, textViewAmount, textViewStartDate, textViewEndDate,
             textViewPenaltyAmount, textViewDescription;
@@ -273,6 +347,17 @@ public class ContractActivity_Details extends AppCompatActivity {
         textViewStartDate.setText(listContract.getStartDate());
         textViewEndDate.setText(listContract.getEndDate());
         textViewPenaltyAmount.setText("$" + listContract.getPenaltyAmount());
+        penaltyAmount = listContract.getPenaltyAmount();
         textViewDescription.setText(listContract.getDescription());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == TopUpCode) {
+            if (resultCode == Activity.RESULT_OK) {
+                System.out.println("Top Up Successful");
+                updateBalance();
+            }
+        }
     }
 }

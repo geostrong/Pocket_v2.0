@@ -147,6 +147,7 @@ public class MoreFragment extends Fragment {
         editor.putString("PhoneNumber", "Phone Number");
         editor.putString("user_name", "Name");
         editor.putBoolean("useFingerprint", false);
+        editor.putString("profileImage",null);
         editor.commit();
     }
 }

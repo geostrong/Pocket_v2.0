@@ -20,6 +20,7 @@
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/appInfo"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/appInfo"
         app:layout_constraintTop_toBottomOf="@+id/appInfo" />
 
@@ -37,7 +38,6 @@
         android:textAllCaps="false"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/changePIN"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -60,22 +60,6 @@
         app:layout_constraintTop_toBottomOf="@+id/contactSupport" />
 
     <Button
-        android:id="@+id/changePIN"
-        android:layout_width="0dp"
-        android:layout_height="47dp"
-        android:background="@android:color/transparent"
-        android:drawableEnd="@drawable/ic_right_arrow"
-        android:gravity="center_vertical"
-        android:text="Change PIN"
-        android:textAllCaps="false"
-        android:textColor="@color/colorPrimaryDark"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/shakeToQuit"
-        app:layout_constraintEnd_toEndOf="@+id/changePassword"
-        app:layout_constraintStart_toStartOf="@+id/changePassword"
-        app:layout_constraintTop_toBottomOf="@+id/changePassword" />
-
-    <Button
         android:id="@+id/contactSupport"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -95,14 +79,14 @@
     <Switch
         android:id="@+id/shakeToQuit"
         android:layout_width="0dp"
-        android:layout_height="47dp"
+        android:layout_height="43dp"
         android:text="Shake to Quit"
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/biometricLogin"
-        app:layout_constraintEnd_toEndOf="@+id/changePIN"
-        app:layout_constraintStart_toStartOf="@+id/changePIN"
-        app:layout_constraintTop_toBottomOf="@+id/changePIN" />
+        app:layout_constraintEnd_toEndOf="@+id/changePassword"
+        app:layout_constraintStart_toStartOf="@+id/changePassword"
+        app:layout_constraintTop_toBottomOf="@+id/changePassword" />
 
     <Switch
         android:id="@+id/biometricLogin"

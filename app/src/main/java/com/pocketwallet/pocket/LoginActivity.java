@@ -126,7 +126,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-    phonenumberInput.addTextChangedListener(loginTextWatcher);
+        phonenumberInput.addTextChangedListener(loginTextWatcher);
         passwordInput.addTextChangedListener(loginTextWatcher);
 
         login.setOnClickListener (new View.OnClickListener() {

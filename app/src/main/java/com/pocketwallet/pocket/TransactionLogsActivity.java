@@ -482,6 +482,12 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                 entries.add(new Entry(j, latestMonthY[k]));
             }
         }
+
+        else if (latestMonth == 100){
+            for (int j = 0; j < 12; j++){
+                entries.add(new Entry(j, latestMonthY[j]));
+            }
+        }
  /*
         entries.add(new Entry(0, janTotal));
         entries.add(new Entry(1, febTotal));

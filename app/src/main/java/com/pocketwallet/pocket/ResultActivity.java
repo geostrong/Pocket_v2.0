@@ -21,6 +21,7 @@ public class ResultActivity extends AppCompatActivity {
         TextView amountText;
         TextView amountTitle;
         TextView transIdTitle;
+        TextView contractNameCreate;
 
         String result;
         String amount = "-";
@@ -43,6 +44,7 @@ public class ResultActivity extends AppCompatActivity {
         transIdTitle = findViewById(R.id.transIdTitle);
         involvedName = findViewById(R.id.contractNameCreate);
         amountText = findViewById(R.id.amountInvolved);
+        contractNameCreate = findViewById(R.id.contractNameCreate);
         Button returnBtn = findViewById(R.id.returnButton);
         returnBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,6 +86,7 @@ public class ResultActivity extends AppCompatActivity {
                 amountTitle.setVisibility(View.GONE);
                 transIdTitle.setVisibility(View.GONE);
                 amountText.setVisibility(View.GONE);
+                contractNameCreate.setVisibility(View.GONE);
             }else if(result.equalsIgnoreCase("phonePaymentFailed")){
                 resultTitleText = "Transaction failed";
                 fromTo.setVisibility(View.GONE);
@@ -91,6 +94,7 @@ public class ResultActivity extends AppCompatActivity {
                 amountTitle.setVisibility(View.GONE);
                 transIdTitle.setVisibility(View.GONE);
                 amountText.setVisibility(View.GONE);
+                contractNameCreate.setVisibility(View.GONE);
             }
         } else if (toolbarTitle.equalsIgnoreCase("top up")) {
             resultTitleText = "Top up successful!";
