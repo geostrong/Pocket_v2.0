@@ -9,7 +9,8 @@
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.sensor.accelerometer"/>
+
+    <uses-feature android:name="android.hardware.sensor.accelerometer" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +20,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".LoyaltyActivity_Details"></activity>
+        <activity android:name=".ChangeTransactionLimit"></activity>
+        <activity android:name=".ChangeDailyLimit" />
+        <activity android:name=".LoyaltyActivity_Details" />
         <activity android:name=".LoyaltyActivity_Create" />
         <activity android:name=".LoyaltyActivity" />
         <activity android:name=".NotificationsActivity" />
@@ -111,7 +114,7 @@
 
         <service
             android:name=".RSSPullService"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

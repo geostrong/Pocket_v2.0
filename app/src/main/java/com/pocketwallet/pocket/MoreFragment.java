@@ -50,6 +50,26 @@ public class MoreFragment extends Fragment {
             }
         });
 
+        Button changeDailyLimitBtn = (Button) view.findViewById(R.id.changeDailyLimit);
+        changeDailyLimitBtn.setOnClickListener(new  View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(getActivity(), ChangeDailyLimit.class);
+                startActivity(newIntent);
+            }
+        });
+
+        Button changeTransactionLimitBtn = (Button) view.findViewById(R.id.changeTransactionLimit);
+        changeTransactionLimitBtn.setOnClickListener(new  View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(getActivity(), ChangeTransactionLimit.class);
+                startActivity(newIntent);
+            }
+        });
+
         Button logoutBtn = (Button) view.findViewById(R.id.logoutButton);
         logoutBtn.setOnClickListener(new  View.OnClickListener()
         {

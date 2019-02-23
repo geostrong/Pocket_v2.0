@@ -21,6 +21,8 @@ public class Transaction {
     private Date timestamp;
     private boolean isIncoming;
 
+    private String displayAmount;
+
     private String title = " ";
 
         /*
@@ -95,5 +97,17 @@ public class Transaction {
 
     public void setTitle(String tempTitle){
         this.title = tempTitle;
+    }
+
+    public String getDisplayAmount() {
+        if (isIncoming) {
+            return "+$" + getAmount();
+        }
+
+        return "-$" + getAmount();
+    }
+
+    public void setDisplayAmount(String displayAmount) {
+        this.displayAmount = displayAmount;
     }
 }

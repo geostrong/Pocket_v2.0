@@ -21,8 +21,6 @@
             android:layout_weight="1"
             android:background="#FFFFFF"
             app:theme="@style/ThemeOverlay.AppCompat.Light">
-            app:title="@string/app_name"
-            app:titleTextColor="@android:color/black">
 
         </android.support.v7.widget.Toolbar>
 

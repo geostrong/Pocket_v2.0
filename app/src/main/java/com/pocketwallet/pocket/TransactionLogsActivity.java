@@ -2,11 +2,13 @@ package com.pocketwallet.pocket;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -75,6 +77,19 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
     private final String[] months10 = {"Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan", "Dec" };
     private final String[] months11 = {"Dec", "Nov", "Oct", "Sep", "Aug", "Jul", "Jun", "May", "Apr", "Mar", "Feb", "Jan" };
 
+    float janPRTotal = 0;
+    float febPRTotal = 0;
+    float marPRTotal = 0;
+    float aprPRTotal = 0;
+    float mayPRTotal = 0;
+    float junPRTotal = 0;
+    float julPRTotal = 0;
+    float augPRTotal = 0;
+    float sepPRTotal = 0;
+    float octPRTotal = 0;
+    float novPRTotal = 0;
+    float decPRTotal = 0;
+
     float janTotal = 0;
     float febTotal = 0;
     float marTotal = 0;
@@ -87,9 +102,24 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
     float octTotal = 0;
     float novTotal = 0;
     float decTotal = 0;
+
+    float janRTotal = 0;
+    float febRTotal = 0;
+    float marRTotal = 0;
+    float aprRTotal = 0;
+    float mayRTotal = 0;
+    float junRTotal = 0;
+    float julRTotal = 0;
+    float augRTotal = 0;
+    float sepRTotal = 0;
+    float octRTotal = 0;
+    float novRTotal = 0;
+    float decRTotal = 0;
+
     float tempAmount = 0;
     int latestMonth = 100;
     int i = 100;
+    int tabSelected = 0;
 
     //Session Token
     private String sessionToken;
@@ -98,6 +128,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_transaction_logs);
+        setupTabLayout();
 
         getSupportActionBar().setTitle("Transaction History");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -148,6 +179,45 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
 
     }
 
+    private void setupTabLayout() {
+        TabLayout mTabLayout = (TabLayout) findViewById(R.id.tabs);
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                onTabTapped(tab.getPosition());
+            }
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                onTabTapped(tab.getPosition());
+            }
+        });
+    }
+
+    private void onTabTapped(int position) {
+        switch (position) {
+            case 0:     tabSelected = 0;
+                        adapter.getFilter();
+                        processGraph();
+                        System.out.println("HELLO");
+                break;
+            case 1:
+                        tabSelected = 1;
+                        adapter.getFilter().filter("-$");
+                        processGraph();
+                        System.out.println("HELLO1");
+                break;
+            case 2:     tabSelected = 2;
+                        adapter.getFilter().filter("+$");
+                        processGraph();
+                        System.out.println("HELLO2");
+            default:
+        }
+    }
+
     public void processTransactionHeaders() {
         int monthNum = 0;
         String[] when = {"Today", "Yesterday", "2 Days Ago", "This Week", "Last 30 Days", "Past Year", "More Than a Year Ago"};
@@ -169,94 +239,184 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
             int monthFirst = temp.charAt(5) - '0';
             int monthSec = temp.charAt(6) - '0';
             if (!t.getisIncoming())
-                if (monthFirst == 0){
-                    if (monthSec == 1){
-                        if (latestMonth == 100){
+                if (latestMonth == 100)
+                    if (monthFirst == 0){
+                        if (monthSec == 1){
                             latestMonth = 0;
                         }
+                        else  if (monthSec == 2){
+                            latestMonth = 1;
+                        }
+                        else if (monthSec == 3){
+                            latestMonth = 2;
+                        }
+                        else  if (monthSec == 4){
+                            latestMonth = 3;
+                        }
+                        else if (monthSec == 5){
+                            latestMonth = 4;
+                        }
+                        else  if (monthSec == 6){
+                            latestMonth = 5;
+                        }
+                        else if (monthSec == 7){
+                            latestMonth = 6;
+                        }
+                        else if (monthSec == 8){
+                            latestMonth = 7;
+                        }
+                        else if (monthSec == 9){
+                            latestMonth = 8;
+                        }
+                    }
+                    else if (monthFirst == 1){
+                        if (monthSec == 0){
+                            latestMonth = 9;
+                        }
+                        else if (monthSec == 1){
+                            latestMonth = 10;
+                        }
+                        else if (monthSec == 2){
+                            latestMonth = 11;
+                        }
+                }
+
+//==================================================GetPayments==================================================================================
+
+            if (!t.getisIncoming())
+                if (monthFirst == 0){
+                    if (monthSec == 1){
                         janTotal = janTotal + tempAmount;
+                        janPRTotal = janPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                     else  if (monthSec == 2){
-                        if (latestMonth == 100){
-                            latestMonth = 1;
-                        }
                         febTotal = febTotal + tempAmount;
+                        febPRTotal = febPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                     else if (monthSec == 3){
-                        if (latestMonth == 100){
-                            latestMonth = 2;
-                        }
                         marTotal = marTotal + tempAmount;
+                        marPRTotal = marPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                     else  if (monthSec == 4){
-                        if (latestMonth == 100){
-                            latestMonth = 3;
-                        }
                         aprTotal = aprTotal + tempAmount;
+                        aprPRTotal = aprPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                     else if (monthSec == 5){
-                        if (latestMonth == 100){
-                            latestMonth = 4;
-                        }
                         mayTotal = mayTotal + tempAmount;
+                        mayPRTotal = mayPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                     else  if (monthSec == 6){
-                        if (latestMonth == 100){
-                            latestMonth = 5;
-                        }
                         junTotal = junTotal + tempAmount;
+                        junPRTotal = junPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                     else if (monthSec == 7){
-                        if (latestMonth == 100){
-                            latestMonth = 6;
-                        }
                         junTotal = julTotal + tempAmount;
+                        julPRTotal = julPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                     else if (monthSec == 8){
-                        if (latestMonth == 100){
-                            latestMonth = 7;
-                        }
                         augTotal = augTotal + tempAmount;
+                        augPRTotal = augPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                     else if (monthSec == 9){
-                        if (latestMonth == 100){
-                            latestMonth = 8;
-                        }
                         sepTotal = sepTotal + tempAmount;
+                        sepPRTotal = sepPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                 }
                 else if (monthFirst == 1){
                     if (monthSec == 0){
-                        if (latestMonth == 100){
-                            latestMonth = 9;
-                        }
                         octTotal = octTotal + tempAmount;
+                        octPRTotal = octPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                     else if (monthSec == 1){
-                        if (latestMonth == 100){
-                            latestMonth = 10;
-                        }
                         novTotal =  novTotal + tempAmount;
+                        novPRTotal = novPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                     else if (monthSec == 2){
-                        if (latestMonth == 100){
-                            latestMonth = 11;
-                        }
                         decTotal = decTotal + tempAmount;
+                        decPRTotal = decPRTotal - tempAmount;
                         tempAmount = 0;
                     }
                 }
+
+//==================================================GetReceives==================================================================================
+
+            if (t.getisIncoming())
+                if (monthFirst == 0){
+                    if (monthSec == 1){
+                        janRTotal = janRTotal + tempAmount;
+                        janPRTotal = janPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else  if (monthSec == 2){
+                        febRTotal = febRTotal + tempAmount;
+                        febPRTotal = febPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 3){
+                        marRTotal = marRTotal + tempAmount;
+                        marPRTotal = marPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else  if (monthSec == 4){
+                        aprRTotal = aprRTotal + tempAmount;
+                        aprPRTotal = aprPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 5){
+                        mayRTotal = mayRTotal + tempAmount;
+                        mayPRTotal = mayPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else  if (monthSec == 6){
+                        junRTotal = junRTotal + tempAmount;
+                        junPRTotal = junPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 7){
+                        julRTotal = julRTotal + tempAmount;
+                        julPRTotal = julPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 8){
+                        augRTotal = augRTotal + tempAmount;
+                        augPRTotal = augPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 9){
+                        sepRTotal = sepRTotal + tempAmount;
+                        sepPRTotal = sepPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                }
+                else if (monthFirst == 1){
+                    if (monthSec == 0){
+                        octRTotal = octRTotal + tempAmount;
+                        octPRTotal = octPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 1){
+                        novRTotal =  novRTotal + tempAmount;
+                        novPRTotal = novPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                    else if (monthSec == 2){
+                        decRTotal = decRTotal + tempAmount;
+                        decPRTotal = decPRTotal + tempAmount;
+                        tempAmount = 0;
+                    }
+                }
+
 
             try {
                 Date date = (Date) dateOnly.parse(temp);
@@ -383,6 +543,27 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
 
 
         System.out.println("Submit = " + searchView.isSubmitButtonEnabled());
+
+        /*
+        incomingButton on click liksterner
+        on click
+        {
+        adapter.getFilter().filter("+$");
+        }
+
+        outgoingButton on click liksterner
+        on click
+        {
+        adapter.getFilter().filter("-$");
+        }
+
+        allButton on click liksterner
+        on click
+        {
+        adapter.getFilter()
+
+         */
+
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -413,11 +594,15 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
 
     public void processGraph() {
 
-        Float[] latestMonthY = {janTotal,febTotal,marTotal,aprTotal,mayTotal,junTotal,julTotal,augTotal,sepTotal,octTotal,novTotal,decTotal};
+        Float[] latestMonthTotal = {janPRTotal,febPRTotal,marPRTotal,aprPRTotal,mayPRTotal,junPRTotal,julPRTotal,augPRTotal,sepPRTotal,octPRTotal,novPRTotal,decPRTotal};
+        Float[] latestMonthPayment = {janTotal,febTotal,marTotal,aprTotal,mayTotal,junTotal,julTotal,augTotal,sepTotal,octTotal,novTotal,decTotal};
+        Float[] latestMonthReceives = {janRTotal,febRTotal,marRTotal,aprRTotal,mayRTotal,junRTotal,julRTotal,augRTotal,sepRTotal,octRTotal,novRTotal,decRTotal};
 
         //Graphs
         LineChart chart = (LineChart) findViewById(R.id.chart);
-        List<Entry> entries = new ArrayList<Entry>();
+        List<Entry> entries = new ArrayList<>();
+        List<Entry> receiveEntries = new ArrayList<>();
+        List<Entry> totalEntries = new ArrayList<>();
 
         System.out.println(janTotal + "HHHHHHHHHHHHHHHH");
         System.out.println(febTotal + "HHHHHHHHHHHHHHHH");
@@ -479,30 +664,25 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                 }
                 h++;
                 System.out.println("Looped " + h + " times");
-                entries.add(new Entry(j, latestMonthY[k]));
+                System.out.println("month " + j + " got " + latestMonthReceives[k]);
+                entries.add(new Entry(j, latestMonthPayment[k]));
+                receiveEntries.add(new Entry(j, latestMonthReceives[k]));
+                totalEntries.add(new Entry(j, latestMonthTotal[k]));
             }
         }
 
         else if (latestMonth == 100){
             for (int j = 0; j < 12; j++){
-                entries.add(new Entry(j, latestMonthY[j]));
+                entries.add(new Entry(j, latestMonthPayment[j]));
+                receiveEntries.add(new Entry(j, latestMonthReceives[j]));
+                totalEntries.add(new Entry(j, latestMonthTotal[j]));
             }
         }
- /*
-        entries.add(new Entry(0, janTotal));
-        entries.add(new Entry(1, febTotal));
-        entries.add(new Entry(2, marTotal));
-        entries.add(new Entry(3, aprTotal));
-        entries.add(new Entry(4, mayTotal));
-        entries.add(new Entry(5, junTotal));
-        entries.add(new Entry(6, julTotal));
-        entries.add(new Entry(7, augTotal));
-        entries.add(new Entry(8, sepTotal));
-        entries.add(new Entry(9, octTotal));
-        entries.add(new Entry(10, novTotal));
-        entries.add(new Entry(11, decTotal));*/
 
-        LineDataSet dataSet = new LineDataSet(entries, "Transactions");
+
+        LineDataSet dataSet = new LineDataSet(entries, "Payments");
+        LineDataSet datasetReceive = new LineDataSet(receiveEntries, "Received");
+        LineDataSet datasetTotal = new LineDataSet(totalEntries, "Total");
 
         IAxisValueFormatter formatter = new IAxisValueFormatter() {
             @Override
@@ -567,7 +747,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
             }
         };
 
-        //Line style
+        //Line style payment
         dataSet.setMode(LineDataSet.Mode.CUBIC_BEZIER);
         dataSet.setCubicIntensity(0.1f);
         dataSet.setColor(getColor(R.color.colorPrimary));
@@ -575,6 +755,24 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         dataSet.setCircleColor(getResources().getColor(R.color.colorPrimary));
         dataSet.setLineWidth(2f);
         dataSet.setCircleRadius(10f);
+
+        //Line style receives
+        datasetReceive.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        datasetReceive.setCubicIntensity(0.1f);
+        datasetReceive.setColor(getColor(R.color.colorPrimary));
+        datasetReceive.setDrawHighlightIndicators(false);
+        datasetReceive.setCircleColor(getResources().getColor(R.color.colorPrimary));
+        datasetReceive.setLineWidth(2f);
+        datasetReceive.setCircleRadius(10f);
+
+        //Line style total
+        datasetTotal.setMode(LineDataSet.Mode.CUBIC_BEZIER);
+        datasetTotal.setCubicIntensity(0.1f);
+        datasetTotal.setColor(getColor(R.color.colorPrimary));
+        datasetTotal.setDrawHighlightIndicators(false);
+        datasetTotal.setCircleColor(getResources().getColor(R.color.colorPrimary));
+        datasetTotal.setLineWidth(2f);
+        datasetTotal.setCircleRadius(10f);
 
         //Chart Style
         chart.getAxisRight().setEnabled(false);
@@ -593,9 +791,21 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         chart.getRenderer().getPaintRender().setShadowLayer(1, 0, 2, Color.GRAY);
 
         //Set Data
-        LineData lineData = new LineData(dataSet);
-        chart.setData(lineData);
+        chart.removeAllViews();
+        LineData chartData = new LineData();
 
+        if (tabSelected == 2) {
+            chartData.addDataSet(datasetReceive);
+        }
+        else if (tabSelected == 1) {
+            chartData.addDataSet(dataSet);
+        }
+        else if (tabSelected == 0) {
+            chartData.addDataSet(datasetTotal);
+        }
+
+
+        chart.setData(chartData);
         chart.invalidate();
         chart.setVisibleXRange(1,3);
         chart.animateY(2000, Easing.Linear);

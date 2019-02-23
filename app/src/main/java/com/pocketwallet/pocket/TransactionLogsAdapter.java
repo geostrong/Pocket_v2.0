@@ -44,11 +44,11 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
 
         if (!t.getisIncoming()) {
             holder.textViewTransactAmount.setTextColor(    ContextCompat.getColor(context,R.color.colorAccent));
-            holder.textViewTransactAmount.setText("-$" + t.getAmount());
+            holder.textViewTransactAmount.setText(t.getDisplayAmount());
             holder.textViewTimestamp.setText("Sent on " + t.getTimestampToString());
         } else {
             holder.textViewTransactAmount.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
-            holder.textViewTransactAmount.setText("+$" + t.getAmount());
+            holder.textViewTransactAmount.setText(t.getDisplayAmount());
             holder.textViewTimestamp.setText(t.getTimestampToString());
         }
     }
@@ -73,7 +73,7 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
                         //PUT SEARCH CONDITIONS HERE
                         if (t.getName().toLowerCase().contains(charString.toLowerCase()) ||
                                 t.getTimestampToString().toLowerCase().contains(charString.toLowerCase()) ||
-                                t.getType().toLowerCase().contains(charString.toLowerCase())) {
+                                t.getType().toLowerCase().contains(charString.toLowerCase()) || t.getDisplayAmount().contains(charString.toLowerCase())) {
                             filteredList.add(t);
                         }
                     }
