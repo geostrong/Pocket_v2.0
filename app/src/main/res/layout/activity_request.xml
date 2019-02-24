@@ -22,20 +22,30 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <EditText
-                android:id="@+id/requestingInput"
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/textInputLayout7"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
-                android:ems="10"
-                android:hint="Enter desired amount"
-                android:inputType="number|numberDecimal"
+                app:boxStrokeColor="@color/colorPrimaryLight"
+                app:hintTextAppearance="@style/customEditText"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <EditText
+                    android:id="@+id/requestingInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:hint="Enter desired amount"
+                    android:inputType="number|numberDecimal"
+                    android:textCursorDrawable="@color/colorPrimaryDark" />
+
+            </android.support.design.widget.TextInputLayout>
 
             <Button
                 android:id="@+id/updateButton"
@@ -44,10 +54,12 @@
                 android:layout_marginTop="16dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginBottom="16dp"
+                android:background="@drawable/btn_layout"
+                android:textColor="#ffffff"
                 android:text="Update"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/requestingInput" />
+                app:layout_constraintTop_toBottomOf="@+id/textInputLayout7" />
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </android.support.v7.widget.CardView>

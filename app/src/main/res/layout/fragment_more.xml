@@ -76,6 +76,22 @@
         app:layout_constraintTop_toBottomOf="@+id/biometricLogin" />
 
 
+    <Button
+        android:id="@+id/changePin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:drawableEnd="@drawable/ic_right_arrow"
+        android:gravity="center_vertical"
+        android:text="Change PIN"
+        android:textAllCaps="false"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/enablePin"
+        app:layout_constraintEnd_toEndOf="@+id/changePassword"
+        app:layout_constraintStart_toStartOf="@+id/changePassword"
+        app:layout_constraintTop_toBottomOf="@+id/changePassword" />
+
     <Switch
         android:id="@+id/shakeToQuit"
         android:layout_width="0dp"
@@ -84,9 +100,21 @@
         android:textColor="@color/colorPrimaryDark"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@+id/biometricLogin"
-        app:layout_constraintEnd_toEndOf="@+id/changePassword"
-        app:layout_constraintStart_toStartOf="@+id/changePassword"
-        app:layout_constraintTop_toBottomOf="@+id/changePassword" />
+        app:layout_constraintEnd_toEndOf="@+id/enablePin"
+        app:layout_constraintStart_toStartOf="@+id/enablePin"
+        app:layout_constraintTop_toBottomOf="@+id/enablePin" />
+
+    <Switch
+        android:id="@+id/enablePin"
+        android:layout_width="0dp"
+        android:layout_height="43dp"
+        android:text="Enable PIN"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toTopOf="@+id/shakeToQuit"
+        app:layout_constraintEnd_toEndOf="@+id/changePin"
+        app:layout_constraintStart_toStartOf="@+id/changePin"
+        app:layout_constraintTop_toBottomOf="@+id/changePin" />
 
     <Switch
         android:id="@+id/biometricLogin"

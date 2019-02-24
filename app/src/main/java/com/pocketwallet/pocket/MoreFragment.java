@@ -26,6 +26,7 @@ public class MoreFragment extends Fragment {
         private SharedPreferences userPreferences;
         private boolean useFingerprint;
         private boolean shakeToExit;
+        private boolean enablePIN;
         private SharedPreferences.Editor editor;
 
     @Nullable
@@ -41,6 +42,17 @@ public class MoreFragment extends Fragment {
         editor =  userPreferences.edit();
         useFingerprint = userPreferences.getBoolean("useFingerprint", false);
         shakeToExit = userPreferences.getBoolean("ShakeToExit",false);
+        enablePIN = userPreferences.getBoolean("EnablePIN", false);
+
+        Button changepPINBtn = (Button) view.findViewById(R.id.changePin);
+        changepPINBtn.setOnClickListener(new  View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent newIntent = new Intent(getActivity(), ChangePINActivity.class);
+                startActivity(newIntent);
+            }
+        });
 
         Button changepasswordBtn = (Button) view.findViewById(R.id.changePassword);
         changepasswordBtn.setOnClickListener(new  View.OnClickListener()
