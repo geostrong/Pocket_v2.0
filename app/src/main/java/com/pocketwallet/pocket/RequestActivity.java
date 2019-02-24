@@ -8,10 +8,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 
 public class RequestActivity extends AppCompatActivity {
 
     private String userId;
+    private TextView requestingAmountView;
+    private Button updateButton;
+    private EditText requestingInput;
+    private String requestingAmount;
     Bundle extras;
 
     @Override
@@ -39,6 +46,9 @@ public class RequestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent nfcIntent = new Intent(RequestActivity.this, RequestActivity_NFC.class);
                 nfcIntent.putExtra("userId",userId);
+                nfcIntent.putExtra("requestingAmount",requestingAmount);
+                System.out.println("Requesting Amount =" + requestingAmount);
+                System.out.println("User ID =" + userId);
                 startActivity(nfcIntent);
             }
         });
@@ -49,6 +59,9 @@ public class RequestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent qrIntent = new Intent(RequestActivity.this, RequestActivity_QR.class);
                 qrIntent.putExtra("userId",userId);
+                qrIntent.putExtra("requestingAmount",requestingAmount);
+                System.out.println("Requesting Amount =" + requestingAmount);
+                System.out.println("User ID =" + userId);
                 startActivity(qrIntent);
             }
         });
@@ -57,6 +70,18 @@ public class RequestActivity extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getString("userId");
         }
+
+        requestingAmountView = findViewById(R.id.requestingAmount);
+        requestingInput = findViewById(R.id.requestingInput);
+        updateButton = findViewById(R.id.updateButton);
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requestingAmount = requestingInput.getText().toString();
+                requestingAmountView.setText("$" + requestingAmount);
+            }
+        });
+
     }
 
     @Override

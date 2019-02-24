@@ -13,6 +13,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
@@ -23,8 +24,7 @@ import com.journeyapps.barcodescanner.BarcodeEncoder;
 public class RequestActivity_QR extends AppCompatActivity {
     ImageView generatedQR;
     EditText amountInput;
-    Button generateQrBtn;
-    Button generateBtn;
+    TextView requestedAmount;
 
     String amount;
     Bundle extras;
@@ -39,6 +39,8 @@ public class RequestActivity_QR extends AppCompatActivity {
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
+            amount = extras.getString("requestingAmount");
+            System.out.println("Amount =" + amount);
         }
         userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -47,10 +49,9 @@ public class RequestActivity_QR extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         generatedQR = (ImageView) findViewById(R.id.generatedQR);
-        amountInput = (EditText) findViewById(R.id.amountRequestQR);
-        generateQrBtn = (Button) findViewById(R.id.generateButton);
-        amountInput.addTextChangedListener(textWatcher);
-
+        requestedAmount = findViewById(R.id.requestedAmountQR);
+        requestedAmount.setText("$" + amount);
+        /*
         generateQrBtn.setOnClickListener(new  View.OnClickListener()
         {
             @Override
@@ -77,26 +78,35 @@ public class RequestActivity_QR extends AppCompatActivity {
                 }
             }
         });
-
+        */
+        generatedQR.post(new Runnable() {
+            @Override
+            public void run() {
+                generateQR();
+            }
+        });
     }
 
-    private TextWatcher textWatcher = new TextWatcher() {
-        @Override
-        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+    private void generateQR() {
+        MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+        try {
+            String toQR = "Dynamic|" + userId + "|" + amount + "|" + userPreferences.getString("user_name", "Name");;
+            System.out.println("TOQR: " + toQR);
+            try {
+                toQR = AESUtils.encrypt(toQR);
+                System.out.println("encrypted:" + toQR);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println("MY QR SIZ 2 -> Width = " + generatedQR.getWidth() + " |  Height = " +  generatedQR.getHeight());
+            BitMatrix bitMatrix = multiFormatWriter.encode(toQR, BarcodeFormat.QR_CODE,generatedQR.getWidth(),generatedQR.getHeight());
+            BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
+            Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);
+            generatedQR.setImageBitmap(bitmap);
+        } catch (WriterException e) {
+            e.printStackTrace();
         }
-
-        @Override
-        public void onTextChanged(CharSequence s, int start, int before, int count) {
-            amount = amountInput.getText().toString().trim();
-            generateQrBtn.setEnabled(!amount.isEmpty());
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-        }
-    };
+    }
 
     @Override
     public boolean onSupportNavigateUp() {
