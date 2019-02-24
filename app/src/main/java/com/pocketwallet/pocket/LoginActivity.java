@@ -24,8 +24,6 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.github.omadahealth.lollipin.lib.managers.AppLock;
-import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -172,6 +170,9 @@ public class LoginActivity extends AppCompatActivity {
                         JSONObject testToken = response.getJSONObject("session_token");
                         sessionToken = testToken.getString("token");
                         sessionTokenExpiry = testToken.getString("expiry");
+                        UpdateSharedPreference("per_transaction_limit",response.getString("per_transaction_limit"));
+                        UpdateSharedPreference("daily_Limit",response.getString("daily_limit"));
+
                         System.out.println("Results: " + result);
                         System.out.println("User: " + userId);
                         System.out.println("Session Token is :" + sessionToken);
@@ -179,7 +180,6 @@ public class LoginActivity extends AppCompatActivity {
                         if(!userId.equals("failed")){
                             updateToken();
                             postFCMToken(userId);
-                            //GETDETAILS_URL += userId;
 
                             name = response.getString("name");
                             launchMainActivity(userId,name);

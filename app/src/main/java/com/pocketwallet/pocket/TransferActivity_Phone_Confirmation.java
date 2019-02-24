@@ -28,7 +28,6 @@ import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.locks.Lock;
 
 public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
 
@@ -55,6 +54,8 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
     //Session Token
     private String sessionToken;
 
+    private String perTransactionLimit;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,6 +78,7 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
 
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sessionToken = userPreferences.getString("sessionToken", "");
+        perTransactionLimit = userPreferences.getString("per_transaction_limit", "999");
 
         phoneNumberText = findViewById(R.id.involvedNumber2);
         nameText = findViewById(R.id.involvedName2);
@@ -117,10 +119,25 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
                         Intent intent = new Intent(TransferActivity_Phone_Confirmation.this, CustomPinActivity.class);
                         intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
                         startActivityForResult(intent,REQUEST_CODE_UNLOCK);
-
                     } else {
                         //PROCESS PAYMENT
-                        processPayment();
+                        if(Double.parseDouble(amount) < Double.parseDouble(perTransactionLimit)) {
+                            processPayment();
+                        }else{
+                            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which){
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            dialog.cancel();
+                                            break;
+                                    }
+                                }
+                            };
+                            AlertDialog.Builder builder = new AlertDialog.Builder(TransferActivity_Phone_Confirmation.this);
+                            builder.setMessage("The amount payable is greater than your 'per transaction limit'")
+                                    .setPositiveButton("Ok", dialogClickListener).show();
+                        }
                     }
                 }
             }

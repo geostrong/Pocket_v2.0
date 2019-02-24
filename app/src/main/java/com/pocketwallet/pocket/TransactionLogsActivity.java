@@ -2,7 +2,6 @@ package com.pocketwallet.pocket;
 
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -30,7 +29,6 @@ import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.XAxis;
-import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
@@ -43,7 +41,6 @@ import org.json.JSONObject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -200,20 +197,17 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
     private void onTabTapped(int position) {
         switch (position) {
             case 0:     tabSelected = 0;
-                        adapter.getFilter();
+                        adapter.getFilter().filter("");
                         processGraph();
-                        System.out.println("HELLO");
                 break;
             case 1:
                         tabSelected = 1;
                         adapter.getFilter().filter("-$");
                         processGraph();
-                        System.out.println("HELLO1");
                 break;
             case 2:     tabSelected = 2;
                         adapter.getFilter().filter("+$");
                         processGraph();
-                        System.out.println("HELLO2");
             default:
         }
     }
