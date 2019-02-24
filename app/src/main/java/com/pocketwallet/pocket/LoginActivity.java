@@ -24,6 +24,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.omadahealth.lollipin.lib.managers.AppLock;
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -126,11 +128,13 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+
         phonenumberInput.addTextChangedListener(loginTextWatcher);
         passwordInput.addTextChangedListener(loginTextWatcher);
 
         login.setOnClickListener (new View.OnClickListener() {
             public void onClick(View view){
+
                 login(phoneNumber, password);
             }
         });

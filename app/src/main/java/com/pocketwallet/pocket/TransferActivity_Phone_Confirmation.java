@@ -113,13 +113,14 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
                             .setPositiveButton("Top Up", dialogClickListener)
                             .setNegativeButton("Cancel", dialogClickListener).show();
                 }else{
-                    if (!LockManager.getInstance().isAppLockEnabled()) {
+                    if (LockManager.getInstance().isAppLockEnabled()) {
+                        Intent intent = new Intent(TransferActivity_Phone_Confirmation.this, CustomPinActivity.class);
+                        intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+                        startActivityForResult(intent,REQUEST_CODE_UNLOCK);
+
+                    } else {
                         //PROCESS PAYMENT
                         processPayment();
-                    } else {
-                        Intent intent = new Intent(TransferActivity_Phone_Confirmation.this, CustomPinActivity.class);
-                            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
-                            startActivityForResult(intent,REQUEST_CODE_UNLOCK);
                     }
                 }
             }

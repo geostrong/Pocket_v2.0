@@ -12,20 +12,19 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 public class SplashActivity extends Activity {
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 200;
-    private SharedPreferences logInPreferences;
+    private SharedPreferences preferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //setContentView(R.layout.splash_screen);
         FirebaseMessaging.getInstance().subscribeToTopic("all");
-        logInPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
-        //LockManager<PinActivity> lockManager = LockManager.getInstance();
-       // lockManager.enableAppLock(this, PinActivity.class);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         if (ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -68,7 +67,8 @@ public class SplashActivity extends Activity {
     }
 
     public void next () {
-        if (!logInPreferences.getBoolean("isLoggedIn", false)) {
+        if (!preferences.getBoolean("isLoggedIn", false)) {
+            LockManager.getInstance().getAppLock().disable();
             //Go to sign up page
             Intent intent = new Intent(SplashActivity.this, RegisterActivity.class);
             startActivity(intent);

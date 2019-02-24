@@ -34,4 +34,11 @@ public class CustomPinActivity extends AppLockActivity {
         return Arrays.asList(AppLock.ENABLE_PINLOCK, AppLock.CHANGE_PIN,
                 AppLock.DISABLE_PINLOCK, AppLock.UNLOCK_PIN);
     }
+
+    @Override
+    public void onBackPressed() {
+            Intent returnIntent = new Intent();
+            setResult(Activity.RESULT_CANCELED, returnIntent);
+            super.onBackPressed();
+    }
 }

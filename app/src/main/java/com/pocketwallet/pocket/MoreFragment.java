@@ -1,5 +1,6 @@
 package com.pocketwallet.pocket;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,15 +19,22 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.Toast;
 
+import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
+import java.util.concurrent.locks.Lock;
+
 public class MoreFragment extends Fragment {
+
+        private static final int REQUEST_CODE_ENABLE = 11;
 
         private SharedPreferences userPreferences;
         private boolean useFingerprint;
         private boolean shakeToExit;
         private boolean enablePIN;
+        Switch pinSwitch;
         private SharedPreferences.Editor editor;
 
     @Nullable
@@ -42,15 +50,20 @@ public class MoreFragment extends Fragment {
         editor =  userPreferences.edit();
         useFingerprint = userPreferences.getBoolean("useFingerprint", false);
         shakeToExit = userPreferences.getBoolean("ShakeToExit",false);
-        enablePIN = userPreferences.getBoolean("EnablePIN", false);
+        //enablePIN = userPreferences.getBoolean("EnablePIN", false);
 
         Button changepPINBtn = (Button) view.findViewById(R.id.changePin);
         changepPINBtn.setOnClickListener(new  View.OnClickListener()
         {
             @Override
             public void onClick(View v) {
-                Intent newIntent = new Intent(getActivity(), ChangePINActivity.class);
-                startActivity(newIntent);
+                if (LockManager.getInstance().getAppLock().isPasscodeSet()) {
+                    Intent intent = new Intent(getActivity(), CustomPinActivity.class);
+                    intent.putExtra(AppLock.EXTRA_TYPE, AppLock.CHANGE_PIN);
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(getActivity(), "PIN hasn't been set yet", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -153,6 +166,28 @@ public class MoreFragment extends Fragment {
             }
         });
 
+        pinSwitch = (Switch) view.findViewById(R.id.enablePin);
+        pinSwitch.setChecked(LockManager.getInstance().isAppLockEnabled());
+        pinSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    LockManager.getInstance().getAppLock().enable();
+
+                    if (!LockManager.getInstance().getAppLock().isPasscodeSet()) {
+                        Intent intent = new Intent(getActivity(), CustomPinActivity.class);
+                        intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+                        startActivityForResult(intent, REQUEST_CODE_ENABLE);
+                    }
+                } else {
+                    //LockManager.getInstance().disableAppLock();
+                    LockManager.getInstance().getAppLock().disable();
+                }
+            }
+        });
+
+        LockManager.getInstance().isAppLockEnabled();
+
         Switch shakeToExitSwitch = (Switch) view.findViewById(R.id.shakeToQuit);
         shakeToExitSwitch.setChecked(shakeToExit);
         shakeToExitSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -169,6 +204,18 @@ public class MoreFragment extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == REQUEST_CODE_ENABLE) {
+            if(resultCode == Activity.RESULT_CANCELED) {
+                pinSwitch.setChecked(false);
+                LockManager.getInstance().getAppLock().disable();
+            }
+        }
     }
 
     private void cleanData () {

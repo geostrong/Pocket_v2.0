@@ -146,13 +146,15 @@ public class MeFragment extends Fragment {
         {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), CustomPinActivity.class);
-                if (!LockManager.getInstance().getAppLock().isPasscodeSet()) {
-                    intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
-                    startActivityForResult(intent, REQUEST_CODE_ENABLE);
-                } else {
-                    intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
-                    startActivityForResult(intent,REQUEST_CODE_UNLOCK);
+                if(LockManager.getInstance().isAppLockEnabled()) {
+                    Intent intent = new Intent(getActivity(), CustomPinActivity.class);
+                    if (!LockManager.getInstance().getAppLock().isPasscodeSet()) {
+                        intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+                        startActivityForResult(intent, REQUEST_CODE_ENABLE);
+                    } else {
+                        intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+                        startActivityForResult(intent, REQUEST_CODE_UNLOCK);
+                    }
                 }
 
             }

@@ -25,6 +25,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.omadahealth.lollipin.lib.managers.AppLock;
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,6 +35,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ScanQRActivity_Static extends AppCompatActivity {
+
+    private static final int REQUEST_CODE_UNLOCK = 12;
+
     EditText amountInput;
     Button payBtn;
     TextView balanceTxt;
@@ -109,7 +114,15 @@ public class ScanQRActivity_Static extends AppCompatActivity {
                                 .setNegativeButton("Cancel", dialogClickListener).show();
                     }
                     else{
-                        processPayment(targetUserId, amount);
+                        if (LockManager.getInstance().isAppLockEnabled()) {
+                            Intent intent = new Intent(ScanQRActivity_Static.this, CustomPinActivity.class);
+                            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+                            startActivityForResult(intent,REQUEST_CODE_UNLOCK);
+
+                        } else {
+                            //PROCESS PAYMENT
+                            processPayment(targetUserId, amount);
+                        }
                     }
                 }else{
                     processPaymentQuickPay(targetUserId,authCode,amount);
@@ -337,6 +350,10 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 System.out.println("Top Up Successful");
                 updateBalance();
+            }
+        } else if (requestCode == REQUEST_CODE_UNLOCK) {
+            if (resultCode == Activity.RESULT_OK) {
+                processPayment(targetUserId, amount);
             }
         }
     }
