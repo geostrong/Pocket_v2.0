@@ -188,9 +188,14 @@ public class MoreFragment extends Fragment {
                         intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
                         startActivityForResult(intent, REQUEST_CODE_ENABLE);
                     }
+
+                    editor.putBoolean("usePIN", true);
+                    editor.commit();
                 } else {
                     //LockManager.getInstance().disableAppLock();
                     LockManager.getInstance().getAppLock().disable();
+                    editor.putBoolean("usePIN", false);
+                    editor.commit();
                 }
             }
         });
@@ -223,6 +228,8 @@ public class MoreFragment extends Fragment {
             if(resultCode == Activity.RESULT_CANCELED) {
                 pinSwitch.setChecked(false);
                 LockManager.getInstance().getAppLock().disable();
+                editor.putBoolean("usePIN", false);
+                editor.commit();
             }
         }
     }
@@ -239,6 +246,7 @@ public class MoreFragment extends Fragment {
         editor.putBoolean("useFingerprint", false);
         editor.putString("profileImage",null);
         editor.putBoolean("ShakeToExit", false);
+        editor.putBoolean("usePIN", false);
         editor.commit();
 
         LockManager.getInstance().getAppLock().disableAndRemoveConfiguration();

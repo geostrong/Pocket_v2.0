@@ -522,7 +522,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
 
     public void createAdapterView(){
         adapter = new TransactionLogsAdapter(listTransactions,this);
-        transactionListView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+        //transactionListView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         transactionListView.setAdapter(adapter);
     }
 

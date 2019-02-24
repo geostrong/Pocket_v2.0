@@ -16,6 +16,5 @@ public class CustomApplication extends Application {
         lockManager.getAppLock().setLogoId(R.drawable.ic_baseline_lock_24px);
         lockManager.getAppLock().setFingerprintAuthEnabled(false);
         lockManager.getAppLock().setShouldShowForgot(false);
-
     }
 }

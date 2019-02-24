@@ -20,16 +20,16 @@
 
     <application
         android:name=".CustomApplication"
-        android:hardwareAccelerated="false"
-        android:largeHeap="true"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".CustomPinActivity"></activity>
+        <activity android:name=".DealActivity"></activity>
+        <activity android:name=".CustomPinActivity" />
         <activity android:name=".ChangeTransactionLimit" />
         <activity android:name=".ChangeDailyLimit" />
         <activity android:name=".LoyaltyActivity_Details" />
