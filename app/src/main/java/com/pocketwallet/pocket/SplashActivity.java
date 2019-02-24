@@ -26,6 +26,12 @@ public class SplashActivity extends Activity {
 
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 
+        if(!preferences.getBoolean("usePIN", false)) {
+            LockManager.getInstance().getAppLock().disable();
+        } else {
+            LockManager.getInstance().getAppLock().enable();
+        }
+
         if (ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(SplashActivity.this,
@@ -68,7 +74,6 @@ public class SplashActivity extends Activity {
 
     public void next () {
         if (!preferences.getBoolean("isLoggedIn", false)) {
-            LockManager.getInstance().getAppLock().disable();
             //Go to sign up page
             Intent intent = new Intent(SplashActivity.this, RegisterActivity.class);
             startActivity(intent);
