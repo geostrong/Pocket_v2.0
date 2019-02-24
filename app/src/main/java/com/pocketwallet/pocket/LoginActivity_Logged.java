@@ -149,7 +149,8 @@ public class LoginActivity_Logged extends AppCompatActivity{
                         String userId = response.getString("user_id");
                         JSONObject testToken = response.getJSONObject("session_token");
                         sessionToken = testToken.getString("token");
-                        //sessionToken = response.getString("session_token");
+                        String perTransactionLimit = response.getString("per_transaction_limit");
+                        UpdateSharedPreference("perTransactionLimit",perTransactionLimit);
 
                         System.out.println("Results: " + result);
                         System.out.println("User: " + userId);
