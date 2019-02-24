@@ -49,22 +49,25 @@
                 android:layout_height="wrap_content"
                 android:background="?android:colorBackground"
                 android:layout_gravity="bottom"
-                app:tabTextColor="@android:color/black">
+                app:tabTextColor="@android:color/black"
+                app:tabSelectedTextColor="@color/colorPrimaryDark"
+                app:tabIndicatorColor="@android:color/transparent"
+                >
 
                 <android.support.design.widget.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Total" />
+                    android:text="ALL" />
 
                 <android.support.design.widget.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Payments Only" />
+                    android:text="OUTGOING" />
 
                 <android.support.design.widget.TabItem
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Received Only" />
+                    android:text="INCOMING" />
 
             </android.support.design.widget.TabLayout>
 
