@@ -56,6 +56,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
 
     //Session Token
     private String sessionToken;
+    private String perTransactionLimit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,7 +101,23 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
 
                     } else {
                         //PROCESS PAYMENT
-                        processPayment(targetUserId, amount);
+                        if(Double.parseDouble(amount) < Double.parseDouble(perTransactionLimit)) {
+                            processPayment(targetUserId, amount);
+                        }else{
+                            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which){
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            dialog.cancel();
+                                            break;
+                                    }
+                                }
+                            };
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity_Dynamic.this);
+                            builder.setMessage("The amount payable is greater than your 'per transaction limit'")
+                                    .setPositiveButton("Ok", dialogClickListener).show();
+                        }
                     }
                 }
             }
@@ -120,6 +137,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
 
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sessionToken = userPreferences.getString("sessionToken", "");
+        perTransactionLimit = userPreferences.getString("per_transaction_limit", "999");
 
         balanceTxt = (TextView) findViewById(R.id.balanceText);
         totalAmountText = (TextView) findViewById(R.id.totalAmount);

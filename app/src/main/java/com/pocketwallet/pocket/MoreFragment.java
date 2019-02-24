@@ -24,8 +24,6 @@ import android.widget.Toast;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
-import java.util.concurrent.locks.Lock;
-
 public class MoreFragment extends Fragment {
 
         private static final int REQUEST_CODE_ENABLE = 11;
@@ -36,6 +34,7 @@ public class MoreFragment extends Fragment {
         private boolean enablePIN;
         Switch pinSwitch;
         private SharedPreferences.Editor editor;
+        private String userId;
 
     @Nullable
     @Override
@@ -45,6 +44,13 @@ public class MoreFragment extends Fragment {
         ((MainActivity)getActivity()).getSupportActionBar().setTitle("Settings");
         ((MainActivity)getActivity()).getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
         ((MainActivity)getActivity()).getSupportActionBar().setElevation(4);
+
+        //Retrieve bundle information
+        Bundle extras = new Bundle();
+        extras = getArguments();
+        if (extras != null) {
+            userId = extras.getString("userId");
+        }
 
         userPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         editor =  userPreferences.edit();
@@ -73,6 +79,7 @@ public class MoreFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(getActivity(), ChangePasswordActivity.class);
+                newIntent.putExtra("userId",userId);
                 startActivity(newIntent);
             }
         });
@@ -83,6 +90,7 @@ public class MoreFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(getActivity(), ChangeDailyLimit.class);
+                newIntent.putExtra("userId",userId);
                 startActivity(newIntent);
             }
         });
@@ -93,6 +101,7 @@ public class MoreFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Intent newIntent = new Intent(getActivity(), ChangeTransactionLimit.class);
+                newIntent.putExtra("userId",userId);
                 startActivity(newIntent);
             }
         });

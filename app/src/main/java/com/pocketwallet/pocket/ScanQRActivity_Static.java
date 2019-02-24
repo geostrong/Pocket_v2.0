@@ -59,6 +59,7 @@ public class ScanQRActivity_Static extends AppCompatActivity {
     private String GETBALANCE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/";
     //Session Token
     private String sessionToken;
+    private String perTransactionLimit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -120,8 +121,24 @@ public class ScanQRActivity_Static extends AppCompatActivity {
                             startActivityForResult(intent,REQUEST_CODE_UNLOCK);
 
                         } else {
-                            //PROCESS PAYMENT
-                            processPayment(targetUserId, amount);
+                            ///PROCESS PAYMENT
+                            if(Double.parseDouble(amount) < Double.parseDouble(perTransactionLimit)) {
+                                processPayment(targetUserId, amount);
+                            }else{
+                                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        switch (which){
+                                            case DialogInterface.BUTTON_POSITIVE:
+                                                dialog.cancel();
+                                                break;
+                                        }
+                                    }
+                                };
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity_Static.this);
+                                builder.setMessage("The amount payable is greater than your 'per transaction limit'")
+                                        .setPositiveButton("Ok", dialogClickListener).show();
+                            }
                         }
                     }
                 }else{
@@ -137,6 +154,7 @@ public class ScanQRActivity_Static extends AppCompatActivity {
 
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sessionToken = userPreferences.getString("sessionToken", "");
+        perTransactionLimit = userPreferences.getString("per_transaction_limit", "999");
         amount = "";
 
         balanceTxt = (TextView) findViewById(R.id.balanceText);
