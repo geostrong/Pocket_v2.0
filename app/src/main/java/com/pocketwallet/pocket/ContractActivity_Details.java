@@ -17,23 +17,23 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimeZone;
 
 public class ContractActivity_Details extends AppCompatActivity {
 
@@ -184,7 +184,13 @@ public class ContractActivity_Details extends AppCompatActivity {
     }
 
     public void acknowledgeContract(String decision){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         try {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user_id", userId);
@@ -199,9 +205,11 @@ public class ContractActivity_Details extends AppCompatActivity {
                         System.out.println("Results: " + result);
                         if (result.equals("success")) {
                             System.out.println("Acknowledge Contract Success!");
+                            requestQueue.stop();
                             finish();
                         } else {
                             System.out.println("Acknowledge Contract Failed");
+                            requestQueue.stop();
                             finish();
                         }
                     }catch (JSONException e) {
@@ -212,6 +220,7 @@ public class ContractActivity_Details extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.getLocalizedMessage();
+                    requestQueue.stop();
                     finish();
                 }
             }){
@@ -231,7 +240,13 @@ public class ContractActivity_Details extends AppCompatActivity {
     }
 
     public void terminateContract(){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         try {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user_id", userId);
@@ -245,9 +260,11 @@ public class ContractActivity_Details extends AppCompatActivity {
                     System.out.println("Results: " + result);
                     if (result.equals("success")) {
                         System.out.println("Terminate Contract Success!");
+                        requestQueue.stop();
                         finish();
                     } else {
                         System.out.println("Terminate Contract Failed");
+                        requestQueue.stop();
                         finish();
                      }
                     }catch (JSONException e) {
@@ -277,13 +294,20 @@ public class ContractActivity_Details extends AppCompatActivity {
     }
 
     public void updateBalance(){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         JsonObjectRequest requestJsonObject = new JsonObjectRequest(Request.Method.GET, GETBALANCE_URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try{
                     balance = response.getString("balance");
                     System.out.println(response.getString("balance"));
+                    requestQueue.stop();
                     }catch(JSONException e){
                         e.printStackTrace();
                     }
@@ -292,6 +316,7 @@ public class ContractActivity_Details extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i("", "Error: " + error.toString());
+                requestQueue.stop();
             }
         }){
             @Override

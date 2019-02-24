@@ -22,12 +22,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -75,6 +79,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_login_loggedin);
 
         loadPreferences();
@@ -126,7 +131,13 @@ public class LoginActivity_Logged extends AppCompatActivity{
 
     //POST LOGIN REQUEST
     private void login(String phoneNumber, String token, String mode,String password) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         try {
             JSONObject jsonBody = new JSONObject();
             if(mode.equals("1")) {
@@ -156,6 +167,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
                         System.out.println("User: " + userId);
                         System.out.println("Session Token is :" + sessionToken);
                         if(!result.equals("failed")){
+                            requestQueue.stop();
                             postFCMToken(userId);
                             launchMainActivity(userId);
                         }else{
@@ -169,10 +181,11 @@ public class LoginActivity_Logged extends AppCompatActivity{
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
-                    System.out.println(error.networkResponse.statusCode);
+                    error.printStackTrace();
                     if(error.networkResponse.statusCode == 500 || error.networkResponse.statusCode == 400){
                         passwordInputLayout.setError("Wrong password! Please ensure you enter the correct password");
                     }
+                    requestQueue.stop();
                 }
             });
             requestQueue.add(jsonObject);
@@ -184,7 +197,13 @@ public class LoginActivity_Logged extends AppCompatActivity{
 
     //POST FCMTOKEN
     private void postFCMToken(String userId) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String fcmToken = prefs.getString("FCM_TOKEN", "DEFAULT");
         System.out.println(fcmToken);
@@ -204,6 +223,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
                         } else {
                             System.out.println("Post FCM Token Failed :(");
                         }
+                        requestQueue.stop();
                     } catch (JSONException e) {
 
                     }
@@ -211,6 +231,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    requestQueue.stop();
                     onBackPressed();
                 }
             });
@@ -226,8 +247,6 @@ public class LoginActivity_Logged extends AppCompatActivity{
         Intent intent = new Intent(LoginActivity_Logged.this, MainActivity.class);
         intent.putExtra("userId",userId);
         UpdateSharedPreference("sessionToken",sessionToken);
-        //UpdateSharedPreference("sessionTokenExpiry",sessionTokenExpiry);
-        System.out.println("Came Here");
         startActivity(intent);
         finish();
     }

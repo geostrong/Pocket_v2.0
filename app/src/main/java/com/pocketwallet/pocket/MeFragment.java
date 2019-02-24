@@ -1,6 +1,5 @@
 package com.pocketwallet.pocket;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,13 +30,12 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.github.omadahealth.lollipin.lib.managers.AppLock;
-import com.github.omadahealth.lollipin.lib.managers.LockManager;
-
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+
+import androidx.annotation.RequiresApi;
 
 public class MeFragment extends Fragment {
 
@@ -203,6 +201,7 @@ public class MeFragment extends Fragment {
                 }).show();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -259,7 +258,7 @@ public class MeFragment extends Fragment {
     public static String encodeTobase64(Bitmap image) {
         Bitmap immage = image;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        immage.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        immage.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] b = baos.toByteArray();
         String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 

@@ -12,12 +12,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.MultiFormatWriter;
 import com.google.zxing.WriterException;
@@ -91,7 +95,13 @@ public class QuickQrActivity extends AppCompatActivity {
     //Get Authentication Code
     private void getAuthCode(){
         StringRequest requestString;
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         requestString = new StringRequest(Request.Method.GET, GETAUTHCODE_URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -103,6 +113,7 @@ public class QuickQrActivity extends AppCompatActivity {
                 myQR.post(new Runnable() {
                     @Override
                     public void run() {
+                        requestQueue.stop();
                         generateMyQR();
                     }
                 });
@@ -111,6 +122,7 @@ public class QuickQrActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i("", "Error: " + error.toString());
+                requestQueue.stop();
             }
         }){
             @Override

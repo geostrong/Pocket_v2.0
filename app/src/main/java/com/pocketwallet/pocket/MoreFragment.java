@@ -24,6 +24,8 @@ import android.widget.Toast;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
+import org.apache.commons.io.FileUtils;
+
 public class MoreFragment extends Fragment {
 
         private static final int REQUEST_CODE_ENABLE = 11;
@@ -237,6 +239,8 @@ public class MoreFragment extends Fragment {
     private void cleanData () {
         DatabaseHelper db = new DatabaseHelper(getActivity());
         db.cleanDB();
+        //Clear cache
+        FileUtils.deleteQuietly(getActivity().getCacheDir());
 
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
         SharedPreferences.Editor editor = userPreferences.edit();

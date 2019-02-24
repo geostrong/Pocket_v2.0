@@ -18,12 +18,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -127,13 +131,19 @@ public class HomeFragment extends Fragment {
         balanceTxt = view.findViewById(R.id.balance);
 
         //Update balance
-        updateBalance();
+        //updateBalance();
 
         return view;
     }
 
     public void updateBalance(){
-        RequestQueue requestQueue = Volley.newRequestQueue(this.getActivity());
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         JsonObjectRequest requestJsonObject = new JsonObjectRequest(Request.Method.GET, GETBALANCE_URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -161,6 +171,7 @@ public class HomeFragment extends Fragment {
                         public void run() {
                             balanceTxt.setText("$"+balance);
                             lastUpdatedTxt.setText(lastUpdatedText);
+                            requestQueue.stop();
                         }
                     });
                 }catch(JSONException e){

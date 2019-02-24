@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -19,12 +18,16 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.github.mikephil.charting.animation.Easing;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -448,7 +451,13 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
     }
 
     public void getTransactions(){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
 
         try {
             JSONObject jsonBody = new JSONObject();
@@ -488,9 +497,11 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                                     listTransactions.add(transaction);
                                 }
                             }
+                            requestQueue.stop();
                         }
                     }catch(JSONException e){
                         System.out.println("Error: " + e);
+                        requestQueue.stop();
                     }
 
                     processTransactionHeaders();
@@ -503,6 +514,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                     System.out.println("Error Message: " + error.getMessage());
                     System.out.println("Error Network Response Data: " + new String(error.networkResponse.data));
                     System.out.println("Error Network Response Status Code" + error.networkResponse.statusCode);
+                    requestQueue.stop();
                     //onBackPressed();
                 }
             }){
@@ -535,28 +547,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         searchView.setSearchableInfo((searchManager.getSearchableInfo(getComponentName())));
         searchView.setMaxWidth(Integer.MAX_VALUE);
 
-
         System.out.println("Submit = " + searchView.isSubmitButtonEnabled());
-
-        /*
-        incomingButton on click liksterner
-        on click
-        {
-        adapter.getFilter().filter("+$");
-        }
-
-        outgoingButton on click liksterner
-        on click
-        {
-        adapter.getFilter().filter("-$");
-        }
-
-        allButton on click liksterner
-        on click
-        {
-        adapter.getFilter()
-
-         */
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -708,36 +699,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                 }else{
                     return months[(int) value];
                 }
-
-
-               /* switch(i){
-                    case 0: return months0[(int) value];
-                        break;
-                    case 1: return months1[(int) value];
-                        break;
-                    case 2: return months2[(int) value];
-                        break;
-                    case 3: return months3[(int) value];
-                        break;
-                    case 4: return months4[(int) value];
-                        break;
-                    case 5: return months5[(int) value];
-                        break;
-                    case 6: return months6[(int) value];
-                        break;
-                    case 7: return months7[(int) value];
-                        break;
-                    case 8: return months8[(int) value];
-                        break;
-                    case 9: return months9[(int) value];
-                        break;
-                    case 10: return months10[(int) value];
-                        break;
-                    case 11: return months11[(int) value];
-                        break;
-                    default: return months11[(int) value];
-                }*/
-
             }
         };
 

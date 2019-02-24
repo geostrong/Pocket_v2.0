@@ -17,12 +17,16 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
@@ -148,7 +152,13 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
     }
 
     public void processPayment(String merchantUserId, String amount){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         try{
             JSONObject jsonBody = new JSONObject();
 
@@ -183,6 +193,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                                     newIntent.putExtra("transactionNumber",transactionNumber);
                                     newIntent.putExtra("amount", amount1);
                                     System.out.println("Amount : " + amount1);
+                                    requestQueue.stop();
                                     startActivity(newIntent);
                                     finish();
                                 }else{
@@ -193,6 +204,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                                     Intent newIntent = new Intent(ScanQRActivity_Dynamic.this, ResultActivity.class);
                                     newIntent.putExtra("title","Transaction");
                                     newIntent.putExtra("results",result);
+                                    requestQueue.stop();
                                     startActivity(newIntent);
                                     finish();
                                 }
@@ -206,6 +218,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    requestQueue.stop();
                     onBackPressed();
                 }
             }){
@@ -224,7 +237,13 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
     }
 
     public void updateBalance(){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         JsonObjectRequest requestJsonObject = new JsonObjectRequest(Request.Method.GET, GETBALANCE_URL, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -235,6 +254,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                         @Override
                         public void run() {
                             balanceTxt.setText("$"+balance);
+                            requestQueue.stop();
                         }
                     });
                 }catch(JSONException e){
@@ -245,6 +265,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Log.i("", "Error: " + error.toString());
+                requestQueue.stop();
             }
         }){
             @Override

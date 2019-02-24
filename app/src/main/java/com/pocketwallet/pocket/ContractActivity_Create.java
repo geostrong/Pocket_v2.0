@@ -16,12 +16,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -168,7 +172,13 @@ public class ContractActivity_Create extends AppCompatActivity {
     }
 
     public void createContract(){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
 
         try {
             //description = "NoDescription";
@@ -185,7 +195,6 @@ public class ContractActivity_Create extends AppCompatActivity {
 
             System.out.println("JSON BODY: " +jsonBody);
 
-
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlCreateContract, jsonBody,
                     new Response.Listener<JSONObject>() {
                         @Override
@@ -195,6 +204,7 @@ public class ContractActivity_Create extends AppCompatActivity {
                                 System.out.println("Results: " + result);
                                 if(result.equalsIgnoreCase("Success")){
                                     System.out.println(response.getString("contract_id"));
+                                    requestQueue.stop();
                                     finish();
                                 }
                             }catch(JSONException e){
@@ -208,6 +218,7 @@ public class ContractActivity_Create extends AppCompatActivity {
                     System.out.println("Error Message: " + error.getMessage());
                     System.out.println("Error Network Response Data: " + new String(error.networkResponse.data));
                     System.out.println("Error Network Response Status Code" + error.networkResponse.statusCode);
+                    requestQueue.stop();
                     finish();
                     //onBackPressed();
                 }

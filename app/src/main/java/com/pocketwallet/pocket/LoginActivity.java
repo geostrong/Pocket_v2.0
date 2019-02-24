@@ -18,12 +18,16 @@ import android.widget.EditText;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -150,7 +154,13 @@ public class LoginActivity extends AppCompatActivity {
 
     //POST LOGIN REQUEST
     private void login(String phoneNumber, String password) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         try {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("mode",0);
@@ -182,6 +192,7 @@ public class LoginActivity extends AppCompatActivity {
                             postFCMToken(userId);
 
                             name = response.getString("name");
+                            requestQueue.stop();
                             launchMainActivity(userId,name);
                         }else{
                             System.out.println("===================Failed to Login===================");
@@ -196,7 +207,9 @@ public class LoginActivity extends AppCompatActivity {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
                     phoneNumberInputLayout.setError("Phone number or password is wrong!");
+                    requestQueue.stop();
                 }
             });
 
@@ -222,7 +235,13 @@ public class LoginActivity extends AppCompatActivity {
 
     //POST FCMTOKEN
     private void postFCMToken(String userId) {
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String fcmToken = prefs.getString("FCM_TOKEN", "DEFAULT");
         System.out.println(fcmToken);
@@ -241,8 +260,10 @@ public class LoginActivity extends AppCompatActivity {
                         System.out.println("Results: " + result);
                         if (result.equals("success")) {
                             System.out.println("Post FCM Token Success!");
+                            requestQueue.stop();
                         } else {
                             System.out.println("Post FCM Token Failed :(");
+                            requestQueue.stop();
                         }
                     } catch (JSONException e) {
 

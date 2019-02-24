@@ -21,10 +21,15 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
@@ -170,8 +175,13 @@ public class TopUpActivity extends AppCompatActivity {
     }
 
     public void requestTopUp(){
-        RequestQueue requestQueue = Volley.newRequestQueue(this);
-
+        // Instantiate the cache
+        Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
         try {
             JSONObject jsonBody = new JSONObject();
             //jsonBody.put("cardType", cardType);
@@ -197,6 +207,7 @@ public class TopUpActivity extends AppCompatActivity {
                                     b.putString("title", "Top Up");
                                     intent.putExtras(b);
                                     setResult(Activity.RESULT_OK);
+                                    requestQueue.stop();
                                     startActivity(intent);
                                     finish();
                                 }
@@ -211,6 +222,7 @@ public class TopUpActivity extends AppCompatActivity {
                     System.out.println("Error Message: " + error.getMessage());
                     System.out.println("Error Network Response Data: " + new String(error.networkResponse.data));
                     System.out.println("Error Network Response Status Code" + error.networkResponse.statusCode);
+                    requestQueue.stop();
                     finish();
                     //onBackPressed();
                 }

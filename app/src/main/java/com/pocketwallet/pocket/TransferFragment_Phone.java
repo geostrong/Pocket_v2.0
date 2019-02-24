@@ -17,12 +17,16 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.Cache;
+import com.android.volley.Network;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.BasicNetwork;
+import com.android.volley.toolbox.DiskBasedCache;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.Volley;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -77,13 +81,16 @@ public class TransferFragment_Phone extends Fragment {
 
     private void checkIfUserExists() {
         //API CALL TO CHECK IF USER EXIST
-        String url = GET_CHECKPHONENUMBER_URL + phoneNumber;
-        RequestQueue requestQueue = Volley.newRequestQueue(this.getContext());
-        JSONObject jsonBody = new JSONObject();
-        //jsonBody.put("phoneNumber", phoneNumber);
-        System.out.println("jsonBody: " + jsonBody);
-        System.out.println("Url: " + url);
+        String url = GET_CHECKPHONENUMBER_URL + phoneNumber;// Instantiate the cache
 
+        Cache cache = new DiskBasedCache(getActivity().getCacheDir(), 1024 * 1024); // 1MB cap
+        // Set up the network to use HttpURLConnection as the HTTP client.
+        Network network = new BasicNetwork(new HurlStack());
+        // Instantiate the RequestQueue with the cache and network.
+        final RequestQueue requestQueue = new RequestQueue(cache, network);
+        requestQueue.start();
+
+        JSONObject jsonBody = new JSONObject();
         JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.GET, url, jsonBody, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
@@ -97,7 +104,7 @@ public class TransferFragment_Phone extends Fragment {
                         intent.putExtra("targetPhoneNumber",phoneNumber);
                         intent.putExtra("sendAmount",amount);
                         intent.putExtra("targetName", targetName);
-                        //startActivity(intent);
+                        requestQueue.stop();
                         startActivityForResult(intent, 1);
                     }else {
                         //PROMPT THAT WALLET/USER NOT FOUND
@@ -107,6 +114,7 @@ public class TransferFragment_Phone extends Fragment {
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        requestQueue.stop();
                                         dialog.cancel();
                                     }
                                 });
