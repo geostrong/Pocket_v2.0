@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
+
 public class MoreFragment extends Fragment {
 
         private SharedPreferences userPreferences;
@@ -170,5 +172,7 @@ public class MoreFragment extends Fragment {
         editor.putString("profileImage",null);
         editor.putBoolean("ShakeToExit", false);
         editor.commit();
+
+        LockManager.getInstance().getAppLock().disableAndRemoveConfiguration();
     }
 }

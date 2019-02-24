@@ -13,6 +13,7 @@
     <uses-feature android:name="android.hardware.sensor.accelerometer" />
 
     <application
+        android:name=".CustomApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -20,7 +21,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
-        <activity android:name=".ChangeTransactionLimit"></activity>
+        <activity android:name=".CustomPinActivity"></activity>
+        <activity android:name=".ChangeTransactionLimit" />
         <activity android:name=".ChangeDailyLimit" />
         <activity android:name=".LoyaltyActivity_Details" />
         <activity android:name=".LoyaltyActivity_Create" />

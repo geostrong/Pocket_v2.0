@@ -29,6 +29,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.github.omadahealth.lollipin.lib.managers.AppLock;
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -36,6 +40,10 @@ import java.io.IOException;
 import java.io.InputStream;
 
 public class MeFragment extends Fragment {
+
+    private static final int REQUEST_CODE_ENABLE = 11;
+    private static final int REQUEST_CODE_UNLOCK = 12;
+
     private String userId;
     private SharedPreferences userPreferences;
     private TextView phoneNumber;
@@ -133,6 +141,22 @@ public class MeFragment extends Fragment {
             }
         });
 
+        Button dealsBtn = (Button) view.findViewById(R.id.dealBtn);
+        dealsBtn.setOnClickListener(new  View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), CustomPinActivity.class);
+                if (!LockManager.getInstance().getAppLock().isPasscodeSet()) {
+                    intent.putExtra(AppLock.EXTRA_TYPE, AppLock.ENABLE_PINLOCK);
+                    startActivityForResult(intent, REQUEST_CODE_ENABLE);
+                } else {
+                    intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+                    startActivityForResult(intent,REQUEST_CODE_UNLOCK);
+                }
+
+            }
+        });
 
         phoneNumber = view.findViewById(R.id.phoneNumber);
         profileName = view.findViewById(R.id.profileName);
@@ -186,7 +210,6 @@ public class MeFragment extends Fragment {
                 }).show();
     }
 
-    @TargetApi(Build.VERSION_CODES.N)
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -225,13 +248,20 @@ public class MeFragment extends Fragment {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
+                SharedPreferences.Editor editor = prefs.edit();
+                editor.putString("profileImage",encodeTobase64(bitmap));
+                editor.commit();
+            } else if (requestCode == REQUEST_CODE_ENABLE) {
+                Toast.makeText(getActivity(), "PinCode enabled", Toast.LENGTH_SHORT).show();
+            } else if (requestCode == REQUEST_CODE_UNLOCK) {
+                Toast.makeText(getActivity(), "Unlocked", Toast.LENGTH_SHORT).show();
             }
-            SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putString("profileImage",encodeTobase64(bitmap));
-            editor.commit();
+
         }
     }
+
     // method for bitmap to base64
     public static String encodeTobase64(Bitmap image) {
         Bitmap immage = image;

@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class RequestActivity extends AppCompatActivity {
 
@@ -80,6 +81,7 @@ public class RequestActivity extends AppCompatActivity {
             public void onClick(View v) {
                 requestingAmount = requestingInput.getText().toString();
                 requestingAmountView.setText("$" + requestingAmount);
+                Toast.makeText(getApplicationContext(), "Requesting amount updated", Toast.LENGTH_SHORT).show();
             }
         });
 

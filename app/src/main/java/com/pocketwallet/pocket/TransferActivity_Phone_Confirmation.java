@@ -20,14 +20,20 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.omadahealth.lollipin.lib.managers.AppLock;
+import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.Lock;
 
 public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
+
+    private static final int REQUEST_CODE_UNLOCK = 12;
+
     private TextView amountText;
     private TextView nameText;
     private TextView phoneNumberText;
@@ -107,8 +113,14 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
                             .setPositiveButton("Top Up", dialogClickListener)
                             .setNegativeButton("Cancel", dialogClickListener).show();
                 }else{
-                    //PROCESS PAYMENT
-                    processPayment();
+                    if (!LockManager.getInstance().isAppLockEnabled()) {
+                        //PROCESS PAYMENT
+                        processPayment();
+                    } else {
+                        Intent intent = new Intent(TransferActivity_Phone_Confirmation.this, CustomPinActivity.class);
+                            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+                            startActivityForResult(intent,REQUEST_CODE_UNLOCK);
+                    }
                 }
             }
         });
@@ -120,6 +132,10 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 System.out.println("Top Up Successful");
                 updateBalance();
+            }
+        } else if (requestCode == REQUEST_CODE_UNLOCK) {
+            if (resultCode == Activity.RESULT_OK) {
+                processPayment();
             }
         }
     }
