@@ -2,6 +2,7 @@ package com.pocketwallet.pocket;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -22,6 +23,9 @@ public class SplashActivity extends Activity {
         //setContentView(R.layout.splash_screen);
         FirebaseMessaging.getInstance().subscribeToTopic("all");
         logInPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        //LockManager<PinActivity> lockManager = LockManager.getInstance();
+       // lockManager.enableAppLock(this, PinActivity.class);
 
         if (ContextCompat.checkSelfPermission(SplashActivity.this, Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {

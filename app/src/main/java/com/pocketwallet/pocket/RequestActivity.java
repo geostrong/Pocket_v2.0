@@ -1,5 +1,6 @@
 package com.pocketwallet.pocket;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -44,12 +45,12 @@ public class RequestActivity extends AppCompatActivity {
         nfcCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent nfcIntent = new Intent(RequestActivity.this, RequestActivity_NFC.class);
+                Intent nfcIntent = new Intent(RequestActivity.this, RequestActivity_NFC_Ready.class);
                 nfcIntent.putExtra("userId",userId);
                 nfcIntent.putExtra("requestingAmount",requestingAmount);
                 System.out.println("Requesting Amount =" + requestingAmount);
                 System.out.println("User ID =" + userId);
-                startActivity(nfcIntent);
+                startActivityForResult(nfcIntent, 1);
             }
         });
 
@@ -82,6 +83,15 @@ public class RequestActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == 1) {
+            if (resultCode == Activity.RESULT_OK) {
+                finish();
+            }
+        }
     }
 
     @Override

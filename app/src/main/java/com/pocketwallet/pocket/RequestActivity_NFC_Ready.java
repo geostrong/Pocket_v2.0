@@ -31,7 +31,7 @@ import java.util.Map;
 
 public class RequestActivity_NFC_Ready extends AppCompatActivity {
 
-    TextView nfcReadyAmountText;
+    TextView requestedAmountView;
 
     Bundle extras;
     String userId;
@@ -60,15 +60,15 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
-            amount = extras.getString("amount");
+            amount = extras.getString("requestingAmount");
             UpdateSharedPreference("userId",userId);
             UpdateSharedPreference("amount",amount);
         }
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sessionToken = userPreferences.getString("sessionToken", "");
 
-        nfcReadyAmountText = (TextView)findViewById(R.id.nfcReadyAmountText);
-        nfcReadyAmountText.setText("$"+amount);
+        requestedAmountView = findViewById(R.id.requestedAmountNFC);
+        requestedAmountView.setText("$" + amount);
 
         nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter == null){
