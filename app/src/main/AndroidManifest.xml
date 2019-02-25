@@ -97,11 +97,7 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity
-            android:name=".RequestActivity_Tabs"
-            android:label="@string/title_activity_request"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar" /> <!-- SERVICES -->
+        <!-- SERVICES -->
         <service android:name=".MyFirebaseMessagingService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
