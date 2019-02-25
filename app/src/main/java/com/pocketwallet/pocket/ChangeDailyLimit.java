@@ -1,11 +1,12 @@
 package com.pocketwallet.pocket;
 
-import android.content.Intent;
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -132,13 +133,20 @@ public class ChangeDailyLimit extends AppCompatActivity {
                         String result = response.getString("result");
                         if(result.equalsIgnoreCase("success")){
                             UpdateSharedPreference("daily_limit",response.getString("daily_limit"));
-                            Intent intent = new Intent (ChangeDailyLimit.this, ResultActivity.class);
-                            Bundle b = new Bundle();
-                            b.putString("title", "Change Daily Limit");
-                            intent.putExtras(b);
-                            requestQueue.stop();
-                            startActivity(intent);
-                            finish();
+                            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which){
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            dialog.cancel();
+                                            finish();
+                                            break;
+                                    }
+                                }
+                            };
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ChangeDailyLimit.this);
+                            builder.setMessage("Successfully changed daily limit!\nThe daily limit is now $"+ response.getString("daily_limit"))
+                                    .setPositiveButton("Ok", dialogClickListener).show();
                         }
                     }catch(JSONException e){
 
@@ -148,6 +156,20 @@ public class ChangeDailyLimit extends AppCompatActivity {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     error.printStackTrace();
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    dialog.cancel();
+                                    finish();
+                                    break;
+                            }
+                        }
+                    };
+                    AlertDialog.Builder builder = new AlertDialog.Builder(ChangeDailyLimit.this);
+                    builder.setMessage("Failed to change daily limit")
+                            .setPositiveButton("Ok", dialogClickListener).show();
                     requestQueue.stop();
                 }
             }){
