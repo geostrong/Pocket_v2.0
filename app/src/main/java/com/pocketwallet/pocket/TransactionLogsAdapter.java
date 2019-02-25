@@ -46,39 +46,29 @@ public class TransactionLogsAdapter extends RecyclerView.Adapter<TransactionLogs
 
         holder.textViewName.setText(t.getName());
 
+        if (t.getType().equalsIgnoreCase("payment")){
+            holder.circleImageView.setImageResource(R.drawable.ic_dollar_24px);
+        }
+        else if (t.getType().equalsIgnoreCase("payment_phone")){
+            holder.circleImageView.setImageResource(R.drawable.ic_phone_24px);
+        }
+        else if (t.getType().equalsIgnoreCase("QuickPay")){
+            holder.circleImageView.setImageResource(R.drawable.ic_quickpay_black);
+        }
+        else if (t.getType().equalsIgnoreCase("topup")){
+            holder.circleImageView.setImageResource(R.drawable.ic_credit_card_24px);
+        }
+
         if (!t.getisIncoming()) {
             holder.textViewTransactAmount.setTextColor(    ContextCompat.getColor(context,R.color.colorAccent));
-            holder.textViewTransactAmount.setText(t.getDisplayAmount());
             holder.textViewTimestamp.setText("Sent on " + t.getTimestampToString());
-            if (t.getType().equalsIgnoreCase("payment")){
-                holder.circleImageView.setImageResource(R.drawable.ic_dollar_24px);
-            }
-            else if (t.getType().equalsIgnoreCase("payment_phone")){
-                holder.circleImageView.setImageResource(R.drawable.ic_phone_24px);
-            }
-            else if (t.getType().equalsIgnoreCase("QuickPay")){
-                holder.circleImageView.setImageResource(R.drawable.ic_quickpay_black);
-            }
-            else if (t.getType().equalsIgnoreCase("topup")){
-                holder.circleImageView.setImageResource(R.drawable.ic_credit_card_24px);
-            }
+
         } else {
             holder.textViewTransactAmount.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
-            holder.textViewTransactAmount.setText(t.getDisplayAmount());
             holder.textViewTimestamp.setText(t.getTimestampToString());
-            if (t.getType().equalsIgnoreCase("payment")){
-                holder.circleImageView.setImageResource(R.drawable.ic_dollar_24px);
-            }
-            else if (t.getType().equalsIgnoreCase("payment_phone")){
-                holder.circleImageView.setImageResource(R.drawable.ic_phone_24px);
-            }
-            else if (t.getType().equalsIgnoreCase("QuickPay")){
-                holder.circleImageView.setImageResource(R.drawable.ic_quickpay_black);
-            }
-            else if (t.getType().equalsIgnoreCase("topup")){
-                holder.circleImageView.setImageResource(R.drawable.ic_credit_card_24px);
-            }
         }
+
+        holder.textViewTransactAmount.setText(t.getDisplayAmount());
     }
 
     @Override
