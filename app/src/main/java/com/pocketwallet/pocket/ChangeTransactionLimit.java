@@ -52,7 +52,7 @@ public class ChangeTransactionLimit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_transaction_limit);
-        getSupportActionBar().setTitle("Change Password");
+        getSupportActionBar().setTitle("Change Transaction Limit");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 

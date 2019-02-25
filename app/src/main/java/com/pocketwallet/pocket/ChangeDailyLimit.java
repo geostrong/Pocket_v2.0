@@ -52,7 +52,7 @@ public class ChangeDailyLimit extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_daily_limit);
-        getSupportActionBar().setTitle("Change Password");
+        getSupportActionBar().setTitle("Change Daily Limit");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
