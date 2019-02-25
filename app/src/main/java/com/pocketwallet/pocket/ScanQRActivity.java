@@ -2,6 +2,7 @@ package com.pocketwallet.pocket;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -9,6 +10,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
@@ -132,38 +134,8 @@ public class ScanQRActivity extends AppCompatActivity{
                     String results[] = resultText.split("\\|");
                     String qrType = results[0];
                     //HANDLE STATIC /DYNAMIC HERE
-                    if (qrType.equals("Dynamic")) {
-                        //Dynamic
-                        String targetUserId = results[1];
-                        String amount = results[2];
-                        String targetName = results[3];
-                        System.out.println("Dynamic QR, the amount is: " + amount);
-                        System.out.println("The target userid is: + targetUserId");
-                        Intent dynamicIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Dynamic.class);
-                        dynamicIntent.putExtra("paymentType", "Dynamic");
-                        dynamicIntent.putExtra("title", "transaction");
-                        dynamicIntent.putExtra("userId", userId);
-                        dynamicIntent.putExtra("amount", amount);
-                        dynamicIntent.putExtra("targetUserId", targetUserId);
-                        dynamicIntent.putExtra("targetName",targetName);
-                        startActivity(dynamicIntent);
-                        finish();
-                    } else if (qrType.equals("Static")) {
-                        //Static
-                        String targetUserId = results[1];
-                        String targetName = results[2];
-                        System.out.println("Static QR, target/merchant userID is: " + targetUserId);
-                        Intent staticIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Static.class);
-                        staticIntent.putExtra("paymentType", "Static");
-                        staticIntent.putExtra("title", "transaction");
-                        staticIntent.putExtra("userId", userId);
-                        staticIntent.putExtra("targetUserId", targetUserId);
-                        staticIntent.putExtra("targetName",targetName);
-                        startActivity(staticIntent);
-                        finish();
-                    } else {
+                    if (qrType.equals("QuickQR")) {
                         //QuickQR
-                        //Static
                         if (isFromRequestActivity) {
                             for (int i = 0; i < results.length; i++) {
                                 System.out.println("Test + " + i + ": " + results[i]);
@@ -183,13 +155,70 @@ public class ScanQRActivity extends AppCompatActivity{
                             dynamicIntent.putExtra("amount", requestingAmount);
                             startActivity(dynamicIntent);
                             finish();
+                        }else{
+                            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which){
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            dialog.cancel();
+                                            break;
+                                    }
+                                }
+                            };
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity.this);
+                            builder.setMessage("Please use the request page for Quick Pay").setTitle("Use request page scanner")
+                                    .setPositiveButton("Ok", dialogClickListener).show();
                         }
-
                     }
-
-                    //Change process payment
-                    //processPayment(merchantUserId,amount);
-
+                    else if (qrType.equals("Dynamic")) {
+                        if (!isFromRequestActivity) {
+                            //Dynamic
+                            String targetUserId = results[1];
+                            String amount = results[2];
+                            String targetName = results[3];
+                            System.out.println("Dynamic QR, the amount is: " + amount);
+                            System.out.println("The target userid is: + targetUserId");
+                            Intent dynamicIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Dynamic.class);
+                            dynamicIntent.putExtra("paymentType", "Dynamic");
+                            dynamicIntent.putExtra("title", "transaction");
+                            dynamicIntent.putExtra("userId", userId);
+                            dynamicIntent.putExtra("amount", amount);
+                            dynamicIntent.putExtra("targetUserId", targetUserId);
+                            dynamicIntent.putExtra("targetName", targetName);
+                            startActivity(dynamicIntent);
+                            finish();
+                        }
+                    } else if (qrType.equals("Static")) {
+                        if (!isFromRequestActivity) {
+                            //Static
+                            String targetUserId = results[1];
+                            String targetName = results[2];
+                            System.out.println("Static QR, target/merchant userID is: " + targetUserId);
+                            Intent staticIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Static.class);
+                            staticIntent.putExtra("paymentType", "Static");
+                            staticIntent.putExtra("title", "transaction");
+                            staticIntent.putExtra("userId", userId);
+                            staticIntent.putExtra("targetUserId", targetUserId);
+                            staticIntent.putExtra("targetName", targetName);
+                            startActivity(staticIntent);
+                            finish();
+                        }
+                    }else{
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which){
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        dialog.cancel();
+                                        break;
+                                }
+                            }
+                        };
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity.this);
+                        builder.setMessage("The scanned QR is not recognized").setTitle("Invalid QR")
+                                .setPositiveButton("Ok", dialogClickListener).show();
+                    }
                     finish();
                 }
             }
