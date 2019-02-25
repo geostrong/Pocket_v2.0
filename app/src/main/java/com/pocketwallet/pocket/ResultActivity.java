@@ -27,7 +27,7 @@ public class ResultActivity extends AppCompatActivity {
         String amount = "-";
         String transactionNumber = "-";
         String sentTo = "";
-        String mode;
+        String mode = "0";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
