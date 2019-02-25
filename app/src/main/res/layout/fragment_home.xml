@@ -107,7 +107,7 @@
 
     <Button
         android:id="@+id/quickQRBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -131,7 +131,7 @@
 
     <Button
         android:id="@+id/reqBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="8dp"
@@ -152,7 +152,7 @@
 
     <Button
         android:id="@+id/scanQRBtn"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="6dp"
@@ -160,7 +160,7 @@
         android:backgroundTint="#FFFFFF"
         android:drawableTop="@drawable/ic_scan"
         android:drawablePadding="8dp"
-        android:elevation="@dimen/_110sdp"
+        android:elevation="@dimen/_100sdp"
         android:paddingTop="24dp"
         android:text="Scan QR"
         android:textAllCaps="false"
@@ -174,7 +174,7 @@
 
     <Button
         android:id="@+id/payButton"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="6dp"
@@ -225,7 +225,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Pay"
         android:textAlignment="viewStart"
@@ -235,6 +235,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/payButton"
         app:layout_constraintTop_toTopOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.0"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
@@ -242,7 +243,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Request"
         android:textColor="@color/colorPrimaryDark"
