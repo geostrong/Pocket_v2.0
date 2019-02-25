@@ -107,7 +107,7 @@
 
     <Button
         android:id="@+id/quickQRBtn"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
@@ -131,9 +131,9 @@
 
     <Button
         android:id="@+id/reqBtn"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="#FFFFFF"
         android:drawableTop="@drawable/ic_request"
@@ -152,15 +152,15 @@
 
     <Button
         android:id="@+id/scanQRBtn"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="8dp"
         android:backgroundTint="#FFFFFF"
         android:drawableTop="@drawable/ic_scan"
         android:drawablePadding="8dp"
-        android:elevation="@dimen/_100sdp"
+        android:elevation="@dimen/_110sdp"
         android:paddingTop="24dp"
         android:text="Scan QR"
         android:textAllCaps="false"
@@ -174,10 +174,10 @@
 
     <Button
         android:id="@+id/payButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="6dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:backgroundTint="#FFFFFF"
@@ -200,9 +200,7 @@
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="8dp"
         android:theme="@style/dividerHorizontal"
         app:layout_constraintBottom_toTopOf="@+id/reqBtn"
         app:layout_constraintEnd_toEndOf="@+id/quickQRBtn"
@@ -214,9 +212,7 @@
         android:id="@+id/view5"
         android:layout_width="0dp"
         android:layout_height="1dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="8dp"
         android:theme="@style/dividerHorizontal"
         app:layout_constraintBottom_toTopOf="@+id/scanQRBtn"
         app:layout_constraintEnd_toEndOf="@+id/quickQRBtn"
@@ -226,10 +222,10 @@
 
     <TextView
         android:id="@+id/payText"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="Pay"
         android:textAlignment="viewStart"
@@ -239,14 +235,13 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/payButton"
         app:layout_constraintTop_toTopOf="@+id/view3"
-        app:layout_constraintVertical_bias="0.2"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
         android:id="@+id/requestText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:text="Request"
