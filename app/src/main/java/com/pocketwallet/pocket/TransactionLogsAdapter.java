@@ -13,6 +13,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class TransactionLogsAdapter extends RecyclerView.Adapter<TransactionLogsAdapter.ViewHolder> implements Filterable {
 
@@ -31,10 +33,12 @@ public class TransactionLogsAdapter extends RecyclerView.Adapter<TransactionLogs
     }
 
     @Override
-public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_transaction_view,parent, false);
         return new ViewHolder(v);
     }
+
+
 
     @Override
     public void onBindViewHolder (ViewHolder holder, final int position){
@@ -46,10 +50,34 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
             holder.textViewTransactAmount.setTextColor(    ContextCompat.getColor(context,R.color.colorAccent));
             holder.textViewTransactAmount.setText(t.getDisplayAmount());
             holder.textViewTimestamp.setText("Sent on " + t.getTimestampToString());
+            if (t.getType().equalsIgnoreCase("payment")){
+                holder.circleImageView.setImageResource(R.drawable.ic_dollar_24px);
+            }
+            else if (t.getType().equalsIgnoreCase("payment_phone")){
+                holder.circleImageView.setImageResource(R.drawable.ic_dialpad_24px);
+            }
+            else if (t.getType().equalsIgnoreCase("quickqr")){
+                holder.circleImageView.setImageResource(R.drawable.ic_qrcode);
+            }
+            else if (t.getType().equalsIgnoreCase("topup")){
+                holder.circleImageView.setImageResource(R.drawable.ic_credit_card_24px);
+            }
         } else {
             holder.textViewTransactAmount.setTextColor(ContextCompat.getColor(context,R.color.colorPrimary));
             holder.textViewTransactAmount.setText(t.getDisplayAmount());
             holder.textViewTimestamp.setText(t.getTimestampToString());
+            if (t.getType().equalsIgnoreCase("payment")){
+                holder.circleImageView.setImageResource(R.drawable.ic_dollar_24px);
+            }
+            else if (t.getType().equalsIgnoreCase("payment_phone")){
+                holder.circleImageView.setImageResource(R.drawable.ic_dialpad_24px);
+            }
+            else if (t.getType().equalsIgnoreCase("quickqr")){
+                holder.circleImageView.setImageResource(R.drawable.ic_qrcode);
+            }
+            else if (t.getType().equalsIgnoreCase("topup")){
+                holder.circleImageView.setImageResource(R.drawable.ic_credit_card_24px);
+            }
         }
     }
 
@@ -98,6 +126,7 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
     public class ViewHolder extends RecyclerView.ViewHolder {
 
         TextView textViewName, textViewNumber, textViewTransactAmount, textViewTimestamp;
+        CircleImageView circleImageView;
 
         public ViewHolder(View itemView){
             super(itemView);
@@ -106,6 +135,7 @@ public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType){
             textViewNumber = itemView.findViewById(R.id.transactTimestamp);
             textViewTransactAmount = itemView.findViewById(R.id.transactAmount);
             textViewTimestamp = itemView.findViewById(R.id.transactTimestamp);
+            circleImageView = itemView.findViewById(R.id.circleImageView);
         }
 
     }
