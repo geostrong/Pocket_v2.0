@@ -1,10 +1,12 @@
 package com.pocketwallet.pocket;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.nfc.NfcAdapter;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
@@ -46,12 +48,16 @@ public class RequestActivity extends AppCompatActivity {
         nfcCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent nfcIntent = new Intent(RequestActivity.this, RequestActivity_NFC_Ready.class);
-                nfcIntent.putExtra("userId",userId);
-                nfcIntent.putExtra("requestingAmount",requestingAmount);
-                System.out.println("Requesting Amount =" + requestingAmount);
-                System.out.println("User ID =" + userId);
-                startActivityForResult(nfcIntent, 1);
+                if(requestingAmount != null) {
+                    Intent nfcIntent = new Intent(RequestActivity.this, RequestActivity_NFC_Ready.class);
+                    nfcIntent.putExtra("userId", userId);
+                    nfcIntent.putExtra("requestingAmount", requestingAmount);
+                    System.out.println("Requesting Amount =" + requestingAmount);
+                    System.out.println("User ID =" + userId);
+                    startActivityForResult(nfcIntent, 1);
+                }else{
+                    showEnterAmountError();
+                }
             }
         });
 
@@ -59,12 +65,16 @@ public class RequestActivity extends AppCompatActivity {
         qrCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent qrIntent = new Intent(RequestActivity.this, RequestActivity_QR.class);
-                qrIntent.putExtra("userId",userId);
-                qrIntent.putExtra("requestingAmount",requestingAmount);
-                System.out.println("Requesting Amount =" + requestingAmount);
-                System.out.println("User ID =" + userId);
-                startActivity(qrIntent);
+                if(requestingAmount != null) {
+                    Intent qrIntent = new Intent(RequestActivity.this, RequestActivity_QR.class);
+                    qrIntent.putExtra("userId", userId);
+                    qrIntent.putExtra("requestingAmount", requestingAmount);
+                    System.out.println("Requesting Amount =" + requestingAmount);
+                    System.out.println("User ID =" + userId);
+                    startActivity(qrIntent);
+                }else{
+                    showEnterAmountError();
+                }
             }
         });
 
@@ -80,8 +90,38 @@ public class RequestActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 requestingAmount = requestingInput.getText().toString();
-                requestingAmountView.setText("$" + requestingAmount);
-                Toast.makeText(getApplicationContext(), "Requesting amount updated", Toast.LENGTH_SHORT).show();
+                if(requestingAmount != null && requestingAmount.length() > 1) {
+                    if (requestingAmount.charAt(requestingAmount.length() - 1) == '.') {
+                        requestingAmount = requestingAmount.substring(0, requestingAmount.length() - 1);
+                    }
+                    if(requestingAmount.charAt(0) == '.'){
+                        requestingAmount = null;
+                    }
+                }
+                if(requestingAmount != null){
+                    if(requestingAmount.equals("") || requestingAmount.equals(".")){
+                        requestingAmount = null;
+                    }
+                }
+                if(requestingAmount == null){
+                    requestingAmountView.setText("$" + "0");
+                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            switch (which){
+                                case DialogInterface.BUTTON_POSITIVE:
+                                    dialog.cancel();
+                                    break;
+                            }
+                        }
+                    };
+                    AlertDialog.Builder builder = new AlertDialog.Builder(RequestActivity.this);
+                    builder.setMessage("Please enter a valid amount!")
+                            .setPositiveButton("Ok", dialogClickListener).show();
+                }else {
+                    requestingAmountView.setText("$" + requestingAmount);
+                    Toast.makeText(getApplicationContext(), "Requesting amount updated", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -100,5 +140,21 @@ public class RequestActivity extends AppCompatActivity {
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return true;
+    }
+
+    public void showEnterAmountError(){
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        dialog.cancel();
+                        break;
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(RequestActivity.this);
+        builder.setMessage("Please enter an amount to request!")
+                .setPositiveButton("Ok", dialogClickListener).show();
     }
 }
