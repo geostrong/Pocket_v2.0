@@ -42,7 +42,7 @@ public class RequestActivity extends AppCompatActivity {
             System.out.println("Device does not support NFC");
             nfcCard.setClickable(false);
             nfcCard.setEnabled(false);
-            nfcCard.setCardBackgroundColor(Color.LTGRAY);
+            nfcCard.setAlpha(0.5f);
         }
 
         nfcCard.setOnClickListener(new View.OnClickListener() {
