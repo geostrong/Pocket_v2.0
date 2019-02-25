@@ -1,5 +1,6 @@
 package com.pocketwallet.pocket;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -264,14 +266,15 @@ public class LoginActivity_Logged extends AppCompatActivity{
 
     public void RequestFingerprint(){
         generateKey();
-        initCipher();
+        boolean validCipher = initCipher();
 
-        //FINGERPRINT DIALOG
-        FingerprintAuthenticationDialogFragment fragment = new FingerprintAuthenticationDialogFragment();
-        fragment.setCryptoObject(new FingerprintManager.CryptoObject(cipher));
-        fragment.setStage(FingerprintAuthenticationDialogFragment.Stage.FINGERPRINT);
-        fragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
-
+        if(validCipher == true) {
+            //FINGERPRINT DIALOG
+            FingerprintAuthenticationDialogFragment fragment = new FingerprintAuthenticationDialogFragment();
+            fragment.setCryptoObject(new FingerprintManager.CryptoObject(cipher));
+            fragment.setStage(FingerprintAuthenticationDialogFragment.Stage.FINGERPRINT);
+            fragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+        }
         /*
         final FingerprintManagerCompat fingerprintManagerCompat = FingerprintManagerCompat.from(this);
         if (!fingerprintManagerCompat.isHardwareDetected()) {
@@ -355,7 +358,6 @@ public class LoginActivity_Logged extends AppCompatActivity{
                     .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
                     .build());
             keyGenerator.generateKey();
-
         } catch (KeyStoreException
                 | NoSuchAlgorithmException
                 | NoSuchProviderException
@@ -387,7 +389,21 @@ public class LoginActivity_Logged extends AppCompatActivity{
             return false;
         } catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
                 | NoSuchAlgorithmException | InvalidKeyException e) {
-            throw new RuntimeException("Failed to init Cipher", e);
+            //throw new RuntimeException("Failed to init Cipher", e);
+            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which){
+                        case DialogInterface.BUTTON_POSITIVE:
+                            dialog.cancel();
+                            break;
+                    }
+                }
+            };
+            AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity_Logged.this);
+            builder.setMessage("1) Biometric does not work on this device, OR \n\n2)You do not have any registered fingerprints")
+                    .setPositiveButton("Ok", dialogClickListener).show();
+            return false;
         }
     }
 
