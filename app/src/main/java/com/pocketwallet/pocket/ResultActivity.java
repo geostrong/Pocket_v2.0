@@ -27,7 +27,7 @@ public class ResultActivity extends AppCompatActivity {
         String amount = "-";
         String transactionNumber = "-";
         String sentTo = "";
-
+        String mode;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,6 +62,7 @@ public class ResultActivity extends AppCompatActivity {
                 transactionNumber = info.getString("transactionNumber");
                 amount = info.getString("amount");
                 sentTo = info.getString("to");
+                mode = info.getString("mode");
             }
         }
 
@@ -104,7 +105,7 @@ public class ResultActivity extends AppCompatActivity {
         resultTitle.setText(resultTitleText);
 
         //Change from/to here
-        if (true){
+        if (mode.equals("0")){
             fromTo.setText("To");
         } else {
             fromTo.setText("From");

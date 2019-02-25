@@ -35,6 +35,7 @@ public class RequestActivity extends AppCompatActivity {
 
         CardView nfcCard = findViewById(R.id.nfcCard);
         CardView qrCard = findViewById(R.id.qrCard);
+        CardView scanCard = findViewById(R.id.scanCard);
 
         NfcAdapter nfcAdapter = NfcAdapter.getDefaultAdapter(this);
         if(nfcAdapter == null || !nfcAdapter.isEnabled()){
@@ -72,6 +73,23 @@ public class RequestActivity extends AppCompatActivity {
                     System.out.println("Requesting Amount =" + requestingAmount);
                     System.out.println("User ID =" + userId);
                     startActivity(qrIntent);
+                }else{
+                    showEnterAmountError();
+                }
+            }
+        });
+
+        scanCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(requestingAmount != null) {
+                    Intent scanIntent = new Intent(RequestActivity.this, ScanQRActivity.class);
+                    scanIntent.putExtra("userId", userId);
+                    scanIntent.putExtra("requestingAmount", requestingAmount);
+                    scanIntent.putExtra("requestActivity", "requestActivity");
+                    System.out.println("Requesting Amount =" + requestingAmount);
+                    System.out.println("User ID =" + userId);
+                    startActivity(scanIntent);
                 }else{
                     showEnterAmountError();
                 }

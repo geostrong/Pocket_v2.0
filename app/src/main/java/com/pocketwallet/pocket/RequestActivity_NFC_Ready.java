@@ -127,6 +127,7 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
                             newIntent.putExtra("results",result);
                             newIntent.putExtra("transactionNumber",transactionNumber);
                             newIntent.putExtra("amount", amount1);
+                            newIntent.putExtra("mode", "1");
                             System.out.println("Amount : " + amount1);
                             setResult(Activity.RESULT_OK);
                             requestQueue.stop();

@@ -35,8 +35,11 @@ public class ScanQRActivity extends AppCompatActivity{
     private Bundle extras;
     private String urlPayment = "http://pocket.ap-southeast-1.elasticbeanstalk.com/transactional/payment/";
     private String userId;
+    private String requestingAmount;
 
     private boolean scanned = false;
+
+    private boolean isFromRequestActivity = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,7 +52,13 @@ public class ScanQRActivity extends AppCompatActivity{
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
+
+            if (extras.containsKey("requestActivity")) {
+                isFromRequestActivity = true;
+                requestingAmount = extras.getString("requestingAmount");
+            }
         }
+
 
         startScan();
 
@@ -155,23 +164,27 @@ public class ScanQRActivity extends AppCompatActivity{
                     } else {
                         //QuickQR
                         //Static
-                        for (int i = 0; i < results.length; i++) {
-                            System.out.println("Test + " + i + ": " + results[i]);
+                        if (isFromRequestActivity) {
+                            for (int i = 0; i < results.length; i++) {
+                                System.out.println("Test + " + i + ": " + results[i]);
+                            }
+                            String targetUserId = results[1];
+                            String targetAuthCode = results[2];
+                            String targetName = results[3];
+                            System.out.println("Quick QR, payee userID is: " + targetUserId);
+                            System.out.println("AuthCode is: " + targetAuthCode);
+                            Intent dynamicIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Dynamic.class);
+                            dynamicIntent.putExtra("paymentType", "QuickQR");
+                            dynamicIntent.putExtra("title", "transaction");
+                            dynamicIntent.putExtra("userId", userId);
+                            dynamicIntent.putExtra("targetUserId", targetUserId);
+                            dynamicIntent.putExtra("targetAuthCode", targetAuthCode);
+                            dynamicIntent.putExtra("targetName",targetName);
+                            dynamicIntent.putExtra("amount", requestingAmount);
+                            startActivity(dynamicIntent);
+                            finish();
                         }
-                        String targetUserId = results[1];
-                        String targetAuthCode = results[2];
-                        String targetName = results[3];
-                        System.out.println("Quick QR, payee userID is: " + targetUserId);
-                        System.out.println("AuthCode is: " + targetAuthCode);
-                        Intent staticIntent = new Intent(ScanQRActivity.this, ScanQRActivity_Static.class);
-                        staticIntent.putExtra("paymentType", "QuickQR");
-                        staticIntent.putExtra("title", "transaction");
-                        staticIntent.putExtra("userId", userId);
-                        staticIntent.putExtra("targetUserId", targetUserId);
-                        staticIntent.putExtra("targetAuthCode", targetAuthCode);
-                        staticIntent.putExtra("targetName",targetName);
-                        startActivity(staticIntent);
-                        finish();
+
                     }
 
                     //Change process payment

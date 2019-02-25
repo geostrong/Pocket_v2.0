@@ -27,6 +27,7 @@ import com.android.volley.toolbox.BasicNetwork;
 import com.android.volley.toolbox.DiskBasedCache;
 import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.github.omadahealth.lollipin.lib.managers.AppLock;
 import com.github.omadahealth.lollipin.lib.managers.LockManager;
 
@@ -57,6 +58,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
     TextView totalAmountText;
     TextView balanceTxt;
     TextView targetNameText;
+    TextView payText;
 
     //Session Token
     private String sessionToken;
@@ -73,71 +75,88 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
 
         Button payBtn = (Button)findViewById(R.id.payButtonDynamic);
 
-        payBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Move to transaction result
-                if(Double.parseDouble(balance) < Double.parseDouble(amount)){
-                    DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            switch (which){
-                                case DialogInterface.BUTTON_POSITIVE:
-                                    Intent intent = new Intent (getApplicationContext(), TopUpActivity.class);
-                                    intent.putExtra("userId",userId);
-                                    startActivityForResult(intent, TopUpCode);
-                                    break;
-                                case DialogInterface.BUTTON_NEGATIVE:
-
-                                    break;
-                            }
-                        }
-                    };
-                    AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity_Dynamic.this);
-                    builder.setMessage("Your wallet does not have enough balance to pay. Press 'Top Up' to go to the top up page.")
-                            .setPositiveButton("Top Up", dialogClickListener)
-                            .setNegativeButton("Cancel", dialogClickListener).show();
-                }else {
-                    if (LockManager.getInstance().isAppLockEnabled()) {
-                        Intent intent = new Intent(ScanQRActivity_Dynamic.this, CustomPinActivity.class);
-                        intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
-                        startActivityForResult(intent,REQUEST_CODE_UNLOCK);
-
-                    } else {
-                        //PROCESS PAYMENT
-                        if(Double.parseDouble(amount) < Double.parseDouble(perTransactionLimit)) {
-                            processPayment(targetUserId, amount);
-                        }else{
-                            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    switch (which){
-                                        case DialogInterface.BUTTON_POSITIVE:
-                                            dialog.cancel();
-                                            break;
-                                    }
-                                }
-                            };
-                            AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity_Dynamic.this);
-                            builder.setMessage("The amount payable is greater than your 'per transaction limit'")
-                                    .setPositiveButton("Ok", dialogClickListener).show();
-                        }
-                    }
-                }
-            }
-        });
-
         extras = getIntent().getExtras();
         if (extras != null) {
             userId = extras.getString("userId");
             amount = extras.getString("amount");
             targetUserId = extras.getString("targetUserId");
             targetName = extras.getString("targetName");
+            paymentType = extras.getString("paymentType");
+            authCode = extras.getString("targetAuthCode");
             //SET URL
             if(!GETBALANCE_URL.contains("/balance")) {
                 GETBALANCE_URL = GETBALANCE_URL + userId + "/balance";
             }
         }
+
+        payBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Move to transaction result
+                System.out.println("PAYMENT TYPE = " + paymentType);
+                if (paymentType.equalsIgnoreCase("Dynamic")) {
+                    System.out.println("PROCESS DYNAMIC");
+                    if (Double.parseDouble(balance) < Double.parseDouble(amount)) {
+                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                switch (which) {
+                                    case DialogInterface.BUTTON_POSITIVE:
+                                        Intent intent = new Intent(getApplicationContext(), TopUpActivity.class);
+                                        intent.putExtra("userId", userId);
+                                        startActivityForResult(intent, TopUpCode);
+                                        break;
+                                    case DialogInterface.BUTTON_NEGATIVE:
+
+                                        break;
+                                }
+                            }
+                        };
+                        AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity_Dynamic.this);
+                        builder.setMessage("Your wallet does not have enough balance to pay. Press 'Top Up' to go to the top up page.")
+                                .setPositiveButton("Top Up", dialogClickListener)
+                                .setNegativeButton("Cancel", dialogClickListener).show();
+                    } else {
+                        if (LockManager.getInstance().isAppLockEnabled()) {
+                            Intent intent = new Intent(ScanQRActivity_Dynamic.this, CustomPinActivity.class);
+                            intent.putExtra(AppLock.EXTRA_TYPE, AppLock.UNLOCK_PIN);
+                            startActivityForResult(intent, REQUEST_CODE_UNLOCK);
+
+                        } else {
+                            //PROCESS PAYMENT
+                            if (Double.parseDouble(amount) < Double.parseDouble(perTransactionLimit)) {
+                                processPayment(targetUserId, amount);
+                            } else {
+                                DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        switch (which) {
+                                            case DialogInterface.BUTTON_POSITIVE:
+                                                dialog.cancel();
+                                                break;
+                                        }
+                                    }
+                                };
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity_Dynamic.this);
+                                builder.setMessage("The amount payable is greater than your 'per transaction limit'")
+                                        .setPositiveButton("Ok", dialogClickListener).show();
+                            }
+                        }
+                    }
+                } else {
+                    System.out.println("PROCESS QUICK PAY");
+                    processPaymentQuickPay(targetUserId,authCode,amount);
+                }
+            }
+        });
+
+        payText = (TextView)findViewById(R.id.payText);
+        System.out.print("The Payment Type is: "  + paymentType);
+        if (paymentType.equalsIgnoreCase("QuickQR")) {
+            payText.setText("You're Requesting");
+            payBtn.setText("REQUEST");
+        }
+
 
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sessionToken = userPreferences.getString("sessionToken", "");
@@ -192,6 +211,8 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                                     newIntent.putExtra("results",result);
                                     newIntent.putExtra("transactionNumber",transactionNumber);
                                     newIntent.putExtra("amount", amount1);
+                                    newIntent.putExtra("mode", "0");
+                                    newIntent.putExtra("to",targetName);
                                     System.out.println("Amount : " + amount1);
                                     requestQueue.stop();
                                     startActivity(newIntent);
@@ -203,6 +224,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                                     System.out.println("NOT Successful Payment!");
                                     Intent newIntent = new Intent(ScanQRActivity_Dynamic.this, ResultActivity.class);
                                     newIntent.putExtra("title","Transaction");
+                                    newIntent.putExtra("mode", "0");
                                     newIntent.putExtra("results",result);
                                     requestQueue.stop();
                                     startActivity(newIntent);
@@ -290,6 +312,83 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK) {
                 processPayment(targetUserId, amount);;
             }
+        }
+    }
+
+    public void processPaymentQuickPay(String payeeUserId, String authCode, String amount){
+        //SENDER IS MERCHANT
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        try{
+            JSONObject jsonBody = new JSONObject();
+            jsonBody.put("payee_id", payeeUserId);
+            jsonBody.put("merchant_id", userId);
+            jsonBody.put("amount", amount);
+            jsonBody.put("auth_code", authCode);
+            System.out.println("TEST PRINTING 2: " + authCode);
+            System.out.println("TEST PRINTING 2: " + jsonBody);
+            final String amount1 = amount;
+            final Activity act = this;
+            JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, urlPaymentQuickPay, jsonBody, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject response) {
+                    try {
+                        final String transactionNumber = response.getString("transaction_id");
+                        final String result = response.getString("result");
+
+                        System.out.println("Response : " + response);
+                        System.out.println("Result: " + result);
+                        System.out.println("Transaction ID: " + transactionNumber);
+                        act.runOnUiThread(new Runnable(){
+                            @Override
+                            public void run() {
+                                if(result.equalsIgnoreCase("Success")) {
+                                    System.out.println("Successful Payment!");
+                                    //Move to transaction result
+                                    Intent newIntent = new Intent(ScanQRActivity_Dynamic.this, ResultActivity.class);
+                                    newIntent.putExtra("title","Transaction");
+                                    newIntent.putExtra("results",result);
+                                    newIntent.putExtra("transactionNumber",transactionNumber);
+                                    newIntent.putExtra("amount", amount1);
+                                    newIntent.putExtra("mode", "1");
+                                    newIntent.putExtra("to",targetName);
+                                    System.out.println("Amount : " + amount1);
+                                    startActivity(newIntent);
+                                    finish();
+                                }
+                            }
+                        });
+                    }catch(JSONException e){
+                        System.out.println("Error: " + e);
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError error) {
+                    error.printStackTrace();
+                    if(error.networkResponse.statusCode == 400){
+                        System.out.println("NOT Successful Payment!");
+                        Intent newIntent = new Intent(ScanQRActivity_Dynamic.this, ResultActivity.class);
+                        newIntent.putExtra("title","Transaction");
+                        newIntent.putExtra("results","failed");
+                        startActivity(newIntent);
+                        finish();
+                    }
+                    //onBackPressed();
+                }
+            }){
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    final Map<String, String> headers = new HashMap<>();
+                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    System.out.println("Header: " + headers.values());
+                    return headers;
+                }
+            };
+            requestQueue.add(jsonObject);
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.out.println("Error: " + e);
+            e.getMessage();
         }
     }
 }
