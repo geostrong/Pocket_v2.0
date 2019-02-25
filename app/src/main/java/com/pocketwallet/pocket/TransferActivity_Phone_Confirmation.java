@@ -193,6 +193,7 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
                             newIntent.putExtra("transactionNumber",transactionNumber);
                             newIntent.putExtra("amount", amount);
                             newIntent.putExtra("to", name+ " (" + targetPhoneNumber + ")");
+                            newIntent.putExtra("mode", "0");
                             setResult(Activity.RESULT_OK);
                             requestQueue.stop();
                             startActivity(newIntent);
