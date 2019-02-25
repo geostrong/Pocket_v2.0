@@ -710,6 +710,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         dataSet.setCircleColor(getResources().getColor(R.color.colorPrimary));
         dataSet.setLineWidth(2f);
         dataSet.setCircleRadius(10f);
+        dataSet.setValueTextSize(12f);
 
         //Line style receives
         datasetReceive.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -719,6 +720,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         datasetReceive.setCircleColor(getResources().getColor(R.color.colorPrimary));
         datasetReceive.setLineWidth(2f);
         datasetReceive.setCircleRadius(10f);
+        datasetReceive.setValueTextSize(12f);
 
         //Line style total
         datasetTotal.setMode(LineDataSet.Mode.CUBIC_BEZIER);
@@ -728,6 +730,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         datasetTotal.setCircleColor(getResources().getColor(R.color.colorPrimary));
         datasetTotal.setLineWidth(2f);
         datasetTotal.setCircleRadius(10f);
+        datasetTotal.setValueTextSize(12f);
 
         //Chart Style
         chart.getAxisRight().setEnabled(false);
