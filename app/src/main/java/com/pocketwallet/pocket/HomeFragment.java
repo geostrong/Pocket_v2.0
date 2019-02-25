@@ -150,12 +150,15 @@ public class HomeFragment extends Fragment {
                 try{
                     final String balance = response.getString("balance");
                     final String updatedAsOf;
-                    System.out.println(response.getString("balance"));
+                    System.out.println("The Balance is: " + response.getString("balance"));
                     updatedAsOf = response.getString("AS_OF").substring(0, response.getString("AS_OF").length() - 5);
                     SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:a");
                     localDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Singapore"));
+                    System.out.println("Test3");
                     Date updatedTime = localDateFormat.parse(updatedAsOf);
+                    System.out.println("Test4");
                     Date currentTime = localDateFormat.parse(localDateFormat.format(new Date()));
+                    System.out.println("Test5");
                     long difference = currentTime.getTime() - updatedTime.getTime();
                     System.out.println("Current Time = " + currentTime.toString() + " | Updated Time = " + updatedTime.toString() + " | Difference = " + difference/1000);
 
@@ -166,18 +169,23 @@ public class HomeFragment extends Fragment {
                         lastUpdatedText = difference/60 + " minutes ago";
                     }
 
-                    lastUpdatedTxt.post(new Runnable() {
+                    balanceTxt.post(new Runnable() {
                         @Override
                         public void run() {
-                            balanceTxt.setText("$"+balance);
-                            lastUpdatedTxt.setText(lastUpdatedText);
-                            requestQueue.stop();
+                            try {
+                                balanceTxt.setText("$" + balance);
+                                lastUpdatedTxt.setText(lastUpdatedText);
+                                requestQueue.stop();
+                            }catch(Exception e){
+                                e.printStackTrace();
+                                System.out.println("Balance Text is: " + balanceTxt.getText().toString());
+                            }
                         }
                     });
                 }catch(JSONException e){
                     e.printStackTrace();
-                } catch (ParseException p) {
-
+                }catch (ParseException p) {
+                    p.printStackTrace();
                 }
             }
         }, new Response.ErrorListener() {
