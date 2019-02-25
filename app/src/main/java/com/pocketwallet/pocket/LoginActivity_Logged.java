@@ -401,7 +401,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
                 }
             };
             AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity_Logged.this);
-            builder.setMessage("User fingerprint does not work on this device")
+            builder.setMessage("1) Biometric does not work on this device, OR \n\n2)You do not have any registered fingerprints")
                     .setPositiveButton("Ok", dialogClickListener).show();
             return false;
         }

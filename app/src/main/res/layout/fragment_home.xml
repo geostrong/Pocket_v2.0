@@ -206,7 +206,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/view5"
         app:layout_constraintTop_toTopOf="@+id/view3"
-        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintVertical_bias="0.2"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <View
