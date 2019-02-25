@@ -114,7 +114,7 @@ public class ScanQRActivity_Static extends AppCompatActivity {
                             }
                         };
                         AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity_Static.this);
-                        builder.setMessage("Your wallet does not have enough balance to pay. Press 'Top Up' to go to the top up page.")
+                        builder.setMessage("Your wallet does not have enough balance to pay. Press 'Top Up' to go to the top up page.").setTitle("Insufficient Balance")
                                 .setPositiveButton("Top Up", dialogClickListener)
                                 .setNegativeButton("Cancel", dialogClickListener).show();
                     }
@@ -140,7 +140,7 @@ public class ScanQRActivity_Static extends AppCompatActivity {
                                     }
                                 };
                                 AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity_Static.this);
-                                builder.setMessage("The amount payable is greater than your 'per transaction limit'")
+                                builder.setMessage("The amount payable is greater than your 'per transaction limit'").setTitle("Exceeded Limit")
                                         .setPositiveButton("Ok", dialogClickListener).show();
                             }
                         }

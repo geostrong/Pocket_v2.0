@@ -129,7 +129,7 @@ public class ContractActivity_Details extends AppCompatActivity {
                             }
                         };
                         AlertDialog.Builder builder = new AlertDialog.Builder(ContractActivity_Details.this);
-                        builder.setMessage("Your wallet does not have enough balance to pay. Press 'Top Up' to go to the top up page.")
+                        builder.setMessage("Your wallet does not have enough balance to pay. Press 'Top Up' to go to the top up page.").setTitle("Insufficient Balance")
                                 .setPositiveButton("Top Up", dialogClickListener)
                                 .setNegativeButton("Cancel", dialogClickListener).show();
                     } else {

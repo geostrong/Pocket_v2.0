@@ -134,7 +134,7 @@ public class RequestActivity extends AppCompatActivity {
                         }
                     };
                     AlertDialog.Builder builder = new AlertDialog.Builder(RequestActivity.this);
-                    builder.setMessage("Please enter a valid amount!")
+                    builder.setMessage("Please enter a valid amount!").setTitle("Invalid Amount")
                             .setPositiveButton("Ok", dialogClickListener).show();
                 }else {
                     requestingAmountView.setText("$" + requestingAmount);
@@ -172,7 +172,7 @@ public class RequestActivity extends AppCompatActivity {
             }
         };
         AlertDialog.Builder builder = new AlertDialog.Builder(RequestActivity.this);
-        builder.setMessage("Please enter an amount to request!")
+        builder.setMessage("Please enter an amount to request!").setTitle("Invalid Amount")
                 .setPositiveButton("Ok", dialogClickListener).show();
     }
 }
