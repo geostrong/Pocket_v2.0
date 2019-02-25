@@ -54,7 +54,7 @@ public class TransactionLogsAdapter extends RecyclerView.Adapter<TransactionLogs
                 holder.circleImageView.setImageResource(R.drawable.ic_dollar_24px);
             }
             else if (t.getType().equalsIgnoreCase("payment_phone")){
-                holder.circleImageView.setImageResource(R.drawable.ic_dialpad_24px);
+                holder.circleImageView.setImageResource(R.drawable.ic_phone_24px);
             }
             else if (t.getType().equalsIgnoreCase("quickqr")){
                 holder.circleImageView.setImageResource(R.drawable.ic_qrcode);
@@ -70,7 +70,7 @@ public class TransactionLogsAdapter extends RecyclerView.Adapter<TransactionLogs
                 holder.circleImageView.setImageResource(R.drawable.ic_dollar_24px);
             }
             else if (t.getType().equalsIgnoreCase("payment_phone")){
-                holder.circleImageView.setImageResource(R.drawable.ic_dialpad_24px);
+                holder.circleImageView.setImageResource(R.drawable.ic_phone_24px);
             }
             else if (t.getType().equalsIgnoreCase("quickqr")){
                 holder.circleImageView.setImageResource(R.drawable.ic_qrcode);
