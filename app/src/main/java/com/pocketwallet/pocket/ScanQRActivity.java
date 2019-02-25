@@ -156,7 +156,7 @@ public class ScanQRActivity extends AppCompatActivity{
                             startActivity(dynamicIntent);
                             finish();
                         }else{
-                            DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                            final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     switch (which){
@@ -166,9 +166,13 @@ public class ScanQRActivity extends AppCompatActivity{
                                     }
                                 }
                             };
-                            AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity.this);
-                            builder.setMessage("Please use the request page for Quick Pay").setTitle("Use request page scanner")
-                                    .setPositiveButton("Ok", dialogClickListener).show();
+                            ScanQRActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity.this);
+                                    builder.setMessage("Please use the request page for Quick Pay").setTitle("Use request page scanner")
+                                            .setPositiveButton("Ok", dialogClickListener).show();
+                                }
+                            });
                         }
                     }
                     else if (qrType.equals("Dynamic")) {
@@ -188,6 +192,24 @@ public class ScanQRActivity extends AppCompatActivity{
                             dynamicIntent.putExtra("targetName", targetName);
                             startActivity(dynamicIntent);
                             finish();
+                        }else{
+                            final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which){
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            dialog.cancel();
+                                            break;
+                                    }
+                                }
+                            };
+                            ScanQRActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity.this);
+                                    builder.setMessage("Please use the Scan QR in the Home page").setTitle("Use home page Scan QR")
+                                            .setPositiveButton("Ok", dialogClickListener).show();
+                                }
+                            });
                         }
                     } else if (qrType.equals("Static")) {
                         if (!isFromRequestActivity) {
@@ -203,9 +225,27 @@ public class ScanQRActivity extends AppCompatActivity{
                             staticIntent.putExtra("targetName", targetName);
                             startActivity(staticIntent);
                             finish();
+                        }else{
+                            final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    switch (which){
+                                        case DialogInterface.BUTTON_POSITIVE:
+                                            dialog.cancel();
+                                            break;
+                                    }
+                                }
+                            };
+                            ScanQRActivity.this.runOnUiThread(new Runnable() {
+                                public void run() {
+                                    AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity.this);
+                                    builder.setMessage("Please use the Scan QR in the Home page").setTitle("Use home page Scan QR")
+                                            .setPositiveButton("Ok", dialogClickListener).show();
+                                }
+                            });
                         }
                     }else{
-                        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+                        final DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 switch (which){
@@ -215,11 +255,14 @@ public class ScanQRActivity extends AppCompatActivity{
                                 }
                             }
                         };
-                        AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity.this);
-                        builder.setMessage("The scanned QR is not recognized").setTitle("Invalid QR")
-                                .setPositiveButton("Ok", dialogClickListener).show();
+                        ScanQRActivity.this.runOnUiThread(new Runnable() {
+                            public void run() {
+                                AlertDialog.Builder builder = new AlertDialog.Builder(ScanQRActivity.this);
+                                builder.setMessage("The scanned QR is not recognized").setTitle("Invalid QR")
+                                        .setPositiveButton("Ok", dialogClickListener).show();
+                            }
+                        });
                     }
-                    finish();
                 }
             }
         });
