@@ -190,7 +190,7 @@ public class ScanQRActivity extends AppCompatActivity{
                             finish();
                         }
                     } else if (qrType.equals("Static")) {
-                        if (isFromRequestActivity) {
+                        if (!isFromRequestActivity) {
                             //Static
                             String targetUserId = results[1];
                             String targetName = results[2];
