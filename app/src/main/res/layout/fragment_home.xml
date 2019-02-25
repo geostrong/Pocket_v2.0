@@ -9,23 +9,21 @@
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/myPocketButton"
-        android:layout_width="340dp"
-        android:layout_height="200dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
         android:background="@drawable/bg_pocketlayout"
         android:clickable="true"
         android:elevation="10dp"
         android:focusable="true"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/view3"
+        app:layout_constraintDimensionRatio="1.586:1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.768">
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:id="@+id/lastUpdated"
@@ -97,16 +95,15 @@
     <View
         android:id="@+id/view3"
         android:layout_width="0dp"
-        android:layout_height="437dp"
-        android:layout_marginTop="380dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
         android:background="?android:colorBackground"
         android:translationZ="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/myPocketButton" />
 
     <Button
         android:id="@+id/quickQRBtn"
@@ -126,7 +123,7 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintBottom_toTopOf="@+id/requestText"
         app:layout_constraintDimensionRatio="h,1:1"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/myPocketButton"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/scanQRBtn"
         app:layout_constraintTop_toTopOf="@+id/view5"
@@ -195,7 +192,7 @@
         app:layout_constraintDimensionRatio="h,1:1"
         app:layout_constraintEnd_toStartOf="@+id/scanQRBtn"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/myPocketButton"
         app:layout_constraintTop_toTopOf="@+id/view5"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -226,7 +223,7 @@
     <TextView
         android:id="@+id/payText"
         android:layout_width="wrap_content"
-        android:layout_height="16dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:text="Pay"
@@ -236,7 +233,7 @@
         app:layout_constraintEnd_toEndOf="@+id/view5"
         app:layout_constraintHorizontal_bias="0.021"
         app:layout_constraintStart_toStartOf="@+id/payButton"
-        app:layout_constraintTop_toBottomOf="@+id/myPocketButton"
+        app:layout_constraintTop_toTopOf="@+id/view3"
         app:layout_constraintVertical_chainStyle="packed" />
 
     <TextView
