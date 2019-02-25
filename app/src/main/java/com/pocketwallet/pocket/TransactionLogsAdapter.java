@@ -72,8 +72,8 @@ public class TransactionLogsAdapter extends RecyclerView.Adapter<TransactionLogs
             else if (t.getType().equalsIgnoreCase("payment_phone")){
                 holder.circleImageView.setImageResource(R.drawable.ic_phone_24px);
             }
-            else if (t.getType().equalsIgnoreCase("quickqr")){
-                holder.circleImageView.setImageResource(R.drawable.ic_qrcode);
+            else if (t.getType().equalsIgnoreCase("QuickPay")){
+                holder.circleImageView.setImageResource(R.drawable.ic_quickpay_black);
             }
             else if (t.getType().equalsIgnoreCase("topup")){
                 holder.circleImageView.setImageResource(R.drawable.ic_credit_card_24px);
