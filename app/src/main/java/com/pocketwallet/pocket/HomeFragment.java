@@ -36,6 +36,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
 
@@ -152,7 +153,7 @@ public class HomeFragment extends Fragment {
                     final String updatedAsOf;
                     System.out.println("The Balance is: " + response.getString("balance"));
                     updatedAsOf = response.getString("AS_OF").substring(0, response.getString("AS_OF").length() - 5);
-                    SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:a");
+                    SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:a",Locale.US);
                     localDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Singapore"));
                     System.out.println("Test3");
                     Date updatedTime = localDateFormat.parse(updatedAsOf);
