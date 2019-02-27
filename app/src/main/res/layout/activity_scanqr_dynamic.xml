@@ -41,55 +41,93 @@ tools:context=".ScanQRActivity_Static">
     app:layout_constraintTop_toBottomOf="@+id/constraintLayout3"
     app:layout_constraintVertical_bias="0.0">
 
-    <TextView
-        android:id="@+id/nametext2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="78dp"
-        android:text="Name:"
-        android:textSize="16sp" />
-
-    <TextView
-        android:id="@+id/payText"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="8dp"
-        android:text="You're Paying"
-        android:textAlignment="center"
-        android:textSize="20sp" />
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/involvedName2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="78dp"
-        android:text="@string/name_involved"
-        android:textColor="#5e76fa"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/involvedName2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="32dp"
+            android:text="@string/name_involved"
+            android:textColor="#5e76fa"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/payText" />
 
-    <TextView
-        android:id="@+id/involvedNumber2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="180dp"
-        android:layout_marginTop="120dp"
-        android:text="@string/phoneNo_involved"
-        android:textColor="#5e76fa"
-        android:textSize="14sp" />
+        <TextView
+            android:id="@+id/numbertext2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Phone Number:"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="@+id/nametext2"
+            app:layout_constraintTop_toBottomOf="@+id/nametext2" />
 
-    <TextView
-        android:id="@+id/numbertext2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="120dp"
-        android:layout_marginBottom="16dp"
-        android:text="Phone Number:"
-        android:textSize="16sp" />
+        <TextView
+            android:id="@+id/involvedNumber2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/phoneNo_involved"
+            android:textColor="#5e76fa"
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="@+id/involvedName2"
+            app:layout_constraintTop_toBottomOf="@+id/involvedName2" />
+
+        <TextView
+            android:id="@+id/payText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:text="You're Paying"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/totalText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="32dp"
+            android:text="Amount:"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/totalAmount"
+            app:layout_constraintTop_toBottomOf="@id/numbertext2" />
+
+        <TextView
+            android:id="@+id/nametext2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="32dp"
+            android:text="Name:"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/payText" />
+
+        <TextView
+            android:id="@+id/totalAmount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:text="@string/amount"
+            android:textAlignment="viewEnd"
+            android:textColor="#5e76fa"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/totalText" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         style="@style/dividerHorizontal"
@@ -99,34 +137,6 @@ tools:context=".ScanQRActivity_Static">
         app:layout_constraintBottom_toTopOf="@+id/totalText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/totalAmount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="275dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/amount"
-        android:textAlignment="viewEnd"
-        android:textColor="#5e76fa"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/numbertext2" />
-
-    <TextView
-        android:id="@+id/totalText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="200dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:text="Amount:"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/numbertext2" />
 
 </android.support.v7.widget.CardView>
 
