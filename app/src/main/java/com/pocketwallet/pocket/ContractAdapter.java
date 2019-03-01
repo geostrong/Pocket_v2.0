@@ -57,8 +57,7 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
         }else{
             holder.textViewContractStatus.setText("Terminated");
         }
-        //holder.textViewAmount.setText(listContract.getAmount());
-        //holder.textViewFrequency.setText(listContract.getFrequency());
+
         holder.textViewStartDate.setText(listContract.getStartDate());
 
         final boolean isExpanded = position==mExpandedPosition;
@@ -94,8 +93,6 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-
-        //TextView textViewName, textViewNumber, textViewDescription, textViewEndDate, textViewPayingOn, textViewEndDate2, textViewFeePerFreq, textViewFrequency, textViewPerSign, textViewMoreBtn, textViewStatus, textViewStartDate, textViewDashText, textViewPayingOnText;
 
         TextView textViewDashText, textViewMoreBtn, textViewFrequency, textViewContractName, textViewContractStatus, textViewDescription, textViewAmount, textViewStartDate, textViewEndDate, textViewEndDate2, textViewPayeeName;
 
