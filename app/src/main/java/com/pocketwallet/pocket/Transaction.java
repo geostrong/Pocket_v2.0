@@ -25,16 +25,6 @@ public class Transaction {
 
     private String title = " ";
 
-        /*
-    public Transaction (String nameInvolved, String numberInvolved, String transactAmount, String transactID, String transactDate, String transactTime){
-        this.nameInvolved = nameInvolved;
-        this.numberInvolved = numberInvolved;
-        this.transactAmount = transactAmount;
-        this.transactID = transactID;
-        this.transactDate = transactDate;
-        this.transactTime = transactTime;
-    }*/
-
     public Transaction(String transactionRefID, String type, String senderID, String receiverID, String amount,
                        String dateStr, boolean incoming){
         this.transactionID = transactionRefID;
@@ -58,30 +48,20 @@ public class Transaction {
         System.out.println("Timestamp: " + timestamp);
 
     }
-
-    public String getTransactionID(){
-        return transactionID;
-    }
-
     public String getType(){
         return type;
     }
-
     public String getAmount(){
         return amount;
     }
-
     public String getNumber(){
         return numberInvolved;
     }
-
     public boolean getisIncoming() {return isIncoming; }
-
     public String getName() {
         if (!getisIncoming()) {
             return destination;
         }
-
         return origin;
     }
     public String getTimestampToString () {
@@ -105,9 +85,5 @@ public class Transaction {
         }
 
         return "-$" + getAmount();
-    }
-
-    public void setDisplayAmount(String displayAmount) {
-        this.displayAmount = displayAmount;
     }
 }

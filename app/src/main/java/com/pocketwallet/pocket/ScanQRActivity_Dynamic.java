@@ -45,6 +45,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
     private String targetName;
     private String amount;
     private String targetUserId;
+    private String targetPhoneNumber;
     private String authCode;
     private String paymentType;
     private String balance;
@@ -59,6 +60,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
     TextView balanceTxt;
     TextView targetNameText;
     TextView payText;
+    TextView targetPhoneNumberText;
 
     //Session Token
     private String sessionToken;
@@ -81,6 +83,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             amount = extras.getString("amount");
             targetUserId = extras.getString("targetUserId");
             targetName = extras.getString("targetName");
+            targetPhoneNumber = extras.getString("targetPhoneNumber");
             paymentType = extras.getString("paymentType");
             authCode = extras.getString("targetAuthCode");
             //SET URL
@@ -93,9 +96,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //Move to transaction result
-                System.out.println("PAYMENT TYPE = " + paymentType);
-                if (paymentType.equalsIgnoreCase("Dynamic")) {
-                    System.out.println("PROCESS DYNAMIC");
+                if (paymentType.equalsIgnoreCase("Dynamic")) {;
                     if (Double.parseDouble(balance) < Double.parseDouble(amount)) {
                         DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                             @Override
@@ -144,14 +145,12 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                         }
                     }
                 } else {
-                    System.out.println("PROCESS QUICK PAY");
                     processPaymentQuickPay(targetUserId,authCode,amount);
                 }
             }
         });
 
         payText = (TextView)findViewById(R.id.payText);
-        System.out.print("The Payment Type is: "  + paymentType);
         if (paymentType.equalsIgnoreCase("QuickQR")) {
             payText.setText("You're Requesting");
             payBtn.setText("REQUEST");
@@ -167,6 +166,8 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
         totalAmountText.setText("$"+ amount);
         targetNameText = (TextView) findViewById(R.id.involvedName2);
         targetNameText.setText(targetName);
+        targetPhoneNumberText = (TextView) findViewById(R.id.involvedNumber2);
+        targetPhoneNumberText.setText(targetPhoneNumber);
         updateBalance();
     }
 
@@ -185,7 +186,6 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             jsonBody.put("merchant_id", merchantUserId);
             jsonBody.put("amount", amount);
             //jsonBody.put("auth_code", authCode);
-            System.out.println("TEST PRINTING: " + jsonBody);
             final String amount1 = amount;
             final Activity act = this;
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, urlPayment, jsonBody, new Response.Listener<JSONObject>() {
@@ -195,16 +195,10 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                         final String transactionNumber = response.getString("transaction_id");
                         final String result = response.getString("result");
 
-                        System.out.println("Response : " + response);
-                        System.out.println("Result: " + result);
-                        System.out.println("Transaction ID: " + transactionNumber);
                         act.runOnUiThread(new Runnable(){
                             @Override
                             public void run() {
                                 if(result.equalsIgnoreCase("Success")) {
-                                    System.out.println("Successful Payment!");
-                                    //mTextView.setText("Transaction is successful!"
-                                    //        + "\nTransaction Number:" + transactionNumber);
                                     //Move to transaction result
                                     Intent newIntent = new Intent(ScanQRActivity_Dynamic.this, ResultActivity.class);
                                     newIntent.putExtra("title","Transaction");
@@ -213,15 +207,11 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                                     newIntent.putExtra("amount", amount1);
                                     newIntent.putExtra("mode", "0");
                                     newIntent.putExtra("to",targetName);
-                                    System.out.println("Amount : " + amount1);
                                     requestQueue.stop();
                                     startActivity(newIntent);
                                     finish();
                                 }else{
-                                    //mTextView.setText("Transaction failed"
-                                    //        + "\nTransaction Number:" + transactionNumber);
                                     //Move to transaction result
-                                    System.out.println("NOT Successful Payment!");
                                     Intent newIntent = new Intent(ScanQRActivity_Dynamic.this, ResultActivity.class);
                                     newIntent.putExtra("title","Transaction");
                                     newIntent.putExtra("mode", "0");
@@ -247,7 +237,7 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }
@@ -271,7 +261,6 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try{
                     balance = response.getString("balance");
-                    System.out.println(response.getString("balance"));
                     balanceTxt.post(new Runnable() {
                         @Override
                         public void run() {
@@ -305,7 +294,6 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TopUpCode) {
             if (resultCode == Activity.RESULT_OK) {
-                System.out.println("Top Up Successful");
                 updateBalance();
             }
         } else if (requestCode == REQUEST_CODE_UNLOCK) {
@@ -324,8 +312,6 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             jsonBody.put("merchant_id", userId);
             jsonBody.put("amount", amount);
             jsonBody.put("auth_code", authCode);
-            System.out.println("TEST PRINTING 2: " + authCode);
-            System.out.println("TEST PRINTING 2: " + jsonBody);
             final String amount1 = amount;
             final Activity act = this;
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, urlPaymentQuickPay, jsonBody, new Response.Listener<JSONObject>() {
@@ -334,15 +320,10 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                     try {
                         final String transactionNumber = response.getString("transaction_id");
                         final String result = response.getString("result");
-
-                        System.out.println("Response : " + response);
-                        System.out.println("Result: " + result);
-                        System.out.println("Transaction ID: " + transactionNumber);
                         act.runOnUiThread(new Runnable(){
                             @Override
                             public void run() {
                                 if(result.equalsIgnoreCase("Success")) {
-                                    System.out.println("Successful Payment!");
                                     //Move to transaction result
                                     Intent newIntent = new Intent(ScanQRActivity_Dynamic.this, ResultActivity.class);
                                     newIntent.putExtra("title","Transaction");
@@ -351,7 +332,6 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                                     newIntent.putExtra("amount", amount1);
                                     newIntent.putExtra("mode", "1");
                                     newIntent.putExtra("to",targetName);
-                                    System.out.println("Amount : " + amount1);
                                     startActivity(newIntent);
                                     finish();
                                 }
@@ -366,20 +346,18 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
                 public void onErrorResponse(VolleyError error) {
                     error.printStackTrace();
                     if(error.networkResponse.statusCode == 400){
-                        System.out.println("NOT Successful Payment!");
                         Intent newIntent = new Intent(ScanQRActivity_Dynamic.this, ResultActivity.class);
                         newIntent.putExtra("title","Transaction");
                         newIntent.putExtra("results","failed");
                         startActivity(newIntent);
                         finish();
                     }
-                    //onBackPressed();
                 }
             }){
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }
@@ -387,8 +365,6 @@ public class ScanQRActivity_Dynamic extends AppCompatActivity {
             requestQueue.add(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
-            System.out.println("Error: " + e);
-            e.getMessage();
         }
     }
 }

@@ -93,11 +93,6 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
     }
 
     private void Payment() {
-        System.out.println("Sending Payment To Server...");
-        System.out.println("Payee_id: " + payeeUserId);
-        System.out.println("Merchant_id: " + userId);
-        System.out.println("Auth_code: " + authCode);
-        System.out.println("Amount: " + amount);
         // Instantiate the cache
         Cache cache = new DiskBasedCache(getCacheDir(), 1024 * 1024); // 1MB cap
         // Set up the network to use HttpURLConnection as the HTTP client.
@@ -111,7 +106,6 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
             jsonBody.put("merchant_id", userId);
             jsonBody.put("amount", amount);
             jsonBody.put("auth_code", authCode);
-            System.out.println("TEST PRINTING: " + jsonBody);
             final String amount1 = amount;
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, urlPayment, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
@@ -150,13 +144,12 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
                         startActivity(newIntent);
                         finish();
                     }
-                    //onBackPressed();
                 }
             }) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }
@@ -204,7 +197,6 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
         String encryptedText = new String(msg.getRecords()[0].getPayload());
         try {
             encryptedText = AESUtils.decrypt(encryptedText);
-            System.out.println("decrypted:" + encryptedText);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -214,8 +206,7 @@ public class RequestActivity_NFC_Ready extends AppCompatActivity {
         String authCode = results[1];
 
         // record 0 contains the MIME type, record 1 is the AAR, if present
-        System.out.println("NFC MESSAGE RECEIVED: " + new String(msg.getRecords()[0].getPayload()));
-        System.out.println("PAYEEUSERID: " + payeeUserId);
+        //System.out.println("NFC MESSAGE RECEIVED: " + new String(msg.getRecords()[0].getPayload()));
         processNFC(userId, payeeUserId,authCode);
     }
 

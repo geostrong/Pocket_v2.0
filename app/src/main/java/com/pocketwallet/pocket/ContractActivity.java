@@ -91,18 +91,16 @@ public class ContractActivity extends AppCompatActivity {
         try {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user_id", userId);
-            System.out.println("User ID: " +jsonBody);
             if(!urlRetrieveContracts.contains("contract")) {
                 urlRetrieveContracts = urlRetrieveContracts + "contract" + "/" + userId;
             }
-            System.out.println("urlRetrieverContracts: " + urlRetrieveContracts);
+
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlRetrieveContracts, jsonBody,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
                                 String result = response.getString("result");
-                                System.out.println("Results: " + result);
                                if(result.equalsIgnoreCase("Success")){
                                     JSONArray contractsArray = response.getJSONArray("contracts");
                                     for(int i = 0; i < contractsArray.length(); i++){
@@ -114,13 +112,6 @@ public class ContractActivity extends AppCompatActivity {
                                                     tempContract.getString("frequency"), tempContract.getString("penaltyAmount"),tempContract.getString("createdDate"),
                                                     tempContract.getString("startDate"),tempContract.getString("endDate"),tempContract.getString("contractName"),
                                                     tempContract.getString("user1_phone"),tempContract.getString("user2_phone"));
-                                            System.out.println("ContractID: " + contract.getContractID() + " | contractStatus: " + contract.getContractStatus()
-                                                                + " | user1_id: " + contract.getUser1ID() + " | user2_id: " + contract.getUser2ID() + " | user1_ack: " + contract.getUser1ACK()
-                                                                + " | user2_ack: " + contract.getUser2ACK() + " | description: " + contract.getDescription() + " | amount: " + contract.getAmount()
-                                                                + " | frequency: " + contract.getFrequency() + " | penalty_amount: " + contract.getPenaltyAmount() + " | createdDate: " + contract.getCreatedDate()
-                                                                + " | startDate: " + contract.getStartDate() + " | endDate: " + contract.getEndDate() + " | receiverName: " + contract.getReceiverName()
-                                                    + " | user1PhoneNum: " + contract.getUser1PhoneNum() + " | payeeName: " + contract.getPayeeName() + " | user2PhoneNum: " + contract.getUser2PhoneNum());
-
                                             listContracts.add(contract);
                                     }
                                 }
@@ -143,7 +134,7 @@ public class ContractActivity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }

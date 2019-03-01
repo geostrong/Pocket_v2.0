@@ -68,7 +68,6 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
 
         //GET INFORMATION FROM BUNDLE
         extras = getIntent().getExtras();
-        System.out.println("extras: " + extras);
 
         if (extras != null) {
             userId = extras.getString("userId");
@@ -153,7 +152,6 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TopUpCode) {
             if (resultCode == Activity.RESULT_OK) {
-                System.out.println("Top Up Successful");
                 updateBalance();
             }
         } else if (requestCode == REQUEST_CODE_UNLOCK) {
@@ -176,7 +174,6 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
             jsonBody.put("payee_id", userId);
             jsonBody.put("merchant_phone", targetPhoneNumber);
             jsonBody.put("amount", amount);
-            System.out.println("Send Details: " +  jsonBody);
 
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, urlPayment, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
@@ -184,7 +181,6 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
                     try {
                         String result = response.getString("result");
                         String transactionNumber = response.getString("transaction_id");
-                        System.out.println("Response Body: " + response.toString());
                         if(result.equals("success")){
                             //Move to transaction result
                             Intent newIntent = new Intent(TransferActivity_Phone_Confirmation.this, ResultActivity.class);
@@ -200,7 +196,6 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
                             finish();
                         }else {
                             //Failed
-                            System.out.println("NOT Successful Payment!");
                             Intent newIntent = new Intent(TransferActivity_Phone_Confirmation.this, ResultActivity.class);
                             newIntent.putExtra("title","Transaction");
                             newIntent.putExtra("results","phonePaymentFailed");
@@ -230,7 +225,7 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }
@@ -249,7 +244,6 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try{
                     balance = response.getString("balance");
-                    System.out.println(response.getString("balance"));
                     balanceTxt.post(new Runnable() {
                         @Override
                         public void run() {
@@ -269,7 +263,7 @@ public class TransferActivity_Phone_Confirmation extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 final Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                headers.put("Authorization", "Bearer " + sessionToken);
                 System.out.println("Header: " + headers.values());
                 return headers;
             }

@@ -193,17 +193,13 @@ public class ContractActivity_Create extends AppCompatActivity {
             jsonBody.put("startDate", startDate.getText().toString());
             jsonBody.put("endDate", endDate.getText().toString());
 
-            System.out.println("JSON BODY: " +jsonBody);
-
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlCreateContract, jsonBody,
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
                                 String result = response.getString("result");
-                                System.out.println("Results: " + result);
                                 if(result.equalsIgnoreCase("Success")){
-                                    System.out.println(response.getString("contract_id"));
                                     requestQueue.stop();
                                     finish();
                                 }
@@ -220,13 +216,12 @@ public class ContractActivity_Create extends AppCompatActivity {
                     System.out.println("Error Network Response Status Code" + error.networkResponse.statusCode);
                     requestQueue.stop();
                     finish();
-                    //onBackPressed();
                 }
             }){
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }

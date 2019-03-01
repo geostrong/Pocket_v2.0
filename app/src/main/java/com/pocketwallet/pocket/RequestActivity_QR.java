@@ -36,7 +36,6 @@ public class RequestActivity_QR extends AppCompatActivity {
         if (extras != null) {
             userId = extras.getString("userId");
             amount = extras.getString("requestingAmount");
-            System.out.println("Amount =" + amount);
         }
         userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -59,15 +58,12 @@ public class RequestActivity_QR extends AppCompatActivity {
     private void generateQR() {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
-            String toQR = "Dynamic|" + userId + "|" + amount + "|" + userPreferences.getString("user_name", "Name");;
-            System.out.println("TOQR: " + toQR);
+            String toQR = "Dynamic|" + userId + "|" + amount + "|" + userPreferences.getString("user_name", "Name") + "|" + userPreferences.getString("PhoneNumber", "-");
             try {
                 toQR = AESUtils.encrypt(toQR);
-                System.out.println("encrypted:" + toQR);
             } catch (Exception e) {
                 e.printStackTrace();
             }
-            System.out.println("MY QR SIZ 2 -> Width = " + generatedQR.getWidth() + " |  Height = " +  generatedQR.getHeight());
             BitMatrix bitMatrix = multiFormatWriter.encode(toQR, BarcodeFormat.QR_CODE,generatedQR.getWidth(),generatedQR.getHeight());
             BarcodeEncoder barcodeEncoder = new BarcodeEncoder();
             Bitmap bitmap = barcodeEncoder.createBitmap(bitMatrix);

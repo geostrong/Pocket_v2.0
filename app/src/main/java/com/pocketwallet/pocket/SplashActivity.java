@@ -2,7 +2,6 @@ package com.pocketwallet.pocket;
 
 import android.Manifest;
 import android.app.Activity;
-import android.app.Application;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -36,9 +35,7 @@ public class SplashActivity extends Activity {
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(SplashActivity.this,
                     new String[]{Manifest.permission.CAMERA}, MY_PERMISSIONS_REQUEST_CAMERA);
-        } else {
-
-            //Check for logged in before
+        } else {//Check for logged in before
 
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -47,7 +44,6 @@ public class SplashActivity extends Activity {
                 }
             }, 1000);
         }
-
     }
 
     @Override

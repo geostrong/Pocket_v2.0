@@ -462,10 +462,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         try {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user_id", userId);
-            System.out.println("User ID: " +jsonBody);
             urlRetrieveTransactionHistory += "/" + userId;
-
-            System.out.println("urlRetrieveTransactionHistory: " + urlRetrieveTransactionHistory);
 
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, urlRetrieveTransactionHistory, jsonBody,
                     new Response.Listener<JSONObject>() {
@@ -473,7 +470,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                 public void onResponse(JSONObject response) {
                     try {
                         String result = response.getString("result");
-                        System.out.println("Results: " + result);
 
                         if(result.equalsIgnoreCase("Success")){
                             JSONArray transactionArray = response.getJSONArray("transactions");
@@ -515,13 +511,12 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                     System.out.println("Error Network Response Data: " + new String(error.networkResponse.data));
                     System.out.println("Error Network Response Status Code" + error.networkResponse.statusCode);
                     requestQueue.stop();
-                    //onBackPressed();
                 }
             }){
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }
@@ -534,7 +529,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
 
     public void createAdapterView(){
         adapter = new TransactionLogsAdapter(listTransactions,this);
-        //transactionListView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
         transactionListView.setAdapter(adapter);
     }
 
@@ -546,8 +540,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         searchView = (SearchView) menu.findItem(R.id.action_search).getActionView();
         searchView.setSearchableInfo((searchManager.getSearchableInfo(getComponentName())));
         searchView.setMaxWidth(Integer.MAX_VALUE);
-
-        System.out.println("Submit = " + searchView.isSubmitButtonEnabled());
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
@@ -570,7 +562,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_search) {
             return true;
         }
@@ -589,8 +580,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         List<Entry> receiveEntries = new ArrayList<>();
         List<Entry> totalEntries = new ArrayList<>();
 
-        System.out.println(janTotal + "HHHHHHHHHHHHHHHH");
-        System.out.println(febTotal + "HHHHHHHHHHHHHHHH");
         //Add data x and y data here
         switch (latestMonth) {
             case 11:    if (i == 100) {
@@ -634,8 +623,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                         break;
         }
 
-        System.out.println(i + " is the current i");
-
         int k = i;
         int h = 0;
 
@@ -648,8 +635,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
                     }
                 }
                 h++;
-                System.out.println("Looped " + h + " times");
-                System.out.println("month " + j + " got " + latestMonthReceives[k]);
                 entries.add(new Entry(j, latestMonthPayment[k]));
                 receiveEntries.add(new Entry(j, latestMonthReceives[k]));
                 totalEntries.add(new Entry(j, latestMonthTotal[k]));
@@ -737,7 +722,7 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
         chart.getAxisLeft().setEnabled(false);
         chart.getXAxis().setValueFormatter(formatter);
         chart.getXAxis().setGranularity(1f);
-        //chart.getXAxis().setTextColor(getResources().getColor(R.color.colorPrimary));
+
         chart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
         chart.getXAxis().setDrawGridLines(false);
         chart.getXAxis().setDrawAxisLine(false);
@@ -762,12 +747,10 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
             chartData.addDataSet(datasetTotal);
         }
 
-
         chart.setData(chartData);
         chart.invalidate();
         chart.setVisibleXRange(1,3);
         chart.animateY(2000, Easing.Linear);
-        //chart.centerViewToAnimated(Calendar.getInstance().get(Calendar.MONDAY),0, YAxis.AxisDependency.LEFT,2000);
     }
 
     @Override
@@ -778,7 +761,6 @@ public class TransactionLogsActivity extends AppCompatActivity implements Transa
 
     @Override
     public void onBackPressed() {
-        // close search view on back button pressed
         if (!searchView.isIconified()) {
             searchView.setIconified(true);
             return;

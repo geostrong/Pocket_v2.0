@@ -38,8 +38,6 @@ public class TransactionLogsAdapter extends RecyclerView.Adapter<TransactionLogs
         return new ViewHolder(v);
     }
 
-
-
     @Override
     public void onBindViewHolder (ViewHolder holder, final int position){
         Transaction t = transactionListFiltered.get(position);

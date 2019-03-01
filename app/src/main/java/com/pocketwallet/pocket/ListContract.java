@@ -5,12 +5,9 @@ import java.io.Serializable;
 public class ListContract implements Serializable {
     private String nameInvolved;
     private String numberInvolved;
-    //private String description;
-    //private String endDate;
     private String feePerFreq;
-    //private String frequency;
     private String status;
-    //private String startDate;
+    //
     private String payingOn;
 
 

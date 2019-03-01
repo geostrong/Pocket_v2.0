@@ -48,11 +48,13 @@ public class ScanQRActivity_Static extends AppCompatActivity {
     TextView balanceTxt;
     TextView targetNameText;
     TextView payText;
+    TextView targetPhoneNumberText;
 
     private String amount;
     private String userId;
     private String targetUserId;
     private String targetName;
+    private String targetPhoneNumber;
     private String paymentType;
     private String authCode;
     private Bundle extras;
@@ -149,8 +151,6 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             }
         });
 
-        System.out.print("The Payment Type is: "  + paymentType);
-
         SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         sessionToken = userPreferences.getString("sessionToken", "");
         perTransactionLimit = userPreferences.getString("per_transaction_limit", "999");
@@ -159,6 +159,8 @@ public class ScanQRActivity_Static extends AppCompatActivity {
         balanceTxt = (TextView) findViewById(R.id.balanceText);
         targetNameText = (TextView) findViewById(R.id.involvedName2);
         targetNameText.setText(targetName);
+        targetPhoneNumberText = (TextView) findViewById(R.id.involvedNumber2);
+        targetPhoneNumberText.setText(targetPhoneNumber);
         updateBalance();
     }
     public void processPayment(String merchantUserId, String amount){
@@ -175,8 +177,7 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             jsonBody.put("payee_id", userId);
             jsonBody.put("merchant_id", merchantUserId);
             jsonBody.put("amount", amount);
-            //jsonBody.put("auth_code", authCode);
-            System.out.println("TEST PRINTING: " + jsonBody);
+
             final String amount1 = amount;
             final Activity act = this;
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, urlPayment, jsonBody, new Response.Listener<JSONObject>() {
@@ -186,16 +187,10 @@ public class ScanQRActivity_Static extends AppCompatActivity {
                         final String transactionNumber = response.getString("transaction_id");
                         final String result = response.getString("result");
 
-                        System.out.println("Response : " + response);
-                        System.out.println("Result: " + result);
-                        System.out.println("Transaction ID: " + transactionNumber);
                         act.runOnUiThread(new Runnable(){
                             @Override
                             public void run() {
                                 if(result.equalsIgnoreCase("Success")) {
-                                    System.out.println("Successful Payment!");
-                                    //mTextView.setText("Transaction is successful!"
-                                    //        + "\nTransaction Number:" + transactionNumber);
                                     //Move to transaction result
                                     Intent newIntent = new Intent(ScanQRActivity_Static.this, ResultActivity.class);
                                     newIntent.putExtra("title","Transaction");
@@ -203,15 +198,11 @@ public class ScanQRActivity_Static extends AppCompatActivity {
                                     newIntent.putExtra("transactionNumber",transactionNumber);
                                     newIntent.putExtra("amount", amount1);
                                     newIntent.putExtra("mode", "0");
-                                    System.out.println("Amount : " + amount1);
                                     requestQueue.stop();
                                     startActivity(newIntent);
                                     finish();
                                 }else{
-                                    //mTextView.setText("Transaction failed"
-                                    //        + "\nTransaction Number:" + transactionNumber);
                                     //Move to transaction result
-                                    System.out.println("NOT Successful Payment!");
                                     Intent newIntent = new Intent(ScanQRActivity_Static.this, ResultActivity.class);
                                     newIntent.putExtra("title","Transaction");
                                     newIntent.putExtra("results",result);
@@ -236,7 +227,7 @@ public class ScanQRActivity_Static extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }
@@ -271,7 +262,6 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try{
                     balance = response.getString("balance");
-                    System.out.println(response.getString("balance"));
                     balanceTxt.post(new Runnable() {
                         @Override
                         public void run() {
@@ -291,7 +281,7 @@ public class ScanQRActivity_Static extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 final Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                headers.put("Authorization", "Bearer " + sessionToken);
                 System.out.println("Header: " + headers.values());
                 return headers;
             }
@@ -302,7 +292,6 @@ public class ScanQRActivity_Static extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TopUpCode) {
             if (resultCode == Activity.RESULT_OK) {
-                System.out.println("Top Up Successful");
                 updateBalance();
             }
         } else if (requestCode == REQUEST_CODE_UNLOCK) {

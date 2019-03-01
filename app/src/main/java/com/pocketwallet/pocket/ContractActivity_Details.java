@@ -145,8 +145,7 @@ public class ContractActivity_Details extends AppCompatActivity {
         if(userId.equals(listContracts.get(position).getUser2ID())){
             listContracts.get(position).setPayeeName(name);
             listContracts.get(position).setReceiverName(listContracts.get(position).getUser1ID());
-            System.out.println("TestName: " + name);
-            System.out.println("TestName2: " + listContracts.get(position).getUser1ID());
+
             if(!listContracts.get(position).getContractStatus().equals(("0"))){
                 acceptButton.setVisibility(View.GONE);
                 declineButton.setVisibility(View.GONE);
@@ -161,7 +160,6 @@ public class ContractActivity_Details extends AppCompatActivity {
         }else{
             acceptButton.setVisibility(View.GONE);
             declineButton.setVisibility(View.GONE);
-            System.out.println("TestName: " + name);
             listContracts.get(position).setReceiverName(name);
             listContracts.get(position).setPayeeName(listContracts.get(position).getUser2ID());
         }
@@ -196,19 +194,15 @@ public class ContractActivity_Details extends AppCompatActivity {
             jsonBody.put("user_id", userId);
             jsonBody.put("contract_id",contractId);
             jsonBody.put("decision",decision);
-            System.out.println("Details: " + jsonBody);
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, ACKNOWLEDGE_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
                         String result = response.getString("result");
-                        System.out.println("Results: " + result);
                         if (result.equals("success")) {
-                            System.out.println("Acknowledge Contract Success!");
                             requestQueue.stop();
                             finish();
                         } else {
-                            System.out.println("Acknowledge Contract Failed");
                             requestQueue.stop();
                             finish();
                         }
@@ -227,7 +221,7 @@ public class ContractActivity_Details extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }
@@ -251,19 +245,15 @@ public class ContractActivity_Details extends AppCompatActivity {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user_id", userId);
             jsonBody.put("contract_id",contractId);
-            System.out.println("Details: " + jsonBody);
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, TERMINATECONTRACT_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
                     String result = response.getString("result");
-                    System.out.println("Results: " + result);
                     if (result.equals("success")) {
-                        System.out.println("Terminate Contract Success!");
                         requestQueue.stop();
                         finish();
                     } else {
-                        System.out.println("Terminate Contract Failed");
                         requestQueue.stop();
                         finish();
                      }
@@ -281,7 +271,7 @@ public class ContractActivity_Details extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }
@@ -306,7 +296,6 @@ public class ContractActivity_Details extends AppCompatActivity {
             public void onResponse(JSONObject response) {
                 try{
                     balance = response.getString("balance");
-                    System.out.println(response.getString("balance"));
                     requestQueue.stop();
                     }catch(JSONException e){
                         e.printStackTrace();
@@ -322,7 +311,7 @@ public class ContractActivity_Details extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 final Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                headers.put("Authorization", "Bearer " + sessionToken);
                 System.out.println("Header: " + headers.values());
                 return headers;
             }
@@ -348,8 +337,6 @@ public class ContractActivity_Details extends AppCompatActivity {
 
         ListContract listContract = listContracts.get(position);
         textViewReceiverName.setText(listContract.getReceiverName());
-        System.out.println("The Receiver Name: " + listContract.getReceiverName());
-        System.out.println("TextViewName: " + textViewReceiverName.getText().toString());
         textViewReceiverPhoneNum.setText(listContract.getUser1PhoneNum());
         textViewPayeeName.setText(listContract.getPayeeName());
         textViewPayeePhoneNum.setText(listContract.getUser2PhoneNum());
@@ -380,7 +367,6 @@ public class ContractActivity_Details extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == TopUpCode) {
             if (resultCode == Activity.RESULT_OK) {
-                System.out.println("Top Up Successful");
                 updateBalance();
             }
         }

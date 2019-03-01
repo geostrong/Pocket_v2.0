@@ -151,17 +151,12 @@ public class HomeFragment extends Fragment {
                 try{
                     final String balance = response.getString("balance");
                     final String updatedAsOf;
-                    System.out.println("The Balance is: " + response.getString("balance"));
                     updatedAsOf = response.getString("AS_OF").substring(0, response.getString("AS_OF").length() - 5);
                     SimpleDateFormat localDateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss:a",Locale.US);
                     localDateFormat.setTimeZone(TimeZone.getTimeZone("Asia/Singapore"));
-                    System.out.println("Test3");
                     Date updatedTime = localDateFormat.parse(updatedAsOf);
-                    System.out.println("Test4");
                     Date currentTime = localDateFormat.parse(localDateFormat.format(new Date()));
-                    System.out.println("Test5");
                     long difference = currentTime.getTime() - updatedTime.getTime();
-                    System.out.println("Current Time = " + currentTime.toString() + " | Updated Time = " + updatedTime.toString() + " | Difference = " + difference/1000);
 
                     final String lastUpdatedText;
                     if (difference < 60) {
@@ -179,7 +174,6 @@ public class HomeFragment extends Fragment {
                                 requestQueue.stop();
                             }catch(Exception e){
                                 e.printStackTrace();
-                                System.out.println("Balance Text is: " + balanceTxt.getText().toString());
                             }
                         }
                     });
@@ -198,7 +192,7 @@ public class HomeFragment extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 final Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                headers.put("Authorization", "Bearer " + sessionToken);
                 System.out.println("Header: " + headers.values());
                 return headers;
             }

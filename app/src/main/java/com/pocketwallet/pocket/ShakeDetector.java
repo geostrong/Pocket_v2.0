@@ -83,7 +83,6 @@ public class ShakeDetector implements SensorEventListener  {
                 if (mShakeTimestamp + SHAKE_COUNT_RESET_TIME_MS < now) {
                     mShakeCount = 0;
                 }
-                //System.out.println("gForce: " + gForce);
                 mShakeTimestamp = now;
                 mShakeCount++;
 

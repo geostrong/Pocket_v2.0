@@ -12,7 +12,6 @@ public class ExitActivity extends AppCompatActivity {
             boolean exit = extras.getBoolean("EXIT");
             if(exit == true){
                 finishAffinity();
-                //System.exit(0);
             }
         }
     }

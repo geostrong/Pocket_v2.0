@@ -96,7 +96,6 @@ public class TransferFragment_Phone extends Fragment {
             public void onResponse(JSONObject response) {
                 try {
                     String result = response.getString("exist");
-                    System.out.println("Response: " + response);
                     if(result.equals("true")){
                         String targetName = response.getString("name");
                         Intent intent = new Intent(getActivity(), TransferActivity_Phone_Confirmation.class);
@@ -136,7 +135,7 @@ public class TransferFragment_Phone extends Fragment {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 final Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                headers.put("Authorization", "Bearer " + sessionToken);
                 System.out.println("Header: " + headers.values());
                 return headers;
             }
@@ -147,7 +146,6 @@ public class TransferFragment_Phone extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 1) {
-            System.out.println("resultCode: " + resultCode);
             if (resultCode == Activity.RESULT_OK) {
                 getActivity().finish();
             }

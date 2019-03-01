@@ -53,21 +53,16 @@ public class ChangePasswordActivity extends AppCompatActivity {
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
         }
-
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             currentPassword = currentPasswordInput.getText().toString().trim();
             newPassword = newPasswordInput.getText().toString().trim();
             confirmNewPassword = confirmNewPasswordInput.getText().toString().trim();
-
             saveButton.setEnabled(!currentPassword.isEmpty() && !newPassword.isEmpty() && !confirmNewPassword.isEmpty());
         }
-
         @Override
         public void afterTextChanged(Editable s) {
-
         }
     };
 

@@ -86,9 +86,7 @@ public class ChangeDailyLimit extends AppCompatActivity {
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
         }
-
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             dailyLimit = dailyLimitInput.getText().toString().trim();
@@ -96,10 +94,8 @@ public class ChangeDailyLimit extends AppCompatActivity {
             password = SHA256.hashSHA256(password);
             changeDailyLimitButton.setEnabled(!dailyLimit.isEmpty() && !password.isEmpty());
         }
-
         @Override
         public void afterTextChanged(Editable s) {
-
         }
     };
 
@@ -122,14 +118,10 @@ public class ChangeDailyLimit extends AppCompatActivity {
             jsonBody.put("user_id",userId);
             jsonBody.put("limit", dailyLimit);
             jsonBody.put("option",1);
-            //jsonBody.put("password",password);
-
-            System.out.println("JsonBody: " + jsonBody);
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, CHANGEDAILYLIMIT_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        System.out.println("Response: " + response);
                         String result = response.getString("result");
                         if(result.equalsIgnoreCase("success")){
                             UpdateSharedPreference("daily_limit",response.getString("daily_limit"));
@@ -176,7 +168,7 @@ public class ChangeDailyLimit extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }

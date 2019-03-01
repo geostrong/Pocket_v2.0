@@ -50,7 +50,6 @@
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
         </activity>
-        <activity android:name=".ContractPromptReceive" />
         <activity android:name=".ContractActivity_Create" />
         <activity android:name=".ContractActivity" />
         <activity android:name=".TopUpActivity" />
@@ -66,7 +65,6 @@
         </activity>
         <activity android:name=".RequestActivity_QR" />
         <activity android:name=".RequestActivity" />
-        <activity android:name=".RequestActivity_NFC" />
         <activity android:name=".ScanQRActivity_Static" />
         <activity android:name=".ResultActivity" />
         <activity android:name=".ScanQRActivity_Dynamic" /> <!-- ACTIVITIES -->

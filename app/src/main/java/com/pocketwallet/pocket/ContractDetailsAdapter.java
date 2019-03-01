@@ -24,14 +24,6 @@ public class ContractDetailsAdapter extends RecyclerView.Adapter<ContractDetails
     public ContractDetailsAdapter(ArrayList<ListContract> listContracts, Context context) {
         this.listContracts = listContracts;
         this.context = context;
-        /*
-        Intent intent = ((Activity) context).getIntent();
-        extras = intent.getExtras();
-        if (extras != null) {
-            userId = extras.getString("userId");
-            this.listContracts = (ArrayList<ListContract>) intent.getSerializableExtra(
-                    "listContracts");
-        }*/
     }
 
     @Override
@@ -47,7 +39,6 @@ public class ContractDetailsAdapter extends RecyclerView.Adapter<ContractDetails
         holder.textViewReceiverPhoneNum.setText(listContract.getUser1PhoneNum());
         holder.textViewPayeeName.setText(listContract.getPayeeName());
         holder.textViewPayeePhoneNum.setText(listContract.getUser2PhoneNum());
-        //holder.textViewContractName.setText(listContract.getContractName());
         holder.textViewContractStatus.setText(listContract.getContractStatus());
         holder.textViewAmount.setText(listContract.getAmount());
         holder.textViewStartDate.setText(listContract.getStartDate());

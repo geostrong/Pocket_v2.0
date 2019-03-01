@@ -2,8 +2,6 @@ package com.pocketwallet.pocket;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.hardware.Sensor;
-import android.hardware.SensorManager;
 import android.nfc.NdefMessage;
 import android.nfc.NdefRecord;
 import android.nfc.NfcAdapter;
@@ -21,7 +19,6 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -44,7 +41,6 @@ public class MainActivity extends AppCompatActivity
         NfcAdapter.OnNdefPushCompleteCallback {
 
     private boolean doubleBackToExitPressedOnce = false;
-    private TextView mTextMessage;
     private String userId;
     private Bundle extras;
     private Fragment homeFragment;
@@ -58,11 +54,6 @@ public class MainActivity extends AppCompatActivity
 
     private NfcAdapter nfcAdapter;
     private static final int MESSAGE_SENT = 1;
-
-    // Shake detection
-    private SensorManager mSensorManager;
-    private Sensor mAccelerometer;
-    private ShakeDetector mShakeDetector;
 
     //Session Token
     String sessionToken;
@@ -93,7 +84,6 @@ public class MainActivity extends AppCompatActivity
     @Override
     protected void onResume(){
         super.onResume();
-        //getAuthCode();
     }
 
     @Override
@@ -117,7 +107,6 @@ public class MainActivity extends AppCompatActivity
             sessionToken = userPreferences.getString("sessionToken", "");
             sessionTokenExpiry = userPreferences.getString("sessionTokenExpiry", "");
             UpdateSharedPreference("userId",userId);
-            System.out.println("Session Token: " + sessionToken);
         }
 
         GETAUTHCODE_URL = "http://pocket.ap-southeast-1.elasticbeanstalk.com/users/"+ userId + "/auth-code";
@@ -162,7 +151,6 @@ public class MainActivity extends AppCompatActivity
             public void onResponse(String response) {
                 authCode = response.toString();
                 authCode = (String) authCode.subSequence(14,authCode.length()-2);
-                System.out.println("AuthCode is: " + authCode);
                 UpdateSharedPreference("authCode",authCode);
                 requestQueue.stop();
             }
@@ -176,7 +164,7 @@ public class MainActivity extends AppCompatActivity
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 final Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                headers.put("Authorization", "Bearer " + sessionToken);
                 System.out.println("Header: " + headers.values());
                 return headers;
             }
@@ -195,15 +183,12 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
         String message = userId + "|" + authCode;
-        System.out.println("The message is: " + message);
 
         try {
             message = AESUtils.encrypt(message);
-            System.out.println("encrypted:" + message);
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("The encrypted message is: " + message);
         NdefRecord ndefRecord = NdefRecord.createMime("text/plain", message.getBytes());
         NdefMessage ndefMessage = new NdefMessage(ndefRecord);
 
@@ -212,8 +197,6 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onNdefPushComplete(NfcEvent arg0) {
-        // A handler is needed to send messages to the activity when this
-        // callback occurs, because it happens from a binder thread
         mHandler.obtainMessage(MESSAGE_SENT).sendToTarget();
     }
 
@@ -224,7 +207,6 @@ public class MainActivity extends AppCompatActivity
             switch (msg.what) {
                 case MESSAGE_SENT:
                     Toast.makeText(getApplicationContext(), "Message sent!", Toast.LENGTH_LONG).show();
-                    System.out.println("MESSAGE SENT: " + msg);
                     break;
             }
         }

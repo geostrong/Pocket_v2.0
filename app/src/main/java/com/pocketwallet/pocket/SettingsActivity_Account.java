@@ -19,8 +19,6 @@ public class SettingsActivity_Account extends AppCompatActivity {
         if(savedInstanceState == null) {
             transaction.add(R.id.account_settings, fragment, "Account Settings");
         }
-
-
     }
 
     public static class accountSettingHolder extends PreferenceFragmentCompat {

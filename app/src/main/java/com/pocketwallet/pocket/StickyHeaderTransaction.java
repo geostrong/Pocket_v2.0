@@ -9,14 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Formatter;
-import java.util.List;
-import java.util.TimeZone;
-
 public class StickyHeaderTransaction extends RecyclerView.ItemDecoration {
 
     private final int headerOffset;
@@ -45,10 +37,7 @@ public class StickyHeaderTransaction extends RecyclerView.ItemDecoration {
 
     @Override
     public void onDrawOver(Canvas c, RecyclerView parent, RecyclerView.State state) {
-        super.onDrawOver(c,
-                parent,
-                state);
-
+        super.onDrawOver(c, parent, state);
         if (headerView == null) {
             headerView = inflateHeaderView(parent);
             header = (TextView) headerView.findViewById(R.id.list_item_section_text);
@@ -56,25 +45,17 @@ public class StickyHeaderTransaction extends RecyclerView.ItemDecoration {
                     parent);
         }
 
-
         for (int i = 0; i < parent.getChildCount(); i++) {
             View child = parent.getChildAt(i);
             final int position = parent.getChildAdapterPosition(child);
             CharSequence title = sectionCallback.getSectionHeader(position);
 
             header.setText(title);
-           // title = when[monthNum];
-            if (!previousHeader.equals(title) /*|| sectionCallback.isSection(position)*/) {
+            if (!previousHeader.equals(title)) {
                 drawHeader(c, child, headerView);
                 previousHeader = title;
-                System.out.println();
-                //System.out.println("Hello1");
-               // System.out.println("Title: " + title + " | PrevHeader: " + previousHeader.toString());
-
             }else {
-               // System.out.print("Hello2");
-              //  System.out.println("");
-               // System.out.println("Title: " + title + " | PrevHeader: " + previousHeader.toString());
+
             }
         }
     }
@@ -85,11 +66,9 @@ public class StickyHeaderTransaction extends RecyclerView.ItemDecoration {
             c.translate(0,
                     Math.max(0,
                             child.getTop() - headerView.getHeight()));
-           // System.out.println("                If sticky translate where getTop is " + child.getTop() + " and getHeight " + headerView.getHeight());
         } else {
             c.translate(0,
                     child.getTop() - headerView.getHeight());
-            //System.out.println("                else translate child.getTop");
         }
         headerView.draw(c);
         c.restore();

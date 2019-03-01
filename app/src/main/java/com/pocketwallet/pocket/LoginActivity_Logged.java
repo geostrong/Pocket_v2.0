@@ -151,13 +151,11 @@ public class LoginActivity_Logged extends AppCompatActivity{
                 jsonBody.put("phoneNumber", phoneNumber);
                 jsonBody.put("password", password);
             }
-            System.out.println("Login Details: " + jsonBody);
 
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        System.out.println("Response: " + response);
                         String result = response.getString("result");
                         String userId = response.getString("user_id");
                         JSONObject testToken = response.getJSONObject("session_token");
@@ -165,15 +163,12 @@ public class LoginActivity_Logged extends AppCompatActivity{
                         UpdateSharedPreference("per_transaction_limit",response.getString("per_transaction_limit"));
                         UpdateSharedPreference("daily_limit",response.getString("daily_limit"));
 
-                        System.out.println("Results: " + result);
-                        System.out.println("User: " + userId);
-                        System.out.println("Session Token is :" + sessionToken);
                         if(!result.equals("failed")){
                             requestQueue.stop();
                             postFCMToken(userId);
                             launchMainActivity(userId);
                         }else{
-                            System.out.println("===================Failed to Login===================");
+
                         }
 
                     }catch(JSONException e){
@@ -208,22 +203,19 @@ public class LoginActivity_Logged extends AppCompatActivity{
         requestQueue.start();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String fcmToken = prefs.getString("FCM_TOKEN", "DEFAULT");
-        System.out.println(fcmToken);
         try {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user_id", userId);
             jsonBody.put("fcm_token", fcmToken);
-            System.out.println("Login Details: " + jsonBody);
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, POSTFCM_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
                         String result = response.getString("result");
-                        System.out.println("Results: " + result);
                         if (result.equals("success")) {
-                            System.out.println("Post FCM Token Success!");
+
                         } else {
-                            System.out.println("Post FCM Token Failed :(");
+
                         }
                         requestQueue.stop();
                     } catch (JSONException e) {
@@ -275,74 +267,9 @@ public class LoginActivity_Logged extends AppCompatActivity{
             fragment.setStage(FingerprintAuthenticationDialogFragment.Stage.FINGERPRINT);
             fragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
         }
-        /*
-        final FingerprintManagerCompat fingerprintManagerCompat = FingerprintManagerCompat.from(this);
-        if (!fingerprintManagerCompat.isHardwareDetected()) {
-            System.out.println("Device does not have fingerprint scanner");
-            return;
-        } else if (!fingerprintManagerCompat.hasEnrolledFingerprints()) {
-            // User hasn't enrolled any fingerprints to authenticate with
-            System.out.println("Devices does not have enrolled fingerprints");
-            return;
-        }
-
-        Toast toast = Toast.makeText(getApplicationContext(),
-                "Please scan your Fingerprint",
-                Toast.LENGTH_SHORT);
-        toast.show();
-
-        FingerprintManagerCompat.CryptoObject cryptoObject = new FingerprintManagerCompat.CryptoObject(cipher);
-        fingerprintManagerCompat.authenticate(cryptoObject, 0, new CancellationSignal(),
-                new FingerprintManagerCompat.AuthenticationCallback() {
-                    @Override
-                    public void onAuthenticationError(int errMsgId, CharSequence errString) {
-                        super.onAuthenticationError(errMsgId, errString);
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Fingerprint NOT RECOGNIZED",
-                                Toast.LENGTH_SHORT);
-                        toast.show();
-                        //updateStatus(String.valueOf(errString));
-                        //biometricCallback.onAuthenticationError(errMsgId, errString);
-                    }
-                    @Override
-                    public void onAuthenticationHelp(int helpMsgId, CharSequence helpString) {
-                        super.onAuthenticationHelp(helpMsgId, helpString);
-                        //updateStatus(String.valueOf(helpString));
-                        //
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                String.valueOf(helpString),
-                                Toast.LENGTH_SHORT);
-                        toast.show();
-                    }
-                    @Override
-                    public void onAuthenticationSucceeded(FingerprintManagerCompat.AuthenticationResult result) {
-                        super.onAuthenticationSucceeded(result);
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Authentication Success!",
-                                Toast.LENGTH_SHORT);
-                        toast.show();
-                        login(phoneNumber,KEY_NAME,"1","-");
-
-                        //dismissDialog();
-                        //biometricCallback.onAuthenticationSuccessful();
-                    }
-                    @Override
-                    public void onAuthenticationFailed() {
-                        super.onAuthenticationFailed();
-                        Toast toast = Toast.makeText(getApplicationContext(),
-                                "Authentication Failed.",
-                                Toast.LENGTH_SHORT);
-                        toast.show();
-                        //updateStatus(context.getString(R.string.biometric_failed));
-                        //biometricCallback.onAuthenticationFailed();
-                    }
-                }, null);
-
-        */
     }
 
     public void onFingerprintCallback (){
-        System.out.println("KEY_NAME: " + KEY_NAME);
         login(phoneNumber,KEY_NAME,"1","-");;
     }
 
@@ -389,7 +316,7 @@ public class LoginActivity_Logged extends AppCompatActivity{
             return false;
         } catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
                 | NoSuchAlgorithmException | InvalidKeyException e) {
-            //throw new RuntimeException("Failed to init Cipher", e);
+
             DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {

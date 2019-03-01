@@ -83,8 +83,6 @@ public class LoginActivity extends AppCompatActivity {
 
                     FingerprintManagerCompat fingerprintManagerCompat = FingerprintManagerCompat.from(LoginActivity.this);
                     if (!fingerprintManagerCompat.isHardwareDetected()) {
-                        System.out.println("Device does not have fingerprint scanner");
-
                         AlertDialog.Builder builder = new AlertDialog.Builder(LoginActivity.this);
                         builder.setTitle("Fingerprint scanner not found")
                                 .setMessage("Device do not have a fingerprint scanner")
@@ -114,7 +112,6 @@ public class LoginActivity extends AppCompatActivity {
                             AlertDialog dialog = builder.create();
                             dialog.show();
                             // User hasn't enrolled any fingerprints to authenticate with
-                            System.out.println("Devices does not have enrolled fingerprints");
                             bioSwitch.setChecked(false);
                         } else {
                             editor.putBoolean("useFingerprint", true);
@@ -167,13 +164,10 @@ public class LoginActivity extends AppCompatActivity {
             jsonBody.put("phoneNumber", phoneNumber);
             jsonBody.put("password", password);
 
-            System.out.println("Login Details: " + jsonBody);
-
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, LOGIN_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        System.out.println("Response: " + response);
                         String result = response.getString("result");
                         String userId = response.getString("user_id");
                         name = response.getString("name");
@@ -183,10 +177,6 @@ public class LoginActivity extends AppCompatActivity {
                         UpdateSharedPreference("per_transaction_limit",response.getString("per_transaction_limit"));
                         UpdateSharedPreference("daily_Limit",response.getString("daily_limit"));
 
-                        System.out.println("Results: " + result);
-                        System.out.println("User: " + userId);
-                        System.out.println("Session Token is :" + sessionToken);
-
                         if(!userId.equals("failed")){
                             updateToken();
                             postFCMToken(userId);
@@ -195,14 +185,12 @@ public class LoginActivity extends AppCompatActivity {
                             requestQueue.stop();
                             launchMainActivity(userId,name);
                         }else{
-                            System.out.println("===================Failed to Login===================");
+
                         }
 
                     }catch(JSONException e){
 
                     }
-                    //String userId;
-                    //launchMainActivity(userId);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -224,7 +212,6 @@ public class LoginActivity extends AppCompatActivity {
     private void updateToken(){
         KEY_NAME = phoneNumber + "|" + password;
         KEY_NAME = SHA256.hashSHA256(KEY_NAME);
-        System.out.println("KEY_NAME: " + KEY_NAME);
 
         logInPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         SharedPreferences.Editor editor = logInPreferences.edit();
@@ -244,25 +231,19 @@ public class LoginActivity extends AppCompatActivity {
         requestQueue.start();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String fcmToken = prefs.getString("FCM_TOKEN", "DEFAULT");
-        System.out.println(fcmToken);
         try {
             JSONObject jsonBody = new JSONObject();
             jsonBody.put("user_id", userId);
             jsonBody.put("fcm_token", fcmToken);
-
-            System.out.println("Login Details: " + jsonBody);
 
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, POSTFCM_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
                         String result = response.getString("result");
-                        System.out.println("Results: " + result);
                         if (result.equals("success")) {
-                            System.out.println("Post FCM Token Success!");
                             requestQueue.stop();
                         } else {
-                            System.out.println("Post FCM Token Failed :(");
                             requestQueue.stop();
                         }
                     } catch (JSONException e) {
@@ -306,7 +287,6 @@ public class LoginActivity extends AppCompatActivity {
     public void launchMainActivity(String userId,String name){
         //Update logged in
         logInPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        System.out.println("isLoggedIn = " + logInPreferences.getBoolean("isLoggedIn", false));
         SharedPreferences.Editor editor = logInPreferences.edit();
         editor.putBoolean("isLoggedIn", true);
         editor.putString("PhoneNumber", phoneNumber);
@@ -314,9 +294,6 @@ public class LoginActivity extends AppCompatActivity {
         UpdateSharedPreference("sessionToken",sessionToken);
         UpdateSharedPreference("sessionTokenExpiry",sessionTokenExpiry);
         editor.commit();
-
-        System.out.println("Phone Number login = " + logInPreferences.getString("PhoneNumber", "DEFAULT"));
-        System.out.println("isLoggedIn = " + logInPreferences.getBoolean("isLoggedIn", false));
 
         Intent intent = new Intent(LoginActivity.this, MainActivity.class);
         intent.putExtra("userId",userId);

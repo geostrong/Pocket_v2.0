@@ -71,9 +71,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //SIGN UP HERE
-                System.out.println("RegisterPhone: " + phoneNumber);
-                System.out.println("RegisterName: " + name);
-                System.out.println("RegisterPassword: " + password);
                 password = SHA256.hashSHA256(password);
                 registerAccount();
             }
@@ -81,7 +78,6 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public void registerAccount(){
-        System.out.println("Sending Registration request To Server...");
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         try {
             JSONObject jsonBody = new JSONObject();
@@ -89,12 +85,10 @@ public class RegisterActivity extends AppCompatActivity {
             jsonBody.put("name", name);
             jsonBody.put("password", password);
             jsonBody.put("phoneNumber", phoneNumber);
-            System.out.println("RegisterDetails: " + jsonBody);
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, REGISTER_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        System.out.println("Response: " + response.toString());
                         String tempResult = response.getString("result");
                         if(tempResult.equals("success")) {
                             result = "Success";
@@ -123,7 +117,6 @@ public class RegisterActivity extends AppCompatActivity {
                             registerPasswordInput.getText().clear();
                             break;
                     }
-                    //onBackPressed();
                 }
             });
             requestQueue.add(jsonObject);

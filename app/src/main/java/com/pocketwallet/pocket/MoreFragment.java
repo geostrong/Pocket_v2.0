@@ -130,8 +130,6 @@ public class MoreFragment extends Fragment {
 
                     FingerprintManagerCompat fingerprintManagerCompat = FingerprintManagerCompat.from(getContext());
                     if (!fingerprintManagerCompat.isHardwareDetected()) {
-                        System.out.println("Device does not have fingerprint scanner");
-
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setTitle("Fingerprint scanner not found")
                                 .setMessage("Device do not have a fingerprint scanner")
@@ -161,7 +159,6 @@ public class MoreFragment extends Fragment {
                             AlertDialog dialog = builder.create();
                             dialog.show();
                             // User hasn't enrolled any fingerprints to authenticate with
-                            System.out.println("Devices does not have enrolled fingerprints");
                             bioSwitch.setChecked(false);
                         } else {
                             editor.putBoolean("useFingerprint", true);
@@ -194,7 +191,6 @@ public class MoreFragment extends Fragment {
                     editor.putBoolean("usePIN", true);
                     editor.commit();
                 } else {
-                    //LockManager.getInstance().disableAppLock();
                     LockManager.getInstance().getAppLock().disable();
                     editor.putBoolean("usePIN", false);
                     editor.commit();

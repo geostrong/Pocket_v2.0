@@ -87,7 +87,6 @@ public class ChangeTransactionLimit extends AppCompatActivity {
     private TextWatcher textWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
         }
 
         @Override
@@ -100,8 +99,6 @@ public class ChangeTransactionLimit extends AppCompatActivity {
 
         @Override
         public void afterTextChanged(Editable s) {
-
-
         }
     };
 
@@ -125,14 +122,11 @@ public class ChangeTransactionLimit extends AppCompatActivity {
             jsonBody.put("user_id",userId);
             jsonBody.put("limit", transactionLimit);
             jsonBody.put("option",0);
-            //jsonBody.put("password",password);
 
-            System.out.println("JsonBody: " + jsonBody);
             JsonObjectRequest jsonObject = new JsonObjectRequest(Request.Method.POST, CHANGEPERTRANSACTIONLIMIT_URL, jsonBody, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject response) {
                     try {
-                        System.out.println("Response: " + response);
                         String result = response.getString("result");
                         if(result.equalsIgnoreCase("success")){
                             UpdateSharedPreference("per_transaction_limit",response.getString("per_transaction_limit"));
@@ -179,7 +173,7 @@ public class ChangeTransactionLimit extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }

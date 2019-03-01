@@ -84,7 +84,6 @@ public class ContractAdapter extends RecyclerView.Adapter<ContractAdapter.ViewHo
                 newIntent.putExtra("listContracts",listContracts);
                 newIntent.putExtra("position",position);
                 v.getContext().startActivity(newIntent);
-                System.out.println("========================== User ID: " + userId + " =========================");
             }
         });
     }

@@ -184,14 +184,8 @@ public class TopUpActivity extends AppCompatActivity {
         requestQueue.start();
         try {
             JSONObject jsonBody = new JSONObject();
-            //jsonBody.put("cardType", cardType);
-            //jsonBody.put("cardNum", cardNum);
-            //jsonBody.put("cvv", cvv);
-            //jsonBody.put("expiryDate", expiryDate.getText().toString());
             jsonBody.put("user_id",userId);
             jsonBody.put("amount", topUpAmount);
-
-            System.out.println("JSON BODY: " +jsonBody);
 
             final JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, urlTopUp, jsonBody,
                     new Response.Listener<JSONObject>() {
@@ -199,9 +193,7 @@ public class TopUpActivity extends AppCompatActivity {
                         public void onResponse(JSONObject response) {
                             try {
                                 String result = response.getString("result");
-                                System.out.println("Results: " + result);
                                 if(result.equalsIgnoreCase("Success")){
-                                    //System.out.println(response.getString("cardType"));
                                     Intent intent = new Intent(TopUpActivity.this, ResultActivity.class);
                                     Bundle b = new Bundle();
                                     b.putString("title", "Top Up");
@@ -230,7 +222,7 @@ public class TopUpActivity extends AppCompatActivity {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     final Map<String, String> headers = new HashMap<>();
-                    headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                    headers.put("Authorization", "Bearer " + sessionToken);
                     System.out.println("Header: " + headers.values());
                     return headers;
                 }
@@ -253,9 +245,7 @@ public class TopUpActivity extends AppCompatActivity {
             @Override
             public void onResponse(JSONObject response) {
                 try{
-                    System.out.println("URL: " + GETBALANCE_URL);
                     final String balance = response.getString("balance");
-                    System.out.println(response.getString("balance"));
                     balanceTxt.post(new Runnable() {
                         @Override
                         public void run() {
@@ -275,7 +265,7 @@ public class TopUpActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 final Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                headers.put("Authorization", "Bearer " + sessionToken);
                 System.out.println("Header: " + headers.values());
                 return headers;
             }

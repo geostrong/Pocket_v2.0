@@ -71,14 +71,11 @@ public class QuickQrActivity extends AppCompatActivity {
     public void generateMyQR() {
         MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
         try {
-            //String toQR = userId + "|" + amount;
             SharedPreferences userPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            String toQR = "QuickQR|" + userId + "|" + authCode + "|" + userPreferences.getString("user_name", "Name");
-            System.out.println("TOQR: " + toQR);
+            String toQR = "QuickQR|" + userId + "|" + authCode + "|" + userPreferences.getString("user_name", "Name") + "|" + userPreferences.getString("PhoneNumber", "-");
 
             try {
                 toQR = AESUtils.encrypt(toQR);
-               System.out.println("encrypted:" + toQR);
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -107,7 +104,6 @@ public class QuickQrActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 authCode = response.toString();
                 authCode = (String) authCode.subSequence(14,authCode.length()-2);
-                System.out.println("AuthCode is: " + authCode);
                 UpdateSharedPreference("authCode",authCode);
                 authCodeText.setText(authCode);
                 myQR.post(new Runnable() {
@@ -128,7 +124,7 @@ public class QuickQrActivity extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 final Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + sessionToken);//put your token here
+                headers.put("Authorization", "Bearer " + sessionToken);
                 System.out.println("Header: " + headers.values());
                 return headers;
             }
